@@ -1,0 +1,32 @@
+﻿<Window x:Class="Quiz_App.QuizQuestion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quiz_App"
+        mc:Ignorable="d"
+        Title="QuizQuestion" Height="450" Width="800">
+    <Grid>
+        <TextBox x:Name="txtQuestion" HorizontalAlignment="Left" Margin="112,57,0,0" TextWrapping="Wrap" Text="Question" VerticalAlignment="Top" Width="120" Height="20"/>
+        <StackPanel Margin="112,103,559,264">
+            <RadioButton x:Name="rbSingleAnswer" Content="Single Answer" Checked="rbSingleAnswer_Checked" Unchecked="rbSingleAnswer_UnChecked"/>
+            <RadioButton x:Name="rbMultipleChoice" Content="Multiple Choice" Checked="rbMultipleChoice_Checked" Unchecked="rbMultipleChoice_UnChecked"/>
+
+        </StackPanel>
+
+        <Grid x:Name="grdSingleAnswer" Visibility="Collapsed">
+            <TextBox x:Name="txtSingleAnswer" HorizontalAlignment="Left" Margin="527,112,0,0" TextWrapping="Wrap" Text="Type Answer" VerticalAlignment="Top" Width="120"/>
+        </Grid>
+
+        <Grid x:Name="grdMultipleChoice" Width="800" Height="430">
+            <TextBox x:Name="txtOption1" HorizontalAlignment="Left" Margin="413,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="txtOption2" HorizontalAlignment="Left" Margin="607,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="txtOption3" HorizontalAlignment="Left" Margin="413,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="txtOption4" HorizontalAlignment="Left" Margin="607,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <RadioButton x:Name="rbOption1" Content="Option 1" HorizontalAlignment="Left" Margin="413,130,0,0" VerticalAlignment="Top" GroupName="MultipleChoiceOptions"/>
+            <RadioButton x:Name="rbOption2" Content="Option 2" HorizontalAlignment="Left" Margin="607,130,0,0" VerticalAlignment="Top" GroupName="MultipleChoiceOptions"/>
+            <RadioButton x:Name="rbOption3" Content="Option 3" HorizontalAlignment="Left" Margin="413,250,0,0" VerticalAlignment="Top" GroupName="MultipleChoiceOptions"/>
+            <RadioButton x:Name="rbOption4" Content="Option 4" HorizontalAlignment="Left" Margin="607,250,0,0" VerticalAlignment="Top" GroupName="MultipleChoiceOptions"/>
+        </Grid>
+    </Grid>
+</Window>

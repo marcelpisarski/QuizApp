@@ -1,0 +1,22 @@
+﻿<Window x:Class="Quiz_App.AddQuiz"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quiz_App"
+        mc:Ignorable="d"
+        Title="AddQuiz" Height="450" Width="800">
+    <Grid>
+        <TextBox x:Name="txtTopicName" HorizontalAlignment="Left" Margin="58,48,0,0" TextWrapping="Wrap" Text="Topic" VerticalAlignment="Top" Width="120" Height="20"/>
+        <TextBox x:Name="txtQuizTitle" HorizontalAlignment="Left" Margin="58,86,0,0" TextWrapping="Wrap" Text="Quiz Title" VerticalAlignment="Top" Width="120" Height="20"/>
+        <StackPanel Orientation="Vertical" Margin="58,121,622,149">
+            <CheckBox x:Name="cbLevel1" Content="Level 1" Margin="5"/>
+            <CheckBox x:Name="cbLevel2" Content="Level 2" Margin="5"/>
+            <CheckBox x:Name="cbLevel3" Content="Level 3" Margin="5"/>
+            <CheckBox x:Name="cbLevel4" Content="Level 4" Margin="5"/>
+        </StackPanel>
+        <Button x:Name="btnAddQuestion" Content="Add Question" HorizontalAlignment="Left" Margin="598,48,0,0" VerticalAlignment="Top" Height="96" Width="149" Click="btnAddQuestion_Click"/>
+        <Button x:Name="btnSaveQuiz" Content="Save" HorizontalAlignment="Left" Margin="672,365,0,0" VerticalAlignment="Top" Height="36" Width="102" Click="btnSaveQuiz_Click"/>
+        <Button x:Name="btnCancelQuiz" Content="Cancel" HorizontalAlignment="Left" Margin="559,365,0,0" VerticalAlignment="Top" Width="102" Height="36" Click="btnCancelQuiz_Click"/>
+    </Grid>
+</Window>
