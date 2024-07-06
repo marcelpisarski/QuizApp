@@ -23,5 +23,10 @@ namespace Quiz_App
         {
             InitializeComponent();
         }
+
+        private void btnOpenQuizzes_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

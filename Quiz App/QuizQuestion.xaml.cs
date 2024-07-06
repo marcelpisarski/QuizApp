@@ -45,5 +45,10 @@ namespace Quiz_App
         {
             grdMultipleChoice.Visibility = Visibility.Collapsed;
         }
+
+        private void btnCancelQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

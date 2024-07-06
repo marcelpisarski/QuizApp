@@ -7,10 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Width="800" Height="430">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="99*"/>
-            <ColumnDefinition Width="101*"/>
-        </Grid.ColumnDefinitions>
         <TextBox x:Name="txtUsername" HorizontalAlignment="Center" Margin="0,116,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="240" Height="36" Grid.ColumnSpan="2"/>
         <Button x:Name="btnRegister" Content="Register" HorizontalAlignment="Left" Margin="348,323,0,0" VerticalAlignment="Top" Height="27" Width="104" Click="btnRegister_Click" Grid.ColumnSpan="2"/>
         <Button x:Name="btnLogin" Content="Login" HorizontalAlignment="Left" Margin="348,236,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="52" Width="104" Grid.ColumnSpan="2" Click="btnLogin_Click">
