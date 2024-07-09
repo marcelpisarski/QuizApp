@@ -1,4 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Collections.Generic;
+using System.Security.Cryptography;
+using MySql.Data.MySqlClient;
 using System.IO;
 using System;
 using System.Collections.Generic;
@@ -29,6 +31,28 @@ namespace Quiz_App
             
             //Hides teachercode textbox by default
             txtTeacherCode.Visibility = Visibility.Collapsed;
+        }
+
+        //Hashes the password
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                //Convert the input string to an array of bytes and create the hash
+                byte[] data = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                //Create a new StringBuilder to collect the bytes and create a string
+                var sBuilder = new StringBuilder();
+
+                //Loop through each byte of the hashed data and format each one as a hexadecimal string
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sBuilder.Append(data[i].ToString("x2"));
+                }
+
+                // Returns the string
+                return sBuilder.ToString();
+            }
         }
 
         //Enabled teacher code textbox if checked
@@ -93,6 +117,9 @@ namespace Quiz_App
                 return;
             }
 
+            //Create a hash of the password
+            string hashedPassword = HashPassword(txtRegisterPassword.Password);
+
             //Create connection to database
             string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
 
@@ -120,7 +147,7 @@ namespace Quiz_App
                     //Insert details into user table
                     command.CommandText = "INSERT INTO user(username,password, role) VALUES (@username, @password, @role); ";
                     command.Parameters.AddWithValue("@username", txtRegisterUsername.Text);
-                    command.Parameters.AddWithValue("@password", txtRegisterPassword.Password);
+                    command.Parameters.AddWithValue("@password", hashedPassword);
                     command.Parameters.AddWithValue("@role", userRole);
 
                     int result = command.ExecuteNonQuery();

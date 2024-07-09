@@ -50,5 +50,45 @@ namespace Quiz_App
         {
             this.Close();
         }
+
+        private void btnAddQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            //Ensures user enters question
+            if (txtQuestion.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("Enter question");
+                return;
+            }
+
+            //Ensures question type is chosen
+            if (rbMultipleChoice.IsChecked == false && rbSingleAnswer.IsChecked == false)
+            {
+                MessageBox.Show("Please select question type");
+                return;
+            }
+
+            //Ensures no fields are empty
+            if (rbMultipleChoice.IsChecked == true)
+            {
+                if (txtOption1.Text.Trim().Length == 0 || txtOption2.Text.Trim().Length == 0 || txtOption3.Text.Trim().Length == 0 || txtOption4.Text.Trim().Length == 0)
+                {
+                    MessageBox.Show("Enter all answer boxes");
+                    return;
+                }
+                if (rbOption1.IsChecked == false && rbOption2.IsChecked == false && rbOption3.IsChecked == false && rbOption4.IsChecked == false)
+                {
+                    MessageBox.Show("Please choose the correct answer");
+                    return;
+                }
+            }
+            else if (rbSingleAnswer.IsChecked == true)
+            {
+                if (txtSingleAnswer.Text.Trim().Length == 0)
+                {
+                    MessageBox.Show("Please enter an answer");
+                    return;
+                }
+            }
+        }
     }
 }

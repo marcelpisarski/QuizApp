@@ -18,5 +18,6 @@
         <Button x:Name="btnAddQuestion" Content="Add Question" HorizontalAlignment="Left" Margin="598,48,0,0" VerticalAlignment="Top" Height="96" Width="149" Click="btnAddQuestion_Click"/>
         <Button x:Name="btnSaveQuiz" Content="Save" HorizontalAlignment="Left" Margin="672,365,0,0" VerticalAlignment="Top" Height="36" Width="102" Click="btnSaveQuiz_Click"/>
         <Button x:Name="btnCancelQuiz" Content="Cancel" HorizontalAlignment="Left" Margin="559,365,0,0" VerticalAlignment="Top" Width="102" Height="36" Click="btnCancelQuiz_Click"/>
+        <Button x:Name="btnCreateSchema" Content="Create Quiz Schema" HorizontalAlignment="Left" Margin="58,233,0,0" VerticalAlignment="Top" Click="btnCreateSchema_Click"/>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,7 +28,29 @@ namespace Quiz_App
         {
             public static int UserId { get; set; }
         }
-        
+
+        //Hashes the password
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                //Convert the input string to an array of bytes and create the hash
+                byte[] data = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                //Create a new StringBuilder to collect the bytes and create a string
+                var sBuilder = new StringBuilder();
+
+                //Loop through each byte of the hashed data and format each one as a hexadecimal string
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sBuilder.Append(data[i].ToString("x2"));
+                }
+
+                // Returns the string
+                return sBuilder.ToString();
+            }
+        }
+
         //Places userid into global variable
         private void FetchUserId(string username, string password)
         {
@@ -77,6 +100,7 @@ namespace Quiz_App
         {
             string username = txtUsername.Text;
             string password = txtPassword.Password;
+            string hashedPassword = HashPassword(password);
 
             string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
 
@@ -91,7 +115,7 @@ namespace Quiz_App
                     //Retrieves user from database
                     command.CommandText = "SELECT COUNT(1) FROM user WHERE username=@username AND password=@password";
                     command.Parameters.AddWithValue("@username", username);
-                    command.Parameters.AddWithValue("@password", password);
+                    command.Parameters.AddWithValue("@password", hashedPassword);
 
                     int result = Convert.ToInt32(command.ExecuteScalar());
 
@@ -103,7 +127,7 @@ namespace Quiz_App
                         //Clears parameters and adds them again
                         command.Parameters.Clear();
                         command.Parameters.AddWithValue("@username", username);
-                        command.Parameters.AddWithValue("@password", password);
+                        command.Parameters.AddWithValue("@password", hashedPassword);
 
                         string role = (string)command.ExecuteScalar();
 
