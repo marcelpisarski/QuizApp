@@ -8,7 +8,7 @@
         Title="TeacherMenu" Height="450" Width="800">
     <Grid Width="800" Height="434">
         <Button x:Name="btnCreateQuiz" Content="Create Quiz" HorizontalAlignment="Left" Margin="78,123,0,0" VerticalAlignment="Top" Height="60" Width="124" Click="btnCreateQuiz_Click"/>
-        <Button x:Name="btnEditQuiz" Content="Edit Quiz" HorizontalAlignment="Left" Margin="78,248,0,0" VerticalAlignment="Top" Height="60" Width="124"/>
+        <Button x:Name="btnEditQuiz" Content="Edit Quiz" HorizontalAlignment="Left" Margin="78,248,0,0" VerticalAlignment="Top" Height="60" Width="124" Click="btnEditQuiz_Click"/>
         <DataGrid x:Name="dtgStudentList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="519,120,23,97" CanUserAddRows="False" AutoGenerateColumns="False" SelectionChanged="dtgStudentList_SelectionChanged" Height="217">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="UserId" Binding="{Binding UserId}" />

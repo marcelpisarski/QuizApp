@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quiz_App
+namespace Quiz_App.Classes
 {
     //MultipleChoiceQuestion class
     public class MultipleChoiceQuestion : Question

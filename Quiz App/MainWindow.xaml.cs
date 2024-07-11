@@ -27,6 +27,7 @@ namespace Quiz_App
         public static class GlobalVariables
         {
             public static int UserId { get; set; }
+            public static int QuizId { get; set; }
         }
 
         //Hashes the password
@@ -137,6 +138,7 @@ namespace Quiz_App
                         command.Parameters.AddWithValue("@username", username);
 
                         bool isNewUser = Convert.ToBoolean(command.ExecuteScalar());
+                        FetchUserId(username, hashedPassword);
 
                         //Checks user role
                         switch (role)
@@ -145,8 +147,6 @@ namespace Quiz_App
                                 //Opens menu for student
                                 if (isNewUser)
                                 {
-                                    FetchUserId(username, password);
-
                                     StudentBaseline StudentBaseline = new StudentBaseline();
                                     MessageBox.Show("Login successful");
                                     this.Hide();

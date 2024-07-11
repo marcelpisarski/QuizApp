@@ -175,7 +175,7 @@ namespace Quiz_App
             }
             else
             {
-                MessageBox.Show("Dataview is null.");
+                MessageBox.Show("Dataview is null");
             }
         }
 
@@ -190,8 +190,17 @@ namespace Quiz_App
             }
             else
             {
-                MessageBox.Show("Dataview is null.");
+                MessageBox.Show("Dataview is null");
             }
+        }
+
+        private void btnEditQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            QuizSelectorEdit QuizSelectorEdit = new QuizSelectorEdit();
+            this.Hide();
+
+            QuizSelectorEdit.Show();
+            this.Show();
         }
     }
 }
