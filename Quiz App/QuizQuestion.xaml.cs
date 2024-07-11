@@ -29,6 +29,8 @@ namespace Quiz_App
         public QuizQuestion()
         {
             InitializeComponent();
+            
+            //Hides answer boxes by default until user selects question type
             grdSingleAnswer.Visibility = Visibility.Collapsed;
             grdMultipleChoice.Visibility = Visibility.Collapsed;
         }
@@ -54,6 +56,7 @@ namespace Quiz_App
             grdMultipleChoice.Visibility = Visibility.Collapsed;
         }
 
+        //Closes window
         private void btnCancelQuestion_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -61,6 +64,8 @@ namespace Quiz_App
 
         private void btnAddQuestion_Click(object sender, RoutedEventArgs e)
         {
+            string question = txtQuestion.Text.Trim();
+            
             //Ensures user enters question
             if (txtQuestion.Text.Trim().Length == 0)
             {
@@ -89,7 +94,7 @@ namespace Quiz_App
                     return;
                 }
 
-                InsertMultipleChoiceQuestion(txtQuestion.Text.Trim());
+                InsertMultipleChoiceQuestion(question);
             }
             else if (rbSingleAnswer.IsChecked == true)
             {
@@ -99,18 +104,19 @@ namespace Quiz_App
                     return;
                 }
 
-                InsertSingleChoiceQuestion(txtQuestion.Text.Trim());
+                InsertSingleChoiceQuestion(question);
             }
 
             //Triggers QuestionAdded event
             QuestionAdded?.Invoke();
+            
             this.Close();
         }
 
-        //Insert question into database
+        //Insert multiplechoice question into database
         private void InsertMultipleChoiceQuestion(string questionText)
         {
-            int correctAnswerIndex = 0;
+            int correctAnswerIndex = -1;
             if (rbOption1.IsChecked == true)
             {
                 correctAnswerIndex = 0;
@@ -136,7 +142,8 @@ namespace Quiz_App
                 {
                     connection.Open();
                     var command = connection.CreateCommand();
-                    //Insert into question table
+                    
+                    //Insert question into question table
                     command.CommandText = "INSERT INTO question (quizid, questiontext, questiontype) VALUES (@quizid, @questiontext, @questiontype)";
                     command.Parameters.AddWithValue("@quizid", quizId);
                     command.Parameters.AddWithValue("@questiontext", questionText);
@@ -160,7 +167,7 @@ namespace Quiz_App
 
                     command.ExecuteNonQuery();
 
-                    MessageBox.Show("Multiple choice question added successfully.");
+                    MessageBox.Show("Multiple choice question added successfully");
                 }
                 catch (Exception ex)
                 {
@@ -169,7 +176,7 @@ namespace Quiz_App
             }
         }
 
-        //Insert question into database
+        //Insert singlechoice question into database
         private void InsertSingleChoiceQuestion(string questionText)
         {
             string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
@@ -180,6 +187,7 @@ namespace Quiz_App
                 {
                     connection.Open();
                     var command = connection.CreateCommand();
+                    
                     //Insert into question table
                     command.CommandText = "INSERT INTO question (quizid, questiontext, questiontype) VALUES (@quizid, @questiontext, @questiontype)";
                     command.Parameters.AddWithValue("@quizid", quizId);
@@ -199,7 +207,7 @@ namespace Quiz_App
 
                     command.ExecuteNonQuery();
 
-                    MessageBox.Show("Single choice question added successfully.");
+                    MessageBox.Show("Single choice question added successfully");
                 }
                 catch (Exception ex)
                 {

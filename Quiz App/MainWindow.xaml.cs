@@ -16,13 +16,10 @@ namespace Quiz_App
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+    /// 
 
+    public partial class MainWindow : Window
+    { 
         //Global variables
         public static class GlobalVariables
         {
@@ -30,61 +27,9 @@ namespace Quiz_App
             public static int QuizId { get; set; }
         }
 
-        //Hashes the password
-        private string HashPassword(string password)
+        public MainWindow()
         {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                //Convert the input string to an array of bytes and create the hash
-                byte[] data = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-                //Create a new StringBuilder to collect the bytes and create a string
-                var sBuilder = new StringBuilder();
-
-                //Loop through each byte of the hashed data and format each one as a hexadecimal string
-                for (int i = 0; i < data.Length; i++)
-                {
-                    sBuilder.Append(data[i].ToString("x2"));
-                }
-
-                // Returns the string
-                return sBuilder.ToString();
-            }
-        }
-
-        //Places userid into global variable
-        private void FetchUserId(string username, string password)
-        {
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
-
-            using (var connection = new MySqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    var command = connection.CreateCommand();
-
-                    command.CommandText = "SELECT id FROM user WHERE username=@username AND password=@password";
-                    command.Parameters.AddWithValue("@username", username);
-                    command.Parameters.AddWithValue("@password", password);
-
-                    object result = command.ExecuteScalar();
-                    if (result != null)
-                    {
-                        GlobalVariables.UserId = Convert.ToInt32(result);
-                    }
-                    else
-                    {
-                        GlobalVariables.UserId = 0;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    GlobalVariables.UserId = 0;
-                    MessageBox.Show($"Error fetching user ID: {ex.Message}");
-                    return;
-                }
-            }
+            InitializeComponent();
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
@@ -97,6 +42,7 @@ namespace Quiz_App
             this.Show();
         }
 
+        //Log user in
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsername.Text;
@@ -167,7 +113,6 @@ namespace Quiz_App
                             case "teacher":
                                 //Opens teacher menu
                                 TeacherMenu TeacherMenu = new TeacherMenu();
-                                
                                 MessageBox.Show("Login successful");
                                 this.Hide();
 
@@ -176,7 +121,7 @@ namespace Quiz_App
 
                                 break;
                             default:
-                                MessageBox.Show("Could not establish user role.");
+                                MessageBox.Show("Could not establish user role");
                                 return;
                         }
                     }
@@ -188,6 +133,63 @@ namespace Quiz_App
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        //Hashes the password
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                //Convert the input string to an array of bytes and create the hash
+                byte[] data = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                //Create a new StringBuilder to collect the bytes and create a string
+                var sBuilder = new StringBuilder();
+
+                //Loop through each byte of the hashed data and format each one as a hexadecimal string
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sBuilder.Append(data[i].ToString("x2"));
+                }
+
+                // Returns the string
+                return sBuilder.ToString();
+            }
+        }
+
+        //Places userid into global variable
+        private void FetchUserId(string username, string password)
+        {
+            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+
+                    command.CommandText = "SELECT id FROM user WHERE username=@username AND password=@password";
+                    command.Parameters.AddWithValue("@username", username);
+                    command.Parameters.AddWithValue("@password", password);
+
+                    object result = command.ExecuteScalar();
+                    if (result != null)
+                    {
+                        GlobalVariables.UserId = Convert.ToInt32(result);
+                    }
+                    else
+                    {
+                        GlobalVariables.UserId = -1;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    GlobalVariables.UserId = -1;
+                    MessageBox.Show($"Error fetching user ID: {ex.Message}");
+                    return;
                 }
             }
         }

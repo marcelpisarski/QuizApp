@@ -35,6 +35,75 @@ namespace Quiz_App
             public string Topic { get; set; }
         }
 
+        private void btnSelectQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            //Ensures user selects an item from list
+            if (dtgQuizList.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a quiz");
+                return;
+            }
+
+            //Create a new instance of AddQuiz window
+            Quiz selectedQuiz = (Quiz)dtgQuizList.SelectedItem;
+
+            //Load the selected quiz into the AddQuiz window
+            AddQuiz AddQuiz = new AddQuiz();
+            AddQuiz.LoadQuiz(selectedQuiz.Id);
+            AddQuiz.Show();
+        }
+
+        //Cancels quiz edit (closes window)
+        private void btnCancelQuizEdit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        //Deletes the selected quiz
+        private void btnDeleteQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            //Ensures an item is selected from list
+            if (dtgQuizList.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a quiz to delete");
+                return;
+            }
+
+            //Creates new quiz object of selected quiz
+            Quiz selectedQuiz = (Quiz)dtgQuizList.SelectedItem;
+            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+
+                    command.CommandText = "DELETE FROM quiz WHERE quizid = @quizid";
+                    command.Parameters.AddWithValue("@quizid", selectedQuiz.Id);
+
+                    int result = command.ExecuteNonQuery();
+
+                    if (result > 0)
+                    {
+                        MessageBox.Show("Quiz deleted successfully");
+                        
+                        //Refresh list
+                        LoadQuizzes();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error deleting quiz");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting quiz: {ex.Message}");
+                }
+            }
+        }
+
         //Load quizzes into table
         private void LoadQuizzes()
         {
@@ -51,6 +120,7 @@ namespace Quiz_App
                     command.CommandText = "SELECT quizid, title, topic FROM quiz WHERE teacherid = @teacherid";
                     command.Parameters.AddWithValue("@teacherid", teacherId);
 
+                    //Adds all quizzes to a list
                     using (var reader = command.ExecuteReader())
                     {
                         var quizzes = new List<Quiz>();
@@ -72,69 +142,6 @@ namespace Quiz_App
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error loading quizzes: {ex.Message}");
-                }
-            }
-        }
-
-        private void btnSelectQuiz_Click(object sender, RoutedEventArgs e)
-        {
-            if (dtgQuizList.SelectedItem == null)
-            {
-                MessageBox.Show("Please select a quiz");
-                return;
-            }
-
-            //Create a new instance of AddQuiz window
-            Quiz selectedQuiz = (Quiz)dtgQuizList.SelectedItem;
-
-            //Load the selected quiz into the AddQuiz window
-            AddQuiz AddQuiz = new AddQuiz();
-            AddQuiz.LoadQuiz(selectedQuiz.Id);
-            AddQuiz.Show();
-        }
-
-        private void btnCancelQuizEdit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnDeleteQuiz_Click(object sender, RoutedEventArgs e)
-        {
-            if (dtgQuizList.SelectedItem == null)
-            {
-                MessageBox.Show("Please select a quiz to delete");
-                return;
-            }
-
-            Quiz selectedQuiz = (Quiz)dtgQuizList.SelectedItem;
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
-
-            using (var connection = new MySqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    var command = connection.CreateCommand();
-
-                    command.CommandText = "DELETE FROM quiz WHERE quizid = @quizid";
-                    command.Parameters.AddWithValue("@quizid", selectedQuiz.Id);
-
-                    int result = command.ExecuteNonQuery();
-
-                    if (result > 0)
-                    {
-                        MessageBox.Show("Quiz deleted successfully");
-                        //Refresh list
-                        LoadQuizzes();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Error deleting quiz");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error deleting quiz: {ex.Message}");
                 }
             }
         }

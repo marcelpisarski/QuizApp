@@ -30,23 +30,9 @@ namespace Quiz_App
             Statement();
         }
 
-        //Shows a random statement from BaselineStatements.txt to newly logged in user
-        private void Statement()
-        {
-            string filePath = "C:\\Users\\marce\\source\\repos\\Quiz App\\Quiz App\\Text Files\\BaselineStatements.txt";
-            string[] questions = File.ReadAllLines(filePath);
-
-            Random random = new Random();
-            int randomIndex = random.Next(questions.Length);
-
-            //Selects a random question from questions array
-            string randomQuestion = questions[randomIndex];
-            txtStatement.Text = randomQuestion;
-        }
-
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            string answer = txtAnswer.Text.TrimEnd();
+            string answer = txtAnswer.Text.Trim();
 
             //Checks if answer box is empty
             if (answer.Length == 0)
@@ -62,7 +48,21 @@ namespace Quiz_App
             Calculation(letters, sentences, words);
         }
 
-        //Checks number of letters
+        //Shows a random statement from BaselineStatements.txt to newly logged in user
+        private void Statement()
+        {
+            string filePath = "C:\\Users\\marce\\source\\repos\\Quiz App\\Quiz App\\Text Files\\BaselineStatements.txt";
+            string[] questions = File.ReadAllLines(filePath);
+
+            Random random = new Random();
+            int randomIndex = random.Next(questions.Length);
+
+            //Selects a random question from questions array
+            string randomQuestion = questions[randomIndex];
+            txtStatement.Text = randomQuestion;
+        }
+
+        //Checks number of letters in answer
         private int LetterChecker(string statement)
         {
             int sum = 0;
@@ -78,7 +78,7 @@ namespace Quiz_App
             return sum;
         }
 
-        //Checks number of sentences
+        //Checks number of sentences in answer
         private int SentencesChecker(string statement)
         {
             int sum = 0;
@@ -94,7 +94,7 @@ namespace Quiz_App
             return sum;
         }
 
-        //Checks number of words
+        //Checks number of words in answer
         private int WordsChecker(string statement)
         {
             int sum = 0;
@@ -110,10 +110,13 @@ namespace Quiz_App
             return sum;
         }
 
+        //Calculates user level
         private void Calculation(double letters, double sentences, double words)
         {
             //Grabs userid of current logged in user
             int userId = GlobalVariables.UserId;
+            
+            //Sets level conditions
             double[,] conditions = new double[,]
             {
                 {double.NaN, 1 },
@@ -152,7 +155,7 @@ namespace Quiz_App
 
                     command.Parameters.AddWithValue("@userId", userId);
 
-                    // Execute the update query
+                    //Execute the update query
                     int rowsAffected = command.ExecuteNonQuery();
 
                     if (rowsAffected > 0)

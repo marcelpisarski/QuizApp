@@ -26,13 +26,14 @@ namespace Quiz_App
     public partial class AddQuiz : Window
     {
         bool canCreateQuiz = false;
-        bool quizSchema = false;
+        bool quizSchemaCreated = false;
         int existingQuizId = -1;
-        bool isEditing = false;
+        bool isEditingQuiz = false;
 
         public AddQuiz()
         {
             InitializeComponent();
+            
             btnAddQuestion.IsEnabled = false;
             dtgQuestionData.IsEnabled = false;
             btnCreateSchema.IsEnabled = true;
@@ -57,21 +58,16 @@ namespace Quiz_App
             canCreateQuiz = true;
         }
 
-        //Refreshes question list
-        private void OnQuestionAdded()
-        {
-            LoadQuestions(); 
-        }
-
         private void btnCancelQuiz_Click(object sender, RoutedEventArgs e)
         {
-            if (isEditing)
+            if (isEditingQuiz)
             {
                 this.Close();
                 return;
             }
             
-            if (quizSchema)
+            //Deletes quiz as user cancelled
+            if (quizSchemaCreated)
             {
                 int quizId = GlobalVariables.QuizId;
 
@@ -93,11 +89,11 @@ namespace Quiz_App
 
                         if (result > 0)
                         {
-                            MessageBox.Show("Quiz deleted successfully.");
+                            MessageBox.Show("Quiz deleted successfully");
                         }
                         else
                         {
-                            MessageBox.Show("Quiz not found or already deleted.");
+                            MessageBox.Show("Quiz not found or already deleted");
                         }
                     }
                     catch (Exception ex)
@@ -106,12 +102,13 @@ namespace Quiz_App
                     }
                 }
             }
+
             this.Close();
         }
 
         private void btnSaveQuiz_Click(object sender, RoutedEventArgs e)
         {
-            if (isEditing)
+            if (isEditingQuiz)
             {
                 UpdateQuiz();
             }
@@ -120,7 +117,7 @@ namespace Quiz_App
                 MessageBox.Show("Unable to create quiz. Ensure quiz is valid");
                 return;
             }
-            else if (!isEditing)
+            else if (!isEditingQuiz)
             {
                 {
                     this.Close();
@@ -128,19 +125,20 @@ namespace Quiz_App
             }
         }
 
+        //Adds quiz to database
         private void btnCreateSchema_Click(object sender, RoutedEventArgs e)
         {
             //Shows error if title / topic name is empty
             if (txtQuizTitle.Text.Length == 0 || txtTopicName.Text.Length == 0)
             {
-                MessageBox.Show("Quiz title and/or topic name is empty.");
+                MessageBox.Show("Quiz title and/or topic name is empty");
                 return;
             }
 
             //Ensures a quiz has a level selected
             if (cbLevel1.IsChecked == false && cbLevel2.IsChecked == false && cbLevel3.IsChecked == false && cbLevel4.IsChecked == false)
             {
-                MessageBox.Show("Please select a quiz level.");
+                MessageBox.Show("Please select a quiz level");
                 return;
             }      
 
@@ -180,15 +178,16 @@ namespace Quiz_App
                     // Check if the quiz title already exists
                     command.CommandText = "SELECT COUNT(*) FROM quiz WHERE title = @title";
                     command.Parameters.AddWithValue("@title", quizTitle);
+
                     int quizCount = Convert.ToInt32(command.ExecuteScalar());
 
                     if (quizCount > 0)
                     {
-                        MessageBox.Show("Quiz title already exists.");
+                        MessageBox.Show("Quiz title already exists");
                         return;
                     }
 
-                    quizSchema = true;
+                    quizSchemaCreated = true;
 
                     // Clear previous parameters
                     command.Parameters.Clear();
@@ -212,9 +211,11 @@ namespace Quiz_App
                     if (result == 1)
                     {
                         MessageBox.Show("Quiz created successfully");
+                        
                         btnAddQuestion.IsEnabled = true;
                         dtgQuestionData.IsEnabled = true;
                         btnCreateSchema.IsEnabled = false;
+                        
                         LoadQuestions();
                     }
                     else
@@ -228,7 +229,61 @@ namespace Quiz_App
                 }
             }
         }
-        
+
+        //Delete question from database and table
+        private void btnDeleteQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            //Ensures a question is selected
+            if (dtgQuestionData.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a question to delete");
+                return;
+            }
+
+            //Getw the selected question and creates object
+            Question selectedQuestion = (Question)dtgQuestionData.SelectedItem;
+            int questionId = selectedQuestion.QuestionId;
+
+            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+
+                    //Delete the question from the database
+                    command.CommandText = "DELETE FROM question WHERE questionid = @questionid";
+                    command.Parameters.AddWithValue("@questionid", questionId);
+
+                    int result = command.ExecuteNonQuery();
+
+                    if (result > 0)
+                    {
+                        MessageBox.Show("Question deleted successfully");
+                        
+                        //Refresh items in table
+                        LoadQuestions();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Question not found or already deleted");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting question: {ex.Message}");
+                }
+            }
+        }
+
+        //Refreshes question list
+        private void OnQuestionAdded()
+        {
+            LoadQuestions();
+        }
+
         //Loads current quiz questions into table which user can see
         private void LoadQuestions()
         {
@@ -270,60 +325,19 @@ namespace Quiz_App
             }
         }
 
-        //Delete question from database and table
-        private void btnDeleteQuestion_Click(object sender, RoutedEventArgs e)
-        {
-            if (dtgQuestionData.SelectedItem == null)
-            {
-                MessageBox.Show("Please select a question to delete");
-                return;
-            }
-
-            //Get the selected question
-            Question selectedQuestion = (Question)dtgQuestionData.SelectedItem;
-            int questionId = selectedQuestion.QuestionId;
-
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
-
-            using (var connection = new MySqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    var command = connection.CreateCommand();
-
-                    //Delete the question from the database
-                    command.CommandText = "DELETE FROM question WHERE questionid = @questionid";
-                    command.Parameters.AddWithValue("@questionid", questionId);
-
-                    int result = command.ExecuteNonQuery();
-
-                    if (result > 0)
-                    {
-                        MessageBox.Show("Question deleted successfully");
-                        //Refresh items in table
-                        LoadQuestions();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Question not found or already deleted");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error deleting question: {ex.Message}");
-                }
-            }
-        }
-
+        //Loads quiz that user will edit
         public void LoadQuiz(int quizId)
         {
+            //Ensures user cannot create another quiz
             btnCreateSchema.IsEnabled = false;
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+
             GlobalVariables.QuizId = quizId;
             existingQuizId = quizId;
-            isEditing = true;
+            isEditingQuiz = true;
 
+            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+
+            //Fills window with quiz details
             using (var connection = new MySqlConnection(connectionString))
             {
                 try
@@ -344,7 +358,7 @@ namespace Quiz_App
                             cbLevel3.IsChecked = reader.GetBoolean("level3");
                             cbLevel4.IsChecked = reader.GetBoolean("level4");
 
-                            quizSchema = true;
+                            quizSchemaCreated = true;
                             btnAddQuestion.IsEnabled = true;
                             dtgQuestionData.IsEnabled = true;
                         }
@@ -359,23 +373,24 @@ namespace Quiz_App
             LoadQuestions();
         }
 
+        //Updates quiz when user presses save
         private void UpdateQuiz()
         {
             //Shows error if title / topic name is empty
-            if (txtQuizTitle.Text.Length == 0 || txtTopicName.Text.Length == 0)
+            if (txtQuizTitle.Text.Trim().Length == 0 || txtTopicName.Text.Trim().Length == 0)
             {
-                MessageBox.Show("Quiz title and/or topic name is empty.");
+                MessageBox.Show("Quiz title and/or topic name is empty");
                 return;
             }
 
             //Ensures a quiz has a level selected
             if (cbLevel1.IsChecked == false && cbLevel2.IsChecked == false && cbLevel3.IsChecked == false && cbLevel4.IsChecked == false)
             {
-                MessageBox.Show("Please select a quiz level.");
+                MessageBox.Show("Please select a quiz level");
                 return;
             }
 
-            //Adds quiz details to variables
+            //Casts updates quiz details to variables
             string quizTitle = txtQuizTitle.Text.Trim();
             string topicName = txtTopicName.Text.Trim();
             bool level1 = false, level2 = false, level3 = false, level4 = false;
@@ -422,12 +437,12 @@ namespace Quiz_App
 
                         if (quizCount > 0)
                         {
-                            MessageBox.Show("Quiz title already exists.");
+                            MessageBox.Show("Quiz title already exists");
                             return;
                         }
                     }
 
-                    quizSchema = true;
+                    quizSchemaCreated = true;
 
                     //Clear previous parameters
                    command.Parameters.Clear();
@@ -447,6 +462,7 @@ namespace Quiz_App
                     if (result == 1)
                     {
                         MessageBox.Show("Quiz updated successfully");
+                        
                         this.Close();
                     }
                     else

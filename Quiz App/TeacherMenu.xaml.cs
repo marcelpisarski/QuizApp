@@ -31,6 +31,7 @@ namespace Quiz_App
             GetStudentCount();
         }
 
+        //Creates a new quiz
         private void btnCreateQuiz_Click(object sender, RoutedEventArgs e)
         {
             AddQuiz addQuiz = new AddQuiz();
@@ -84,13 +85,14 @@ namespace Quiz_App
 
         private void btnSubmitLevel_Click(object sender, RoutedEventArgs e)
         {
-            //Casts cbbChangeLevel.SelectedItem to selectedItem
+            //Casts selected level to user
             if (cbbChangeLevel.SelectedItem is ComboBoxItem selectedItem)
             {
                 //Sets newLevel to the selected item 
                 int newLevel = Convert.ToInt32(selectedItem.Content);
 
                 string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+
                 using (var connection = new MySqlConnection(connectionString))
                 {
                     try
@@ -113,6 +115,7 @@ namespace Quiz_App
                         {
                             MessageBox.Show("No rows updated");
                         }
+
                         //Clears combobox once submitted
                         cbbChangeLevel.SelectedIndex = -1;
                     }
@@ -136,7 +139,7 @@ namespace Quiz_App
                 {
                     connection.Open();
                     var command = connection.CreateCommand();
-                    command.CommandText = @"SELECT COUNT(*) FROM user INNER JOIN userbaseline ON user.id = userbaseline.userid WHERE user.role = 'student'";
+                    command.CommandText = "SELECT COUNT(*) FROM user INNER JOIN userbaseline ON user.id = userbaseline.userid WHERE user.role = 'student'";
 
                     object result = command.ExecuteScalar();
 
@@ -170,8 +173,8 @@ namespace Quiz_App
         {
             if (dtgStudentList.ItemsSource is DataView dataView)
             {
-                string searchUser = $"Username LIKE '%{txtSearchUser.Text}%'";
-                dataView.RowFilter = searchUser;
+                string searchedUser = $"Username LIKE '%{txtSearchUser.Text}%'";
+                dataView.RowFilter = searchedUser;
             }
             else
             {
@@ -194,6 +197,7 @@ namespace Quiz_App
             }
         }
 
+        //Allows user to edit quiz
         private void btnEditQuiz_Click(object sender, RoutedEventArgs e)
         {
             QuizSelectorEdit QuizSelectorEdit = new QuizSelectorEdit();
