@@ -71,7 +71,8 @@ namespace Quiz_App
 
             //Creates new quiz object of selected quiz
             Quiz selectedQuiz = (Quiz)dtgQuizList.SelectedItem;
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+
+            string connectionString = GlobalVariables.Connection;
 
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -107,7 +108,7 @@ namespace Quiz_App
         //Load quizzes into table
         private void LoadQuizzes()
         {
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection;
 
             int teacherId = GlobalVariables.UserId;
 

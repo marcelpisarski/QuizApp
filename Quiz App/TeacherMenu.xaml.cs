@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static Quiz_App.MainWindow;
 
 namespace Quiz_App
 {
@@ -44,7 +45,7 @@ namespace Quiz_App
         //Loads students into table
         private void LoadStudentData()
         {
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection;
 
             DataTable dataTable = new DataTable();
 
@@ -91,7 +92,7 @@ namespace Quiz_App
                 //Sets newLevel to the selected item 
                 int newLevel = Convert.ToInt32(selectedItem.Content);
 
-                string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+                string connectionString = GlobalVariables.Connection;
 
                 using (var connection = new MySqlConnection(connectionString))
                 {
@@ -131,7 +132,7 @@ namespace Quiz_App
         private void GetStudentCount()
         {
             int studentCount = 0;
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection; 
 
             try
             {

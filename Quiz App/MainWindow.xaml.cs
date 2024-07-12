@@ -25,10 +25,13 @@ namespace Quiz_App
         {
             public static int UserId { get; set; }
             public static int QuizId { get; set; }
+            public static string Connection {  get; set; }
         }
 
         public MainWindow()
         {
+            GlobalVariables.Connection = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+
             InitializeComponent();
         }
 
@@ -49,7 +52,7 @@ namespace Quiz_App
             string password = txtPassword.Password;
             string hashedPassword = HashPassword(password);
 
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection;
 
             //Open database connection
             using (var connection = new MySqlConnection(connectionString))
@@ -162,7 +165,7 @@ namespace Quiz_App
         //Places userid into global variable
         private void FetchUserId(string username, string password)
         {
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection;
 
             using (var connection = new MySqlConnection(connectionString))
             {

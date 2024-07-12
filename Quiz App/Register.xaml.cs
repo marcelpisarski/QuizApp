@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Org.BouncyCastle.Bcpg;
+using static Quiz_App.MainWindow;
 
 namespace Quiz_App
 {
@@ -104,7 +105,7 @@ namespace Quiz_App
             }
 
             //Create connection to database
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection;
 
             using (var connection = new MySqlConnection(connectionString))
             {

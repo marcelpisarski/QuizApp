@@ -133,7 +133,7 @@ namespace Quiz_App
             double index = 0;
             index = 0.0588 * letters - 0.296 * sentences - 15.8;
 
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection;
 
             using (var connection = new MySqlConnection(connectionString))
             {

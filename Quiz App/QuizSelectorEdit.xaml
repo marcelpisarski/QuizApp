@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="QuizSelectorEdit" Height="450" Width="800">
     <Grid>
-        <Button x:Name="btnCancelQuizEdit" Content="Close" HorizontalAlignment="Left" Margin="160,240,0,0" VerticalAlignment="Top" Click="btnCancelQuizEdit_Click"/>
-        <Button x:Name="btnSelectQuiz" Content="Select Quiz" HorizontalAlignment="Left" Margin="308,240,0,0" VerticalAlignment="Top" Click="btnSelectQuiz_Click"/>
+        <Button x:Name="btnCancelQuizEdit" Content="Close" HorizontalAlignment="Left" Margin="282,235,0,0" VerticalAlignment="Top" Click="btnCancelQuizEdit_Click"/>
+        <Button x:Name="btnSelectQuiz" Content="Select Quiz" HorizontalAlignment="Left" Margin="337,235,0,0" VerticalAlignment="Top" Click="btnSelectQuiz_Click"/>
         <DataGrid x:Name="dtgQuizList" d:ItemsSource="{d:SampleData ItemCount=5}" CanUserAddRows="False" AutoGenerateColumns="False" Margin="63,48,319,217">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Quiz Id" Binding="{Binding Id}" />
@@ -16,7 +16,7 @@
                 <DataGridTextColumn Header="Quiz Title" Binding="{Binding Title}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnDeleteQuiz" Content="Delete Quiz" HorizontalAlignment="Left" Margin="400,240,0,0" VerticalAlignment="Top" Click="btnDeleteQuiz_Click"/>
+        <Button x:Name="btnDeleteQuiz" Content="Delete Quiz" HorizontalAlignment="Left" Margin="415,235,0,0" VerticalAlignment="Top" Click="btnDeleteQuiz_Click"/>
 
     </Grid>
 </Window>

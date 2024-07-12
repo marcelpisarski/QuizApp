@@ -134,7 +134,7 @@ namespace Quiz_App
                 correctAnswerIndex = 3;
             }
 
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection;
 
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -179,7 +179,7 @@ namespace Quiz_App
         //Insert singlechoice question into database
         private void InsertSingleChoiceQuestion(string questionText)
         {
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection;
 
             using (var connection = new MySqlConnection(connectionString))
             {

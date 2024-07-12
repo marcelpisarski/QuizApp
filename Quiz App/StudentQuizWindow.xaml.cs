@@ -15,22 +15,13 @@ using System.Windows.Shapes;
 namespace Quiz_App
 {
     /// <summary>
-    /// Interaction logic for StudentMenu.xaml
+    /// Interaction logic for StudentQuizWindow.xaml
     /// </summary>
-    public partial class StudentMenu : Window
+    public partial class StudentQuizWindow : Window
     {
-        public StudentMenu()
+        public StudentQuizWindow()
         {
             InitializeComponent();
-        }
-
-        private void btnOpenQuizzes_Click(object sender, RoutedEventArgs e)
-        {
-            StudentSelectQuiz StudentSelectQuiz = new StudentSelectQuiz();
-            this.Hide();
-
-            StudentSelectQuiz.Show();
-            this.Show();
         }
     }
 }

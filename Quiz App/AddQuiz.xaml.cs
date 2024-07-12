@@ -72,7 +72,7 @@ namespace Quiz_App
                 int quizId = GlobalVariables.QuizId;
 
                 // Define the connection string
-                string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+                string connectionString = GlobalVariables.Connection;
 
                 using (var connection = new MySqlConnection(connectionString))
                 {
@@ -166,7 +166,7 @@ namespace Quiz_App
             }          
 
             // Insert quiz data into the database
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection;
 
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -244,7 +244,7 @@ namespace Quiz_App
             Question selectedQuestion = (Question)dtgQuestionData.SelectedItem;
             int questionId = selectedQuestion.QuestionId;
 
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection;
 
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -287,7 +287,7 @@ namespace Quiz_App
         //Loads current quiz questions into table which user can see
         private void LoadQuestions()
         {
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection;
 
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -335,7 +335,7 @@ namespace Quiz_App
             existingQuizId = quizId;
             isEditingQuiz = true;
 
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection;
 
             //Fills window with quiz details
             using (var connection = new MySqlConnection(connectionString))
@@ -414,7 +414,7 @@ namespace Quiz_App
             }
 
             //Insert quiz data into the database
-            string connectionString = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            string connectionString = GlobalVariables.Connection;
 
             using (var connection = new MySqlConnection(connectionString))
             {
