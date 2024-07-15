@@ -7,6 +7,20 @@
         mc:Ignorable="d"
         Title="StudentQuizWindow" Height="450" Width="800">
     <Grid>
-        
+        <TextBlock x:Name="txtQuestion" HorizontalAlignment="Center" Margin="0,38,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="56" Width="344"/>
+
+        <Grid x:Name="grdMultipleChoiceQuestion" Visibility="Collapsed">
+            <TextBox x:Name="txtSingleAnswer" HorizontalAlignment="Left" Margin="414,153,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+
+        </Grid>
+
+        <Grid x:Name="grdSingleChoiceQuestion" Visibility="Collapsed">
+            <Button x:Name="btnAnswer1" Content="Button" HorizontalAlignment="Left" Margin="189,134,0,0" VerticalAlignment="Top" Height="83" Width="184"/>
+            <Button x:Name="btnAnswer2" Content="Button" HorizontalAlignment="Left" Margin="400,134,0,0" VerticalAlignment="Top" Height="83" Width="177"/>
+            <Button x:Name="btnAnswer3" Content="Button" HorizontalAlignment="Left" Margin="189,256,0,0" VerticalAlignment="Top" Height="73" Width="184"/>
+            <Button x:Name="btnAnswer4" Content="Button" HorizontalAlignment="Left" Margin="400,256,0,0" VerticalAlignment="Top" Height="73" Width="177"/>
+        </Grid>
+        <Button x:Name="btnStartQuiz" Content="Start Quiz" HorizontalAlignment="Center" VerticalAlignment="Center" Height="34" Width="96" Click="btnStartQuiz_Click"/>
+
     </Grid>
 </Window>

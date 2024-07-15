@@ -25,12 +25,11 @@ namespace Quiz_App
         {
             public static int UserId { get; set; }
             public static int QuizId { get; set; }
-            public static string Connection {  get; set; }
+            public static readonly string Connection = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
         }
 
         public MainWindow()
         {
-            GlobalVariables.Connection = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
 
             InitializeComponent();
         }

@@ -108,12 +108,12 @@ namespace Quiz_App
         {
             if (dtgUncompleteQuizzes.SelectedItem is Quiz selectedQuiz)
             {
-                // Proceed to start the selected quiz
-                // Example: Open the quiz window and pass the selected quiz ID
-                StudentQuizWindow StudentQuizWindow = new StudentQuizWindow();
+                //Proceed to start the selected quiz
+                StudentQuizWindow StudentQuizWindow = new StudentQuizWindow(selectedQuiz.Id);
                 this.Hide();
                 
                 StudentQuizWindow.Show();
+                this.Close();
             }
             else
             {
