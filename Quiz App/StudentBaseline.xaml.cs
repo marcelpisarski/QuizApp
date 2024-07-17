@@ -59,7 +59,7 @@ namespace Quiz_App
 
             //Selects a random question from questions array
             string randomQuestion = questions[randomIndex];
-            txtStatement.Text = randomQuestion;
+            lblStatement.Content = randomQuestion;
         }
 
         //Checks number of letters in answer

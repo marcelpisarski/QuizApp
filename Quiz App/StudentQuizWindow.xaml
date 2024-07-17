@@ -7,20 +7,22 @@
         mc:Ignorable="d"
         Title="StudentQuizWindow" Height="450" Width="800">
     <Grid>
-        <TextBlock x:Name="txtQuestion" HorizontalAlignment="Center" Margin="0,38,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="56" Width="344"/>
 
-        <Grid x:Name="grdMultipleChoiceQuestion" Visibility="Collapsed">
-            <TextBox x:Name="txtSingleAnswer" HorizontalAlignment="Left" Margin="414,153,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-
-        </Grid>
+        <TextBlock x:Name="txtQuestion" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,59,0,0" TextWrapping="Wrap" Text="QUESTION" VerticalAlignment="Top"/>
 
         <Grid x:Name="grdSingleChoiceQuestion" Visibility="Collapsed">
-            <Button x:Name="btnAnswer1" Content="Button" HorizontalAlignment="Left" Margin="189,134,0,0" VerticalAlignment="Top" Height="83" Width="184"/>
-            <Button x:Name="btnAnswer2" Content="Button" HorizontalAlignment="Left" Margin="400,134,0,0" VerticalAlignment="Top" Height="83" Width="177"/>
-            <Button x:Name="btnAnswer3" Content="Button" HorizontalAlignment="Left" Margin="189,256,0,0" VerticalAlignment="Top" Height="73" Width="184"/>
-            <Button x:Name="btnAnswer4" Content="Button" HorizontalAlignment="Left" Margin="400,256,0,0" VerticalAlignment="Top" Height="73" Width="177"/>
+            <TextBox x:Name="txtSingleAnswer" HorizontalAlignment="Center" Margin="0,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="btnSubmitSingleAnswer" Content="Submit Answer" HorizontalAlignment="Center" Margin="0,264,0,0" VerticalAlignment="Top" Click="btnSubmitSingleAnswer_Click"/>
         </Grid>
-        <Button x:Name="btnStartQuiz" Content="Start Quiz" HorizontalAlignment="Center" VerticalAlignment="Center" Height="34" Width="96" Click="btnStartQuiz_Click"/>
+
+        <Grid x:Name="grdMultipleChoiceQuestion">
+            <Button x:Name="btnAnswer1" Content="Button" HorizontalAlignment="Left" Margin="189,134,0,0" VerticalAlignment="Top" Height="83" Width="184" Click="btnAnswer1_Click"/>
+            <Button x:Name="btnAnswer2" Content="Button" HorizontalAlignment="Left" Margin="400,134,0,0" VerticalAlignment="Top" Height="83" Width="177" Click="btnAnswer2_Click"/>
+            <Button x:Name="btnAnswer3" Content="Button" HorizontalAlignment="Left" Margin="189,256,0,0" VerticalAlignment="Top" Height="73" Width="184" Click="btnAnswer3_Click"/>
+            <Button x:Name="btnAnswer4" Content="Button" HorizontalAlignment="Left" Margin="400,256,0,0" VerticalAlignment="Top" Height="73" Width="177" Click="btnAnswer4_Click"/>
+        </Grid>
+
+        <Button x:Name="btnStartQuiz" Content="Start Quiz" HorizontalAlignment="Center" VerticalAlignment="Center" Height="34" Width="96" Click="btnStartQuiz_Click" Visibility="Collapsed"/>
 
     </Grid>
 </Window>
