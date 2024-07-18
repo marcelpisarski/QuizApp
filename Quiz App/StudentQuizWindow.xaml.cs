@@ -237,9 +237,59 @@ namespace Quiz_App
             }
         }
 
+        //Gets user answer and real answer as arguements for levenshtein algorithm
         private void btnSubmitSingleAnswer_Click(object sender, RoutedEventArgs e)
         {
+            if (currentQuestion is SingleChoiceQuestion scQuestion)
+            {
+                string userAnswer = txtSingleAnswer.Text.Trim().ToLower();
+                string realAnswer = scQuestion.ScAnswer.ToString().Trim().ToLower();
+                
+                int distance = LevenshteinAlgorithmCheck(userAnswer, realAnswer);
+                
+                //Adjust edits as needed to mark answer as correct
+                bool isCorrect = distance <= 3;
 
+                CheckAnswerAndSave(scQuestion.QuestionId, isCorrect);
+                DisplayNextQuestion();
+            }
+        }
+
+        private int LevenshteinAlgorithmCheck(string userAnswer, string realAnswer)
+        {
+            //Gets length of user's answer and actual answer
+            int n = userAnswer.Length;
+            int m = realAnswer.Length;
+
+            //Creates a matrix based on lengths
+            var matrix = new int[n + 1, m + 1];
+
+            //Populates with 1++
+            for (int i = 0; i < n + 1; i++)
+            {
+                matrix[i, 0] = i;
+            }
+
+            //Populates with 1++
+            for (int j = 0; j < m + 1; j++)
+            {
+                matrix[0, j] = j;
+            }
+
+            
+            //Edit disance algorithm using a matrix
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = 1; j <= m; j++)
+                {
+                    int cost = (userAnswer[i - 1] == realAnswer[j - 1]) ? 0 : 1;
+
+                    matrix[i, j] = Math.Min(Math.Min(matrix[i - 1, j] + 1, matrix[i, j - 1] + 1), matrix[i - 1, j - 1] + cost);
+                }
+            }
+
+            //Returns edits made to turn user answer into real answer
+            return matrix[n, m];
         }
 
         private void btnAnswer1_Click(object sender, RoutedEventArgs e)
