@@ -32,5 +32,14 @@ namespace Quiz_App
             StudentSelectQuiz.Show();
             this.Show();
         }
+
+        private void btnOpenFlashcards_Click(object sender, RoutedEventArgs e)
+        {
+            SelectFlashcardType SelectFlashcardType = new SelectFlashcardType();
+            this.Hide();
+
+            SelectFlashcardType.Show();
+            this.Show();
+        }
     }
 }
