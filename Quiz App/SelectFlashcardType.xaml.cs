@@ -55,7 +55,10 @@ namespace Quiz_App
 
         private void btnWrongQuizAnswers_Click(object sender, RoutedEventArgs e)
         {
-
+            //Opens flashcard window with arguements
+            StudentFlashcardWindow StudentFlashcardWindow = new StudentFlashcardWindow("WrongQuizAnswers", randomiseQuestions);
+            StudentFlashcardWindow.Show();
+            this.Close();
         }
     }
 }

@@ -10,7 +10,7 @@
         <Button x:Name="btnWrongQuizAnswers" Content="Wrong quiz answers" HorizontalAlignment="Left" Margin="526,150,0,0" VerticalAlignment="Top" Click="btnWrongQuizAnswers_Click"/>
         <Button x:Name="btnPreviousQuizzes" Content="Previous quizzes" HorizontalAlignment="Left" Margin="163,150,0,0" VerticalAlignment="Top" Click="btnPreviousQuizzes_Click"/>
         <Button x:Name="btnAllQuestions" Content="All questions" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top" Click="btnAllQuestions_Click"/>
-        <CheckBox Content="Randomize" HorizontalAlignment="Center" Margin="0,246,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+        <CheckBox Content="Randomise" HorizontalAlignment="Center" Margin="0,246,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
 
     </Grid>
 </Window>

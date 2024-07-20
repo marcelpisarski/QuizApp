@@ -24,17 +24,84 @@ namespace Quiz_App
     {
         private string flashcardType;
         private bool randomiseQuestions;
-        private Stack<Question> questionList;
+        private Stack<Question> questionStack;
+        private bool isQuestionDisplayed;
+        private Question currentQuestion;
         public StudentFlashcardWindow(string flashcardType, bool randomiseQuestions)
         {
             InitializeComponent();
+            
+            //Casts variables 
             this.flashcardType = flashcardType;
             this.randomiseQuestions = randomiseQuestions;
-            questionList = new Stack<Question>();
+            questionStack = new Stack<Question>();
 
             List<Question> questions = FetchFlashCards();
+
+            if (questions.Count == 0)
+            {
+                MessageBox.Show("No questions to display");
+                this.Close();
+                return;
+            }
+
+            //Randomise list of questions
+            if (randomiseQuestions)
+            {
+                Random random = new Random();
+                questions = questions.OrderBy(questions => random.Next()).ToList();
+            }
+
+            //Push each question to a stack
+            foreach (var question in questions)
+            {
+                questionStack.Push(question);
+            }
+            isQuestionDisplayed = true;
+
+            DisplayFlashcard();
         }
 
+        private void DisplayFlashcard()
+        {
+            if (questionStack.Count > 0)
+            {
+                currentQuestion = questionStack.Peek();
+            }
+            else
+            {
+                MessageBox.Show("Mo more flashcards to show");
+                this.Close();
+                return;
+            }
+
+            if (isQuestionDisplayed)
+            {
+                btnFlashcard.Content = currentQuestion.QuestionText;
+                isQuestionDisplayed= false;
+            }
+            else
+            {
+                if (currentQuestion is MultipleChoiceQuestion mcq)
+                {
+                    string correctAnswer = mcq.CorrectAnswerIndex switch
+                    {
+                        0 => mcq.Option1,
+                        1 => mcq.Option2,
+                        2 => mcq.Option3,
+                        3 => mcq.Option4
+                    };
+                    btnFlashcard.Content = correctAnswer;
+                }
+                else if (currentQuestion is SingleChoiceQuestion scq)
+                {
+                    btnFlashcard.Content = scq.ScAnswer;
+                }
+                isQuestionDisplayed = true;
+            }
+        }
+
+        //Fetches a list of questions depending on flashcard type
         private List<Question> FetchFlashCards()
         {
             List<Question> questions = new List<Question>();
@@ -51,7 +118,7 @@ namespace Quiz_App
                     {
                         case "AllQuestions":
                             command.CommandText = @"
-                                SELECT q.questionid, q.questiontext, q.questiontype, 
+                                SELECT q.questionid, q.questiontext, q.questiontype, q.quizid, 
                                        mc.mcquestionid, mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, 
                                        sc.scquestionid, sc.scanswer 
                                 FROM userquizanswers uqa
@@ -77,14 +144,14 @@ namespace Quiz_App
 
                         case "WrongQuizAnswers":
                             command.CommandText = @"
-                                SELECT q.questionid, q.questiontext, q.questiontype, 
+                                SELECT q.questionid, q.questiontext, q.questiontype, q.quizid,
                                        mc.mcquestionid, mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, 
                                        sc.scquestionid, sc.scanswer 
                                 FROM userquizanswers uqa
                                 JOIN question q ON uqa.questionid = q.questionid
                                 LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid 
                                 LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid 
-                                WHERE uqa.userid = @userId AND uqa.iscorrect = 0";
+                                WHERE uqa.userid = @userId AND uqa.mark = 0";
                             command.Parameters.AddWithValue("@userId", GlobalVariables.UserId);
                             break;
 
@@ -136,6 +203,22 @@ namespace Quiz_App
             }
 
             return questions;
+        }
+
+        private void btnNextFlashcard_Click(object sender, RoutedEventArgs e)
+        {
+            if (questionStack.Count > 0)
+            {
+                questionStack.Pop();
+            }
+            
+            isQuestionDisplayed = true;
+            DisplayFlashcard();
+        }
+
+        private void btnFlashcard_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayFlashcard();
         }
     }
 }
