@@ -33,7 +33,7 @@ namespace Quiz_App
         private void btnAllQuestions_Click(object sender, RoutedEventArgs e)
         {
             //Opens flashcard window with arguements
-            StudentFlashcardWindow StudentFlashcardWindow= new StudentFlashcardWindow("AllQuestions", randomiseQuestions);
+            StudentFlashcardWindow StudentFlashcardWindow= new StudentFlashcardWindow("AllQuestions", randomiseQuestions, -1);
             StudentFlashcardWindow.Show();
             this.Close();
         }
@@ -50,13 +50,16 @@ namespace Quiz_App
 
         private void btnPreviousQuizzes_Click(object sender, RoutedEventArgs e)
         {
-
+            //Opens flashcard window with arguements
+            StudentSelectQuiz StudentSelectQuiz = new StudentSelectQuiz("PreviousQuizzes", randomiseQuestions);
+            StudentSelectQuiz.Show();
+            
         }
 
         private void btnWrongQuizAnswers_Click(object sender, RoutedEventArgs e)
         {
             //Opens flashcard window with arguements
-            StudentFlashcardWindow StudentFlashcardWindow = new StudentFlashcardWindow("WrongQuizAnswers", randomiseQuestions);
+            StudentFlashcardWindow StudentFlashcardWindow = new StudentFlashcardWindow("WrongQuizAnswers", randomiseQuestions, -1);
             StudentFlashcardWindow.Show();
             this.Close();
         }

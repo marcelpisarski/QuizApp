@@ -24,20 +24,24 @@ namespace Quiz_App
     {
         private string flashcardType;
         private bool randomiseQuestions;
+        private int quizId;
         private Stack<Question> questionStack;
         private bool isQuestionDisplayed;
         private Question currentQuestion;
-        public StudentFlashcardWindow(string flashcardType, bool randomiseQuestions)
+        public StudentFlashcardWindow(string flashcardType, bool randomiseQuestions, int quizId)
         {
             InitializeComponent();
             
             //Casts variables 
             this.flashcardType = flashcardType;
             this.randomiseQuestions = randomiseQuestions;
+            this.quizId = quizId;
+
             questionStack = new Stack<Question>();
 
             List<Question> questions = FetchFlashCards();
 
+            //Closes window when user finishes flashcards
             if (questions.Count == 0)
             {
                 MessageBox.Show("No questions to display");
@@ -62,6 +66,7 @@ namespace Quiz_App
             DisplayFlashcard();
         }
 
+        //Places question information onto flashcard
         private void DisplayFlashcard()
         {
             if (questionStack.Count > 0)
@@ -78,6 +83,7 @@ namespace Quiz_App
             if (isQuestionDisplayed)
             {
                 btnFlashcard.Content = currentQuestion.QuestionText;
+                //Answer will display next time user presses flashcard
                 isQuestionDisplayed= false;
             }
             else
@@ -97,6 +103,7 @@ namespace Quiz_App
                 {
                     btnFlashcard.Content = scq.ScAnswer;
                 }
+                //Question displays again once user presses flashcard
                 isQuestionDisplayed = true;
             }
         }
@@ -131,15 +138,16 @@ namespace Quiz_App
 
                         case "PreviousQuizzes":
                             command.CommandText = @"
-                                SELECT q.questionid, q.questiontext, q.questiontype, 
+                                SELECT q.questionid, q.questiontext, q.questiontype, q.quizid, 
                                        mc.mcquestionid, mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, 
                                        sc.scquestionid, sc.scanswer 
                                 FROM userquizcompletions uqc
                                 JOIN question q ON uqc.quizid = q.quizid
                                 LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid 
                                 LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid 
-                                WHERE uqc.userid = @userId";
+                                WHERE uqc.userid = @userId AND q.quizid = @quizId";
                             command.Parameters.AddWithValue("@userId", GlobalVariables.UserId);
+                            command.Parameters.AddWithValue("@quizId", quizId);
                             break;
 
                         case "WrongQuizAnswers":

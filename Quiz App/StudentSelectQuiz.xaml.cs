@@ -22,10 +22,25 @@ namespace Quiz_App
     /// </summary>
     public partial class StudentSelectQuiz : Window
     {
-        public StudentSelectQuiz()
+        private string actionType;
+        private bool randomiseQuestions;
+        
+        public StudentSelectQuiz(string actionType, bool randomiseQuestions)
         {
+            this.actionType = actionType;
+            this.randomiseQuestions = randomiseQuestions;
+
             InitializeComponent();
-            LoadUncompletedQuizzes();
+
+            // Load quizzes based on the action type
+            if (actionType == "PreviousQuizzes")
+            {
+                LoadCompletedQuizzes();
+            }
+            else
+            {
+                LoadUncompletedQuizzes();
+            }
         }
 
         public class Quiz
@@ -41,7 +56,7 @@ namespace Quiz_App
             int userId = GlobalVariables.UserId;
 
             var uncompletedQuizzes = GetUncompletedQuizzes(userId);
-            dtgUncompleteQuizzes.ItemsSource = uncompletedQuizzes;
+            dtgQuizzes.ItemsSource = uncompletedQuizzes;
         }
 
         //Get the users uncompleted quizzes from database
@@ -99,6 +114,59 @@ namespace Quiz_App
             return uncompletedQuizzes;
         }
 
+        private void LoadCompletedQuizzes()
+        {
+            int userId = GlobalVariables.UserId;
+
+            var completedQuizzes = GetCompletedQuizzes(userId);
+            dtgQuizzes.ItemsSource = completedQuizzes;
+        }
+
+        //Get the user's completed quizzes from the database
+        private List<Quiz> GetCompletedQuizzes(int userId)
+        {
+            var completedQuizzes = new List<Quiz>();
+
+            string connectionString = GlobalVariables.Connection;
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+
+                    //SQL query to fetch quizzes completed by the user
+                    command.CommandText = @"
+                        SELECT quiz.quizid, quiz.topic, quiz.title 
+                        FROM quiz 
+                        JOIN userquizcompletions ON quiz.quizid = userquizcompletions.quizid 
+                        WHERE userquizcompletions.userid = @userId";
+                    command.Parameters.AddWithValue("@userId", userId);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var quiz = new Quiz
+                            {
+                                Id = reader.GetInt32("quizid"),
+                                Topic = reader.GetString("topic"),
+                                Title = reader.GetString("title")
+                            };
+                            completedQuizzes.Add(quiz);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error fetching completed quizzes: {ex.Message}");
+                }
+            }
+
+            return completedQuizzes;
+        }
+
         private void btnCloseStudentSelectQuiz_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -106,20 +174,30 @@ namespace Quiz_App
 
         private void btnSelectQuiz_Click(object sender, RoutedEventArgs e)
         {
-            if (dtgUncompleteQuizzes.SelectedItem is Quiz selectedQuiz)
+            if (dtgQuizzes.SelectedItem is Quiz selectedQuiz)
             {
-                //Proceed to start the selected quiz
-                StudentQuizWindow StudentQuizWindow = new StudentQuizWindow(selectedQuiz.Id);
-                this.Hide();
-                
-                StudentQuizWindow.Show();
+                switch (actionType)
+                {
+                    case "PreviousQuizzes":
+                        //Proceed to open flashcard window with selected quiz id
+                        StudentFlashcardWindow studentFlashcardWindow = new StudentFlashcardWindow("PreviousQuizzes", randomiseQuestions, selectedQuiz.Id);
+                        studentFlashcardWindow.Show();
+                        break;
+                    case "StartQuiz":
+                        //Proceed to start the selected quiz
+                        StudentQuizWindow studentQuizWindow = new StudentQuizWindow(selectedQuiz.Id);
+                        studentQuizWindow.Show();
+                        break;
+                    default:
+                        MessageBox.Show("Invalid action type");
+                        return;
+                }
                 this.Close();
             }
             else
             {
                 MessageBox.Show("Please select a quiz to start");
-                return;
-            }     
+            }
         }
     }
 }

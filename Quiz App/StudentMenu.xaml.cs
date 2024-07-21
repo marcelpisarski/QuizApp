@@ -26,7 +26,7 @@ namespace Quiz_App
 
         private void btnOpenQuizzes_Click(object sender, RoutedEventArgs e)
         {
-            StudentSelectQuiz StudentSelectQuiz = new StudentSelectQuiz();
+            StudentSelectQuiz StudentSelectQuiz = new StudentSelectQuiz("StartQuiz", false);
             this.Hide();
 
             StudentSelectQuiz.Show();

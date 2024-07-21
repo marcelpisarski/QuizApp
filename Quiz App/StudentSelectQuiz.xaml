@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="StudentSelectQuiz" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="dtgUncompleteQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" Margin="203,103,318,192">
+        <DataGrid x:Name="dtgQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" Margin="203,103,318,192">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Quiz ID" Binding="{Binding Id}" />
                 <DataGridTextColumn Header="Quiz Name" Binding="{Binding Topic}" />
@@ -15,6 +15,6 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="btnCloseStudentSelectQuiz" Content="Close" HorizontalAlignment="Left" Margin="329,261,0,0" VerticalAlignment="Top" Click="btnCloseStudentSelectQuiz_Click" Height="33" Width="71"/>
-        <Button x:Name="btnSelectQuiz" Content="Open Quiz" HorizontalAlignment="Left" Margin="421,261,0,0" VerticalAlignment="Top" Click="btnSelectQuiz_Click" Height="33" Width="61"/>
+        <Button x:Name="btnSelectQuiz" Content="Open" HorizontalAlignment="Left" Margin="421,261,0,0" VerticalAlignment="Top" Click="btnSelectQuiz_Click" Height="33" Width="61"/>
     </Grid>
 </Window>

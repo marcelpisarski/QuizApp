@@ -29,6 +29,7 @@ namespace Quiz_App
         bool quizSchemaCreated = false;
         int existingQuizId = -1;
         bool isEditingQuiz = false;
+        int questionCount = 0;
 
         public AddQuiz()
         {
@@ -108,6 +109,13 @@ namespace Quiz_App
 
         private void btnSaveQuiz_Click(object sender, RoutedEventArgs e)
         {
+            //Check if there are no questions added
+            if (questionCount == 0)
+            {
+                MessageBox.Show("You cannot save a quiz without questions. Please add at least one question");
+                return;
+            }
+
             if (isEditingQuiz)
             {
                 UpdateQuiz();
@@ -316,6 +324,7 @@ namespace Quiz_App
 
                         //Fills datagrid with questions
                         dtgQuestionData.ItemsSource = questions;
+                        questionCount = questions.Count;
                     }
                 }
                 catch (Exception ex)
