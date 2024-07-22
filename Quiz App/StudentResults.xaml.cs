@@ -19,7 +19,7 @@ namespace Quiz_App
     /// <summary>
     /// Interaction logic for StudentResults.xaml
     /// </summary>
-    public record QuizResult(int QuizId, string QuizTitle, int TotalMarks, int StudentMark);
+    public record QuizResult(int QuizId, string QuizTitle, int TotalMarks, int StudentMark, DateTime completionDate, decimal Percentage);
     public partial class StudentResults : Window
     {
         private int studentId;
@@ -48,7 +48,7 @@ namespace Quiz_App
 
                     // Fetch quiz results for the student
                     command.CommandText = @"
-                        SELECT q.quizid, q.title, q.totalmarks, uqc.marks 
+                        SELECT q.quizid, q.title, q.totalmarks, uqc.marks, uqc.completiondate, uqc.percentage
                         FROM userquizcompletions uqc
                         JOIN quiz q ON uqc.quizid = q.quizid
                         WHERE uqc.userid = @userid";
@@ -62,8 +62,10 @@ namespace Quiz_App
                             string quizTitle = reader.GetString("title");
                             int totalMarks = reader.GetInt32("totalMarks");
                             int studentMarks = reader.GetInt32("marks");
+                            DateTime completionDate = reader.GetDateTime("completiondate");
+                            decimal Percentage = reader.GetDecimal("percentage");
 
-                            studentResults.Add(quizId, new QuizResult(quizId, quizTitle, totalMarks, studentMarks));
+                            studentResults.Add(quizId, new QuizResult(quizId, quizTitle, totalMarks, studentMarks, completionDate, Percentage));
                         }
                     }
                 }
@@ -84,7 +86,7 @@ namespace Quiz_App
             {
                 for (int j = 0; j < resultsList.Count - i - 1; j++)
                 {
-                    if (resultsList[j].TotalMarks < resultsList[j + 1].TotalMarks)
+                    if (resultsList[j].Percentage < resultsList[j + 1].Percentage)
                     {
                         //Swap elements
                         var temp = resultsList[j];

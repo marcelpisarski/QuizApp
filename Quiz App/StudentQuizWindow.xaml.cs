@@ -96,15 +96,24 @@ namespace Quiz_App
                     command.CommandText = "SELECT COUNT(*) FROM userquizanswers WHERE userid = @userId AND quizid = @quizId AND mark = 1";
                     command.Parameters.AddWithValue("@userId", userId);
                     command.Parameters.AddWithValue("@quizId", quizId);
-                    int totalMarks = Convert.ToInt32(command.ExecuteScalar());
+                    int totalUserMarks = Convert.ToInt32(command.ExecuteScalar());
+
+                    command.Parameters.Clear();
+
+                    command.CommandText = "SELECT totalmarks FROM quiz WHERE quizid = @quizId";
+                    command.Parameters.AddWithValue("@quizid", quizId);
+                    int totalQuizMarks = Convert.ToInt32(command.ExecuteScalar());
+
+                    decimal percentage = Math.Round(((decimal)totalUserMarks / totalQuizMarks) * 100, 2);
 
                     //Insert user and quiz completion information to database
-                    command.CommandText = "INSERT INTO userquizcompletions (userid, quizid, marks, completiondate) VALUES (@userid, @quizid, @marks, @completiondate)";
+                    command.CommandText = "INSERT INTO userquizcompletions (userid, quizid, marks, completiondate, percentage) VALUES (@userid, @quizid, @marks, @completiondate, @percentage)";
                     command.Parameters.Clear();
                     command.Parameters.AddWithValue("@userid", userId);
                     command.Parameters.AddWithValue("@quizid", quizId);
-                    command.Parameters.AddWithValue("@marks", totalMarks);
+                    command.Parameters.AddWithValue("@marks", totalUserMarks);
                     command.Parameters.AddWithValue("@completiondate", DateTime.Now);
+                    command.Parameters.AddWithValue("@percentage", percentage);
 
                     command.ExecuteNonQuery();
                 }

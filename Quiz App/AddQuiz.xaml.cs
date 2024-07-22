@@ -49,7 +49,16 @@ namespace Quiz_App
         }
 
         private void btnAddQuestion_Click(object sender, RoutedEventArgs e)
-        {       
+        {
+            int quizId = GlobalVariables.QuizId;
+
+            //Checks if a user has completed current quiz. If so, then teacher cannot edit questions
+            if (IsQuizCompleted(quizId))
+            {
+                MessageBox.Show("Unable to add questions. This quiz was already completed by a user");
+                return;
+            }
+            
             QuizQuestion QuizQuestion = new QuizQuestion();
             
             //Connects OnQuestionAdded method to QuestionAdded event inside QuizQuestion
@@ -57,6 +66,35 @@ namespace Quiz_App
             QuizQuestion.Show();
             
             canCreateQuiz = true;
+        }
+
+        //Checks number of users who completed the quiz
+        private bool IsQuizCompleted(int quizId)
+        {
+            string connectionString = GlobalVariables.Connection;
+            bool isCompleted = false;
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+
+                    // Check if there are any completions for the selected quiz
+                    command.CommandText = "SELECT COUNT(*) FROM userquizcompletions WHERE quizid = @quizId";
+                    command.Parameters.AddWithValue("@quizId", quizId);
+
+                    int completionCount = Convert.ToInt32(command.ExecuteScalar());
+                    isCompleted = completionCount > 0;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error checking quiz completion status: {ex.Message}");
+                }
+            }
+
+            return isCompleted;
         }
 
         private void btnCancelQuiz_Click(object sender, RoutedEventArgs e)
@@ -242,6 +280,15 @@ namespace Quiz_App
         //Delete question from database and table
         private void btnDeleteQuestion_Click(object sender, RoutedEventArgs e)
         {
+            int quizId = GlobalVariables.QuizId;
+
+            //Checks if a user has completed current quiz. If so, then teacher cannot edit questions
+            if (IsQuizCompleted(quizId))
+            {
+                MessageBox.Show("Unable to delete questions. This quiz was already completed by a user");
+                return;
+            }
+
             //Ensures a question is selected
             if (dtgQuestionData.SelectedItem == null)
             {
