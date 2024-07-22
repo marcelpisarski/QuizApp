@@ -34,8 +34,15 @@ namespace Quiz_App
         {
             //Opens flashcard window with arguements
             StudentFlashcardWindow StudentFlashcardWindow= new StudentFlashcardWindow("AllQuestions", randomiseQuestions, -1);
-            StudentFlashcardWindow.Show();
-            this.Close();
+            try
+            {
+                StudentFlashcardWindow.Show();
+            }
+            catch
+            {
+                return;
+            }
+
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -60,8 +67,15 @@ namespace Quiz_App
         {
             //Opens flashcard window with arguements
             StudentFlashcardWindow StudentFlashcardWindow = new StudentFlashcardWindow("WrongQuizAnswers", randomiseQuestions, -1);
-            StudentFlashcardWindow.Show();
-            this.Close();
+            try
+            {
+                StudentFlashcardWindow.Show();
+            }
+            catch
+            {
+                return;
+            }
+
         }
     }
 }

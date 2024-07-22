@@ -41,14 +41,6 @@ namespace Quiz_App
 
             List<Question> questions = FetchFlashCards();
 
-            //Closes window when user finishes flashcards
-            if (questions.Count == 0)
-            {
-                MessageBox.Show("No questions to display");
-                this.Close();
-                return;
-            }
-
             //Randomise list of questions
             if (randomiseQuestions)
             {

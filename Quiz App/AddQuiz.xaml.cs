@@ -200,7 +200,7 @@ namespace Quiz_App
                     // Clear previous parameters
                     command.Parameters.Clear();
 
-                    command.CommandText = "INSERT INTO quiz (topic, title, teacherid, level1, level2, level3, level4) VALUES (@topic, @title, @teacherid, @level1, @level2, @level3, @level4)";
+                    command.CommandText = "INSERT INTO quiz (topic, title, teacherid, level1, level2, level3, level4, totalmarks) VALUES (@topic, @title, @teacherid, @level1, @level2, @level3, @level4, @totalmarks)";
 
                     command.Parameters.AddWithValue("@topic", topicName);
                     command.Parameters.AddWithValue("@title", quizTitle);
@@ -209,6 +209,7 @@ namespace Quiz_App
                     command.Parameters.AddWithValue("@level2", level2);
                     command.Parameters.AddWithValue("@level3", level3);
                     command.Parameters.AddWithValue("@level4", level4);
+                    command.Parameters.AddWithValue("@totalmarks", questionCount);
 
                     int result = command.ExecuteNonQuery();
 
@@ -326,6 +327,11 @@ namespace Quiz_App
                         dtgQuestionData.ItemsSource = questions;
                         questionCount = questions.Count;
                     }
+                    
+                    //Update the question count in the quiz table
+                    command.CommandText = "UPDATE quiz SET totalmarks = @totalmarks WHERE quizid = @quizid";
+                    command.Parameters.AddWithValue("@totalmarks", questionCount);
+                    command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {
@@ -456,7 +462,7 @@ namespace Quiz_App
                     //Clear previous parameters
                    command.Parameters.Clear();
 
-                   command.CommandText = "UPDATE quiz SET topic = @topic, title = @title, level1 = @level1, level2 = @level2, level3 = @level3, level4 = @level4 WHERE quizid = @quizid";
+                   command.CommandText = "UPDATE quiz SET topic = @topic, title = @title, level1 = @level1, level2 = @level2, level3 = @level3, level4 = @level4, totalmarks = @totalmarks WHERE quizid = @quizid";
 
                     command.Parameters.AddWithValue("@topic", topicName);
                     command.Parameters.AddWithValue("@title", quizTitle);
@@ -465,6 +471,7 @@ namespace Quiz_App
                     command.Parameters.AddWithValue("@level2", level2);
                     command.Parameters.AddWithValue("@level3", level3);
                     command.Parameters.AddWithValue("@level4", level4);
+                    command.Parameters.AddWithValue("@totalmarks", questionCount);
                     command.Parameters.AddWithValue("@quizid", existingQuizId);
                     int result = command.ExecuteNonQuery();
 

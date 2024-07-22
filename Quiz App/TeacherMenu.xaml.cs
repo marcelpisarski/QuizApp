@@ -207,5 +207,19 @@ namespace Quiz_App
             QuizSelectorEdit.Show();
             this.Show();
         }
+
+        private void btnStudentResults_Click(object sender, RoutedEventArgs e)
+        {
+            if (dtgStudentList.SelectedItem is DataRowView row)
+            {
+                selectedUserId = Convert.ToInt32(row["UserId"]);
+
+                StudentResults StudentResults = new StudentResults(selectedUserId);
+                this.Hide();
+
+                StudentResults.Show();
+                this.Show();
+            }
+        }
     }
 }
