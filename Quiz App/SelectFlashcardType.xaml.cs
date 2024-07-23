@@ -45,11 +45,13 @@ namespace Quiz_App
 
         }
 
+        //Sets randomise questions to true
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             randomiseQuestions = true;
         }
 
+        //Sets randomise questions to false
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             randomiseQuestions = false;

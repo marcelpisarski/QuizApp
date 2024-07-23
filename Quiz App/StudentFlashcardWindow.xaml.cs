@@ -28,6 +28,7 @@ namespace Quiz_App
         private Stack<Question> questionStack;
         private bool isQuestionDisplayed;
         private Question currentQuestion;
+
         public StudentFlashcardWindow(string flashcardType, bool randomiseQuestions, int quizId)
         {
             InitializeComponent();
@@ -41,7 +42,7 @@ namespace Quiz_App
 
             List<Question> questions = FetchFlashCards();
 
-            //Randomise list of questions
+            //Creates randomised list of questions
             if (randomiseQuestions)
             {
                 Random random = new Random();
@@ -75,6 +76,7 @@ namespace Quiz_App
             if (isQuestionDisplayed)
             {
                 btnFlashcard.Content = currentQuestion.QuestionText;
+                
                 //Answer will display next time user presses flashcard
                 isQuestionDisplayed= false;
             }
@@ -89,6 +91,7 @@ namespace Quiz_App
                         2 => mcq.Option3,
                         3 => mcq.Option4
                     };
+                    
                     btnFlashcard.Content = correctAnswer;
                 }
                 else if (currentQuestion is SingleChoiceQuestion scq)
@@ -205,6 +208,7 @@ namespace Quiz_App
             return questions;
         }
 
+        //Pops question out of stack and displays new flashcard  
         private void btnNextFlashcard_Click(object sender, RoutedEventArgs e)
         {
             if (questionStack.Count > 0)
@@ -216,6 +220,7 @@ namespace Quiz_App
             DisplayFlashcard();
         }
 
+        //Switches between question and answer
         private void btnFlashcard_Click(object sender, RoutedEventArgs e)
         {
             DisplayFlashcard();

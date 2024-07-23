@@ -161,7 +161,7 @@ namespace Quiz_App
             }
         }
 
-        //Places userid into global variable
+        //Places logged in userid into global variables
         private void FetchUserId(string username, string password)
         {
             string connectionString = GlobalVariables.Connection;

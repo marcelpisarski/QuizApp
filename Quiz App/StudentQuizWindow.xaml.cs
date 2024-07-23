@@ -100,6 +100,7 @@ namespace Quiz_App
 
                     command.Parameters.Clear();
 
+                    //Calculate user percentage score
                     command.CommandText = "SELECT totalmarks FROM quiz WHERE quizid = @quizId";
                     command.Parameters.AddWithValue("@quizid", quizId);
                     int totalQuizMarks = Convert.ToInt32(command.ExecuteScalar());

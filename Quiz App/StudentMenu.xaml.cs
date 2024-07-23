@@ -24,6 +24,7 @@ namespace Quiz_App
             InitializeComponent();
         }
 
+        //Opens window where students can select a quiz
         private void btnOpenQuizzes_Click(object sender, RoutedEventArgs e)
         {
             StudentSelectQuiz StudentSelectQuiz = new StudentSelectQuiz("StartQuiz", false);
@@ -33,6 +34,7 @@ namespace Quiz_App
             this.Show();
         }
 
+        //Opens window where students can select flashcards
         private void btnOpenFlashcards_Click(object sender, RoutedEventArgs e)
         {
             SelectFlashcardType SelectFlashcardType = new SelectFlashcardType();

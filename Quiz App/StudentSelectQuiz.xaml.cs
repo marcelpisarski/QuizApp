@@ -27,6 +27,7 @@ namespace Quiz_App
         
         public StudentSelectQuiz(string actionType, bool randomiseQuestions)
         {
+            //Casts flashcard options to variables
             this.actionType = actionType;
             this.randomiseQuestions = randomiseQuestions;
 
@@ -114,6 +115,7 @@ namespace Quiz_App
             return uncompletedQuizzes;
         }
 
+        //Loads the quizzes which the user has completed into table
         private void LoadCompletedQuizzes()
         {
             int userId = GlobalVariables.UserId;
@@ -167,6 +169,7 @@ namespace Quiz_App
             return completedQuizzes;
         }
 
+        //Closes window
         private void btnCloseStudentSelectQuiz_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

@@ -208,6 +208,7 @@ namespace Quiz_App
             this.Show();
         }
 
+        //Opens student results window
         private void btnStudentResults_Click(object sender, RoutedEventArgs e)
         {
             if (dtgStudentList.SelectedItem is DataRowView row)

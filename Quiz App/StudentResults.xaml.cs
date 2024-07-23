@@ -28,15 +28,17 @@ namespace Quiz_App
         public StudentResults(int studentId)
         {
             InitializeComponent();
+            
             this.studentId = studentId;
             studentResults = new Dictionary<int, QuizResult>();
+            
             LoadStudentResults();
             DisplayQuizResults();
         }
 
         private void LoadStudentResults()
         {
-            // Define the connection string
+            //Define the connection string
             string connectionString = GlobalVariables.Connection;
 
             using (var connection = new MySqlConnection(connectionString))
@@ -46,7 +48,7 @@ namespace Quiz_App
                     connection.Open();
                     var command = connection.CreateCommand();
 
-                    // Fetch quiz results for the student
+                    //Fetch quiz results for the student
                     command.CommandText = @"
                         SELECT q.quizid, q.title, q.totalmarks, uqc.marks, uqc.completiondate, uqc.percentage
                         FROM userquizcompletions uqc
@@ -65,6 +67,7 @@ namespace Quiz_App
                             DateTime completionDate = reader.GetDateTime("completiondate");
                             decimal Percentage = reader.GetDecimal("percentage");
 
+                            //Adds results to studentResults dictionary
                             studentResults.Add(quizId, new QuizResult(quizId, quizTitle, totalMarks, studentMarks, completionDate, Percentage));
                         }
                     }
@@ -81,7 +84,7 @@ namespace Quiz_App
             //Convert the dictionary values to a list
             var resultsList = studentResults.Values.ToList();
 
-            //Sort the list using Bubble Sort by total marks
+            //Sort the list using bubble sort by percentage score
             for (int i = 0; i < resultsList.Count - 1; i++)
             {
                 for (int j = 0; j < resultsList.Count - i - 1; j++)

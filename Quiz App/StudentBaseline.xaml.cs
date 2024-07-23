@@ -27,7 +27,7 @@ namespace Quiz_App
         public StudentBaseline()
         {
             InitializeComponent();
-            Statement();
+            LoadStatement();
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
@@ -49,7 +49,7 @@ namespace Quiz_App
         }
 
         //Shows a random statement from BaselineStatements.txt to newly logged in user
-        private void Statement()
+        private void LoadStatement()
         {
             string filePath = "C:\\Users\\marce\\source\\repos\\Quiz App\\Quiz App\\Text Files\\BaselineStatements.txt";
             string[] questions = File.ReadAllLines(filePath);
