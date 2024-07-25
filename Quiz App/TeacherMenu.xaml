@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:Quiz_App"
         mc:Ignorable="d"
         Title="TeacherMenu" Height="450" Width="800">
-    <Grid Width="800" Height="434">
-        <Button x:Name="btnCreateQuiz" Content="Create Quiz" HorizontalAlignment="Left" Margin="78,123,0,0" VerticalAlignment="Top" Height="60" Width="124" Click="btnCreateQuiz_Click"/>
-        <Button x:Name="btnEditQuiz" Content="Edit Quiz" HorizontalAlignment="Left" Margin="78,248,0,0" VerticalAlignment="Top" Height="60" Width="124" Click="btnEditQuiz_Click"/>
+    <Grid Width="800" Height="434" Background="#FF77B0AA">
+        <Button x:Name="btnCreateQuiz" Content="Create Quiz" HorizontalAlignment="Left" Margin="163,120,0,0" VerticalAlignment="Top" Height="77" Width="186" Click="btnCreateQuiz_Click" Background="#FF003C42" Foreground="White"/>
+        <Button x:Name="btnEditQuiz" Content="Edit Quiz" HorizontalAlignment="Left" Margin="163,243,0,0" VerticalAlignment="Top" Height="77" Width="186" Click="btnEditQuiz_Click" Background="#FF003C42" Foreground="White"/>
         <DataGrid x:Name="dtgStudentList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="519,120,23,97" CanUserAddRows="False" AutoGenerateColumns="False" SelectionChanged="dtgStudentList_SelectionChanged" Height="217">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="UserId" Binding="{Binding UserId}" />
@@ -26,9 +26,9 @@
         <Label x:Name="lblStudentCount" Content="STUDENT COUNT" HorizontalAlignment="Left" Margin="519,41,0,0" VerticalAlignment="Top" Width="105" Height="30"/>
         <Button x:Name="btnCancelSelection" Content="Cancel" HorizontalAlignment="Left" Margin="731,342,0,0" VerticalAlignment="Top" Height="22" Width="46" Click="btnCancelSelection_Click"/>
         <TextBox x:Name="txtSearchUser" HorizontalAlignment="Left" Margin="519,82,0,0" TextWrapping="Wrap" Text="Search User" VerticalAlignment="Top" Width="120" Height="20"/>
-        <Button x:Name="btnSearchUser" Content="Search" HorizontalAlignment="Left" Margin="654,81,0,0" VerticalAlignment="Top" Click="btnSearchUser_Click" Width="40" Height="20"/>
-        <Button x:Name="btnClearSearch" Content="Clear" HorizontalAlignment="Left" Margin="714,81,0,0" VerticalAlignment="Top" Click="btnClearSearch_Click" Width="40" Height="20"/>
-        <Button x:Name="btnStudentResults" Content="View Student Results" HorizontalAlignment="Left" Margin="519,387,0,0" VerticalAlignment="Top" Width="258" Click="btnStudentResults_Click"/>
+        <Button x:Name="btnSearchUser" Content="Search" HorizontalAlignment="Left" Margin="654,81,0,0" VerticalAlignment="Top" Click="btnSearchUser_Click" Width="40" Height="20" Background="White" Foreground="Black"/>
+        <Button x:Name="btnClearSearch" Content="Clear" HorizontalAlignment="Left" Margin="714,81,0,0" VerticalAlignment="Top" Click="btnClearSearch_Click" Width="40" Height="20" Background="White"/>
+        <Button x:Name="btnStudentResults" Content="View Student Results" HorizontalAlignment="Left" Margin="519,387,0,0" VerticalAlignment="Top" Width="258" Click="btnStudentResults_Click" Background="White"/>
 
     </Grid>
 </Window>

@@ -146,5 +146,321 @@ namespace Quiz_App
                 }
             }
         }
+        
+        //Exports a quiz to the user
+        private void btnExportQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            Quiz selectedQuiz = (Quiz)dtgQuizList.SelectedItem;
+
+            //Ensures a quiz is selected from list
+            if (dtgQuizList.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a quiz to export");
+                return;
+            }
+
+            string connectionString = GlobalVariables.Connection;
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+
+                    //Fetch quiz details including level
+                    command.CommandText = "SELECT title, topic, level1, level2, level3, level4 FROM quiz WHERE quizid = @quizid";
+                    command.Parameters.AddWithValue("@quizid", selectedQuiz.Id);
+
+                    string title = "";
+                    string topic = "";
+                    int level1 = -1;
+                    int level2 = -1;
+                    int level3 = -1;
+                    int level4 = -1;
+
+                    //Casts quiz data to variables
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            title = reader.GetString("title");
+                            topic = reader.GetString("topic");
+                            level1 = reader.GetInt32("level1");
+                            level2 = reader.GetInt32("level2");
+                            level3 = reader.GetInt32("level3");
+                            level4 = reader.GetInt32("level4");
+                        }
+                    }
+
+                    //Fetch questions and answers
+                    command.CommandText = @"
+                        SELECT q.questionid, q.questiontext, q.questiontype, 
+                               mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, 
+                               sc.scanswer
+                        FROM question q
+                        LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid
+                        LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid
+                        WHERE q.quizid = @quizid";
+
+                    //Starts to build exported file
+                    var quizContent = new StringBuilder();
+                    quizContent.AppendLine($"Quiz Title: {title}");
+                    quizContent.AppendLine($"Topic: {topic}");
+                    quizContent.AppendLine($"Level 1: {level1}");
+                    quizContent.AppendLine($"Level 2: {level2}");
+                    quizContent.AppendLine($"Level 3: {level3}");
+                    quizContent.AppendLine($"Level 4: {level4}");
+
+                    quizContent.AppendLine();
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string questionText = reader.GetString("questiontext");
+                            string questionType = reader.GetString("questiontype");
+
+                            quizContent.AppendLine($"Question: {questionText}");
+                            quizContent.AppendLine($"Type: {questionType}");
+
+                            if (questionType == "MultipleChoice")
+                            {
+                                quizContent.AppendLine($"1. {reader.GetString("option1")}");
+                                quizContent.AppendLine($"2. {reader.GetString("option2")}");
+                                quizContent.AppendLine($"3. {reader.GetString("option3")}");
+                                quizContent.AppendLine($"4. {reader.GetString("option4")}");
+                                quizContent.AppendLine($"correctanswerindex. {reader.GetInt32("correctanswerindex")}");
+                            }
+                            else if (questionType == "SingleChoice")
+                            {
+                                quizContent.AppendLine($"Answer: {reader.GetString("scanswer")}");
+                            }
+                            quizContent.AppendLine();
+                        }
+                    }
+
+                    //Save to file on the desktop
+                    string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                    string filePath = System.IO.Path.Combine(desktopPath, $"{title}_Quiz.txt");
+
+                    System.IO.File.WriteAllText(filePath, quizContent.ToString());
+
+                    MessageBox.Show($"Quiz exported successfully to {filePath}");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error exporting quiz: {ex.Message}");
+                }
+            }
+        }
+
+        public class Question
+        {
+            public string Text { get; set; }
+            public string Type { get; set; }
+            public List<string> Options { get; set; }
+            public int CorrectAnswerIndex { get; set; }
+            public string Answer { get; set; }
+        }
+
+        private void btnImportQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            //Open a file dialog to select the quiz file
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "Text files (*.txt)|*.txt",
+                Title = "Select Quiz File"
+            };
+
+            //Lets the user select a file to import
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName;
+
+                try
+                {
+                    //Read the file content
+                    string[] lines = System.IO.File.ReadAllLines(filePath);
+                    int totalMarks = 0;
+
+                    if (lines.Length == 0)
+                    {
+                        MessageBox.Show("The selected file is empty");
+                        return;
+                    }
+
+                    string title = string.Empty;
+                    string topic = string.Empty;
+                    int level1 = -1;
+                    int level2 = -1;
+                    int level3 = -1;
+                    int level4 = -1;
+                    var questions = new List<Question>();
+
+                    //Parse the file content
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        string line = lines[i];
+
+                        if (line.StartsWith("Quiz Title:"))
+                        {
+                            title = line.Replace("Quiz Title:", "").Trim();
+                        }
+                        else if (line.StartsWith("Topic:"))
+                        {
+                            topic = line.Replace("Topic:", "").Trim();
+                        }
+                        else if (line.StartsWith("Level 1:"))
+                        {
+                            level1 = int.Parse(line.Replace("Level 1:", "").Trim());
+                        }
+                        else if (line.StartsWith("Level 2:"))
+                        {
+                            level2 = int.Parse(line.Replace("Level 2:", "").Trim());
+                        }
+                        else if (line.StartsWith("Level 3:"))
+                        {
+                            level3 = int.Parse(line.Replace("Level 3:", "").Trim());
+                        }
+                        else if (line.StartsWith("Level 4:"))
+                        {
+                            level4 = int.Parse(line.Replace("Level 4:", "").Trim());
+                        }
+                        else if (line.StartsWith("Question:"))
+                        {
+                            totalMarks++;
+                            var question = new Question
+                            {
+                                Text = line.Replace("Question:", "").Trim(),
+                            };
+
+                            i++;
+                            if (lines[i].StartsWith("Type:"))
+                            {
+                                question.Type = lines[i].Replace("Type:", "").Trim();
+                            }
+
+                            if (question.Type == "MultipleChoice")
+                            {
+                                question.Options = new List<string>();
+                                for (int j = 0; j < 4; j++)
+                                {
+                                    i++;
+                                    question.Options.Add(lines[i].Substring(3).Trim());
+                                }
+                                i++;
+                                question.CorrectAnswerIndex = int.Parse(lines[i].Replace("correctanswerindex.", "").Trim());
+                            }
+                            else if (question.Type == "SingleChoice")
+                            {
+                                i++;
+                                question.Answer = lines[i].Replace("Answer:", "").Trim();
+                            }
+
+                            questions.Add(question);
+                        }
+                    }
+
+                    //Insert the quiz into the database
+                    string connectionString = GlobalVariables.Connection;
+
+                    using (var connection = new MySqlConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        var command = connection.CreateCommand();
+
+                        command.CommandText = "SELECT COUNT(*) from quiz WHERE title = @title";
+                        command.Parameters.AddWithValue("@title", title);
+                        int quizCount = Convert.ToInt32(command.ExecuteScalar());
+
+                        if (quizCount > 0)
+                        {
+                            MessageBox.Show("Quiz title already exists");
+                            return;
+                        }
+
+                        //Creates a transaction for error validation (will revert everything if something goes wrong during import phase)
+                        using (var transaction = connection.BeginTransaction())
+                        {
+                            try
+                            {
+                                
+                                command.Transaction = transaction;
+
+                                //Insert quiz details
+                                command.CommandText = "INSERT INTO quiz (title, topic, level1, level2, level3, level4, teacherid, totalmarks) VALUES (@title, @topic, @level1, @level2, @level3, @level4, @teacherid, @totalmarks)";
+                                command.Parameters.Clear();
+                                command.Parameters.AddWithValue("@title", title);
+                                command.Parameters.AddWithValue("@topic", topic);
+                                command.Parameters.AddWithValue("@level1", level1);
+                                command.Parameters.AddWithValue("@level2", level2);
+                                command.Parameters.AddWithValue("@level3", level3);
+                                command.Parameters.AddWithValue("@level4", level4);
+                                command.Parameters.AddWithValue("@teacherid", GlobalVariables.UserId);
+                                command.Parameters.AddWithValue("@totalmarks", totalMarks);
+
+                                command.ExecuteNonQuery();
+                                int quizId = (int)command.LastInsertedId;
+
+                                //Insert questions
+                                foreach (var question in questions)
+                                {
+                                    command.CommandText = "INSERT INTO question (quizid, questiontext, questiontype) VALUES (@quizid, @questiontext, @questiontype)";
+                                    command.Parameters.Clear();
+                                    command.Parameters.AddWithValue("@quizid", quizId);
+                                    command.Parameters.AddWithValue("@questiontext", question.Text);
+                                    command.Parameters.AddWithValue("@questiontype", question.Type);
+
+                                    command.ExecuteNonQuery();
+                                    int questionId = (int)command.LastInsertedId;
+
+                                    if (question.Type == "MultipleChoice")
+                                    {
+                                        command.CommandText = "INSERT INTO multiplechoicequestion (questionid, option1, option2, option3, option4, correctanswerindex) VALUES (@questionid, @option1, @option2, @option3, @option4, @correctanswerindex)";
+                                        command.Parameters.Clear();
+                                        command.Parameters.AddWithValue("@questionid", questionId);
+                                        command.Parameters.AddWithValue("@option1", question.Options[0]);
+                                        command.Parameters.AddWithValue("@option2", question.Options[1]);
+                                        command.Parameters.AddWithValue("@option3", question.Options[2]);
+                                        command.Parameters.AddWithValue("@option4", question.Options[3]);
+                                        command.Parameters.AddWithValue("@correctanswerindex", question.CorrectAnswerIndex);
+
+                                        command.ExecuteNonQuery();
+                                    }
+                                    else if (question.Type == "SingleChoice")
+                                    {
+                                        command.CommandText = "INSERT INTO singlechoicequestion (questionid, scanswer) VALUES (@questionid, @scanswer)";
+                                        command.Parameters.Clear();
+                                        command.Parameters.AddWithValue("@questionid", questionId);
+                                        command.Parameters.AddWithValue("@scanswer", question.Answer);
+
+                                        command.ExecuteNonQuery();
+                                    }
+                                }
+
+                                //Commits the changes
+                                transaction.Commit();
+                                MessageBox.Show("Quiz imported successfully");
+                                
+                                LoadQuizzes();
+                            }
+                            catch (Exception ex)
+                            {
+                                //Reverts changes
+                                transaction.Rollback();
+                                MessageBox.Show($"Error importing quiz: {ex.Message}");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error reading file: {ex.Message}");
+                }
+                return;
+            }
+        }
     }
 }
