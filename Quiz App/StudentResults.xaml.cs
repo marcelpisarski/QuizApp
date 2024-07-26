@@ -102,5 +102,10 @@ namespace Quiz_App
             //Display the sorted results in the data grid
             dtgStudentResults.ItemsSource = resultsList;
         }
+
+        private void btnCloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,10 +22,15 @@ namespace Quiz_App
     /// </summary>
     public partial class QuizSelectorEdit : Window
     {
+        private BinarySearchTree quizTree;
+
         public QuizSelectorEdit()
         {
+
             InitializeComponent();
-            LoadQuizzes();
+
+            quizTree = new BinarySearchTree();
+            LoadQuizzes(-1);
         }
 
         //Class to input quizzes into table
@@ -91,7 +97,7 @@ namespace Quiz_App
                         MessageBox.Show("Quiz deleted successfully");
                         
                         //Refresh list
-                        LoadQuizzes();
+                        LoadQuizzes(-1);
                     }
                     else
                     {
@@ -106,11 +112,12 @@ namespace Quiz_App
         }
 
         //Load quizzes into table
-        private void LoadQuizzes()
+        private void LoadQuizzes(int Id)
         {
             string connectionString = GlobalVariables.Connection;
 
             int teacherId = GlobalVariables.UserId;
+            int quizId = Id;
 
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -118,8 +125,17 @@ namespace Quiz_App
                 {
                     connection.Open();
                     var command = connection.CreateCommand();
-                    command.CommandText = "SELECT quizid, title, topic FROM quiz WHERE teacherid = @teacherid";
-                    command.Parameters.AddWithValue("@teacherid", teacherId);
+                    if (quizId == -1)
+                    {
+                        command.CommandText = "SELECT quizid, title, topic FROM quiz WHERE teacherid = @teacherid";
+                        command.Parameters.AddWithValue("@teacherid", teacherId);
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT quizid, title, topic FROM quiz WHERE teacherid = @teacherid AND quizid = @quizid";
+                        command.Parameters.AddWithValue("@teacherid", teacherId);
+                        command.Parameters.AddWithValue("@quizid", quizId);
+                    }
 
                     //Adds all quizzes to a list
                     using (var reader = command.ExecuteReader())
@@ -128,12 +144,14 @@ namespace Quiz_App
 
                         while (reader.Read())
                         {
-                            quizzes.Add(new Quiz
+                            var quiz = new Quiz
                             {
                                 Id = reader.GetInt32("quizid"),
                                 Title = reader.GetString("title"),
                                 Topic = reader.GetString("topic")
-                            });
+                            };
+                            quizzes.Add(quiz);
+                            quizTree.InsertQuiz(quiz);
                         }
 
                         //Bind the list of quizzes to the datagrid
@@ -246,7 +264,7 @@ namespace Quiz_App
 
                     System.IO.File.WriteAllText(filePath, quizContent.ToString());
 
-                    MessageBox.Show($"Quiz exported successfully to {filePath}");
+                    MessageBox.Show($"Quiz exported successfully to {desktopPath}");
                 }
                 catch (Exception ex)
                 {
@@ -444,7 +462,7 @@ namespace Quiz_App
                                 transaction.Commit();
                                 MessageBox.Show("Quiz imported successfully");
                                 
-                                LoadQuizzes();
+                                LoadQuizzes(-1);
                             }
                             catch (Exception ex)
                             {
@@ -461,6 +479,122 @@ namespace Quiz_App
                 }
                 return;
             }
+        }
+
+        //Searches for a quiz by id
+        private void btnSearchQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            int quizId;
+
+            //Ensures a valid id is entered
+            if (int.TryParse(txtIdSearch.Text, out quizId))
+            {
+                var quiz = quizTree.SearchQuiz(quizId);
+                if (quiz != null)
+                {
+                    LoadQuizzes(quizId);
+                }
+                else
+                {
+                    MessageBox.Show("Quiz not found");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid quiz ID");
+            }
+        }
+
+        public class TreeNode
+        {
+            //Defines a node
+            public Quiz Data { get; set; }
+            public TreeNode Left { get; set; }
+            public TreeNode Right { get; set; }
+
+            //Sets up pointers
+            public TreeNode(Quiz data)
+            {
+                Data = data;
+                Left = null;
+                Right = null;
+            }
+        }
+
+        public class BinarySearchTree
+        {
+            private TreeNode root;
+
+            //If a quiz doesn't exist at root node, then create a new root node
+            public void InsertQuiz(Quiz data)
+            {
+                if (root == null)
+                {
+                    root = new TreeNode(data);
+                }
+                else
+                {
+                    InsertRecursively(data, root);
+                }
+            }
+
+            //Recursively insert new quizzes into the tree
+            public void InsertRecursively(Quiz data, TreeNode root)
+            {
+                if (data.Id < root.Data.Id)
+                {
+                    if (root.Left == null)
+                    {
+                        root.Left = new TreeNode(data); 
+                    }
+                    else
+                    {
+                        InsertRecursively(data, root.Left);
+                    }
+                }
+                else
+                {
+                    if (root.Right == null)
+                    {
+                        root.Right = new TreeNode(data);
+                    }
+                    else
+                    {
+                        InsertRecursively(data, root.Right);
+                    }
+                }
+            }
+
+            public Quiz SearchQuiz(int id)
+            {
+                return SearchRecursively(root, id);
+            }
+
+            public Quiz SearchRecursively(TreeNode root, int id)
+            {
+                //Checks if the root node is null or id matches up
+                if (root == null|| root.Data.Id == id)
+                {
+                    //returns null if root is null, otherwise it returns the quiz id
+                    return root?.Data;
+                }
+
+                if (id < root.Data?.Id) 
+                {
+                    return SearchRecursively(root.Left, id);
+                }
+                else
+                {
+                    return SearchRecursively(root.Right, id);
+                }
+            }
+        }
+
+        //Clears the search and resets quiz list
+        private void btnClearSearch_Click(object sender, RoutedEventArgs e)
+        {
+            txtIdSearch.Text = string.Empty;
+            LoadQuizzes(-1);
         }
     }
 }

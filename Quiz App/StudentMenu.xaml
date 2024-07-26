@@ -9,5 +9,6 @@
     <Grid Width="800" Height="430">
         <Button x:Name="btnOpenQuizzes" Content="Open Quizzes" HorizontalAlignment="Left" Margin="150,165,0,0" VerticalAlignment="Top" Width="200" Height="80" Click="btnOpenQuizzes_Click"/>
         <Button x:Name="btnOpenFlashcards" Content="Open Flashcards" HorizontalAlignment="Left" Margin="457,165,0,0" VerticalAlignment="Top" Width="200" Height="80" Click="btnOpenFlashcards_Click"/>
+        <Button x:Name="btnViewResults" Content="View Quiz Results" HorizontalAlignment="Left" Margin="194,275,0,0" VerticalAlignment="Top" Click="btnViewResults_Click"/>
     </Grid>
 </Window>

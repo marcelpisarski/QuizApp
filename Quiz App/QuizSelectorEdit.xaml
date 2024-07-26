@@ -19,6 +19,9 @@
         <Button x:Name="btnDeleteQuiz" Content="Delete Quiz" HorizontalAlignment="Left" Margin="439,235,0,0" VerticalAlignment="Top" Click="btnDeleteQuiz_Click"/>
         <Button x:Name="btnExportQuiz" Content="Export Quiz" HorizontalAlignment="Left" Margin="440,277,0,0" VerticalAlignment="Top" Click="btnExportQuiz_Click"/>
         <Button x:Name="btnImportQuiz" Content="Import Quiz" HorizontalAlignment="Center" Margin="0,277,0,0" VerticalAlignment="Top" Click="btnImportQuiz_Click"/>
+        <TextBox x:Name="txtIdSearch" HorizontalAlignment="Left" Margin="548,48,0,0" TextWrapping="Wrap" Text="Search by Id" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnSearchQuiz" Content="Search" HorizontalAlignment="Left" Margin="692,48,0,0" VerticalAlignment="Top" Click="btnSearchQuiz_Click"/>
+        <Button x:Name="btnClearSearch" Content="Clear" HorizontalAlignment="Left" Margin="700,84,0,0" VerticalAlignment="Top" Click="btnClearSearch_Click"/>
 
     </Grid>
 </Window>

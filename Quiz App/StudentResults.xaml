@@ -8,6 +8,7 @@
         Title="StudentResults" Height="450" Width="800">
     <Grid>
         <DataGrid x:Name="dtgStudentResults" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="214,128,214,128"/>
+        <Button x:Name="btnCloseWindow" Content="Close" HorizontalAlignment="Left" Margin="574,330,0,0" VerticalAlignment="Top" Click="btnCloseWindow_Click"/>
 
     </Grid>
 </Window>

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static Quiz_App.MainWindow;
 
 namespace Quiz_App
 {
@@ -42,6 +43,16 @@ namespace Quiz_App
 
             SelectFlashcardType.Show();
             this.Show();
+        }
+
+        private void btnViewResults_Click(object sender, RoutedEventArgs e)
+        {          
+            StudentResults StudentResults = new StudentResults(GlobalVariables.UserId);
+            this.Hide();
+            
+            StudentResults.Show();
+            this.Show();
+
         }
     }
 }
