@@ -6,16 +6,16 @@
         xmlns:local="clr-namespace:Quiz_App"
         mc:Ignorable="d"
         Title="Register" Height="450" Width="800">
-    <Grid Width="800" Height="430">
-        <TextBox x:Name="txtRegisterUsername" HorizontalAlignment="Left" Margin="304,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="240" Height="36"/>
-        <Button x:Name="btnRegisterUser" Content="Register User" HorizontalAlignment="Left" Margin="374,344,0,0" VerticalAlignment="Top" Width="104" Height="52" Click="btnRegisterUser_Click"/>
-        <Label x:Name="lblUsername" Content="Username" HorizontalAlignment="Left" Margin="304,89,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblPassword" Content="Password" HorizontalAlignment="Left" Margin="306,155,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="lblTeacherQuery" Content="Are you a teacher?" HorizontalAlignment="Left" Margin="304,293,0,0" VerticalAlignment="Top" Checked="lblTeacherQuery_Checked" Unchecked="lblTeacherQuery_UnChecked"/>
-        <TextBox x:Name="txtTeacherCode" HorizontalAlignment="Left" Margin="427,292,0,0" TextWrapping="Wrap" Text="Enter Code" VerticalAlignment="Top" Width="120" />
-        <Label x:Name="lblConfirmPassword" Content="Confirm Password" HorizontalAlignment="Left" Margin="306,222,0,0" VerticalAlignment="Top"/>
-        <PasswordBox x:Name="txtRegisterPassword" HorizontalAlignment="Left" Margin="304,181,0,0" VerticalAlignment="Top" Width="240" Height="36"/>
-        <PasswordBox x:Name="txtConfirmPassword" HorizontalAlignment="Left" Margin="304,248,0,0" VerticalAlignment="Top" Width="240" Height="36"/>
+    <Grid Width="800" Height="430" Background="#FF77B0AA">
+        <TextBox x:Name="txtRegisterUsername" HorizontalAlignment="Left" Margin="306,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="240" Height="20"/>
+        <Button x:Name="btnRegisterUser" Content="Register User" HorizontalAlignment="Left" Margin="358,350,0,0" VerticalAlignment="Top" Width="132" Height="52" Click="btnRegisterUser_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
+        <Label x:Name="lblUsername" Content="Username" HorizontalAlignment="Left" Margin="304,50,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="18" FontWeight="Bold"/>
+        <Label x:Name="lblPassword" Content="Password" HorizontalAlignment="Left" Margin="306,128,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="18" FontWeight="Bold"/>
+        <CheckBox x:Name="lblTeacherQuery" Content="Teacher?" HorizontalAlignment="Left" Margin="304,293,0,0" VerticalAlignment="Top" Checked="lblTeacherQuery_Checked" Unchecked="lblTeacherQuery_UnChecked" FontFamily="Tahoma" FontSize="18"/>
+        <TextBox x:Name="txtTeacherCode" HorizontalAlignment="Left" Margin="424,296,0,0" TextWrapping="Wrap" Text="Enter Code" VerticalAlignment="Top" Width="120" Background="White" />
+        <Label x:Name="lblConfirmPassword" Content="Confirm Password" HorizontalAlignment="Left" Margin="306,210,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="18" RenderTransformOrigin="0.487,-0.226" FontWeight="Bold"/>
+        <PasswordBox x:Name="txtRegisterPassword" HorizontalAlignment="Left" Margin="306,165,0,0" VerticalAlignment="Top" Width="240" Height="20"/>
+        <PasswordBox x:Name="txtConfirmPassword" HorizontalAlignment="Left" Margin="306,247,0,0" VerticalAlignment="Top" Width="240" Height="20"/>
 
     </Grid>
 </Window>

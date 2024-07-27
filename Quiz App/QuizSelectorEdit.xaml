@@ -6,22 +6,23 @@
         xmlns:local="clr-namespace:Quiz_App"
         mc:Ignorable="d"
         Title="QuizSelectorEdit" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="btnCancelQuizEdit" Content="Close" HorizontalAlignment="Left" Margin="282,235,0,0" VerticalAlignment="Top" Click="btnCancelQuizEdit_Click"/>
-        <Button x:Name="btnSelectQuiz" Content="Select Quiz" HorizontalAlignment="Left" Margin="355,235,0,0" VerticalAlignment="Top" Click="btnSelectQuiz_Click"/>
-        <DataGrid x:Name="dtgQuizList" d:ItemsSource="{d:SampleData ItemCount=5}" CanUserAddRows="False" AutoGenerateColumns="False" Margin="87,48,295,217">
+    <Grid Background="#FF77B0AA">
+        <Button x:Name="btnCancelQuizEdit" Content="Close" HorizontalAlignment="Left" Margin="677,371,0,0" VerticalAlignment="Top" Click="btnCancelQuizEdit_Click" Background="#FFDBEEF1" FontFamily="Tahoma" Height="36" Width="102" FontSize="18"/>
+        <Button x:Name="btnSelectQuiz" Content="Select Quiz" HorizontalAlignment="Left" Margin="219,371,0,0" VerticalAlignment="Top" Click="btnSelectQuiz_Click" Background="#FFDBEEF1" FontFamily="Tahoma" Width="102" Height="36" FontSize="18"/>
+        <DataGrid x:Name="dtgQuizList" d:ItemsSource="{d:SampleData ItemCount=5}" CanUserAddRows="False" AutoGenerateColumns="False" Margin="112,39,226,121" FontFamily="Tahoma" Background="White" FontSize="18">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Quiz Id" Binding="{Binding Id}" />
                 <DataGridTextColumn Header="Quiz Topic" Binding="{Binding Topic}" />
                 <DataGridTextColumn Header="Quiz Title" Binding="{Binding Title}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnDeleteQuiz" Content="Delete Quiz" HorizontalAlignment="Left" Margin="439,235,0,0" VerticalAlignment="Top" Click="btnDeleteQuiz_Click"/>
-        <Button x:Name="btnExportQuiz" Content="Export Quiz" HorizontalAlignment="Left" Margin="440,277,0,0" VerticalAlignment="Top" Click="btnExportQuiz_Click"/>
-        <Button x:Name="btnImportQuiz" Content="Import Quiz" HorizontalAlignment="Center" Margin="0,277,0,0" VerticalAlignment="Top" Click="btnImportQuiz_Click"/>
-        <TextBox x:Name="txtIdSearch" HorizontalAlignment="Left" Margin="548,48,0,0" TextWrapping="Wrap" Text="Search by Id" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="btnSearchQuiz" Content="Search" HorizontalAlignment="Left" Margin="692,48,0,0" VerticalAlignment="Top" Click="btnSearchQuiz_Click"/>
-        <Button x:Name="btnClearSearch" Content="Clear" HorizontalAlignment="Left" Margin="700,84,0,0" VerticalAlignment="Top" Click="btnClearSearch_Click"/>
+        <Button x:Name="btnDeleteQuiz" Content="Delete Quiz" HorizontalAlignment="Left" Margin="112,371,0,0" VerticalAlignment="Top" Click="btnDeleteQuiz_Click" Background="#FFDBEEF1" FontFamily="Tahoma" Width="102" Height="36" FontSize="18"/>
+        <Button x:Name="btnExportQuiz" Content="Export Quiz" HorizontalAlignment="Left" Margin="472,371,0,0" VerticalAlignment="Top" Click="btnExportQuiz_Click" Background="#FFDBEEF1" FontFamily="Tahoma" Width="102" Height="36" FontSize="18"/>
+        <Button x:Name="btnImportQuiz" Content="Import Quiz" HorizontalAlignment="Left" Margin="365,371,0,0" VerticalAlignment="Top" Click="btnImportQuiz_Click" Background="#FFDBEEF1" FontFamily="Tahoma" Width="102" Height="36" FontSize="18"/>
+        <TextBox x:Name="txtIdSearch" HorizontalAlignment="Left" Margin="639,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnSearchQuiz" Content="Search" HorizontalAlignment="Left" Margin="648,172,0,0" VerticalAlignment="Top" Click="btnSearchQuiz_Click" Background="#FFDBEEF1" FontFamily="Tahoma" Width="102" Height="36" FontSize="18"/>
+        <Button x:Name="btnClearSearch" Content="Clear" HorizontalAlignment="Left" Margin="648,223,0,0" VerticalAlignment="Top" Click="btnClearSearch_Click" Background="#FFDBEEF1" FontFamily="Tahoma" Width="102" Height="36" FontSize="18"/>
+        <Label Content="Search by Id" HorizontalAlignment="Left" Margin="637,78,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="Tahoma" FontWeight="Bold"/>
 
     </Grid>
 </Window>

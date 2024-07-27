@@ -7,28 +7,29 @@
         mc:Ignorable="d"
         Title="TeacherMenu" Height="450" Width="800">
     <Grid Width="800" Height="434" Background="#FF77B0AA">
-        <Button x:Name="btnCreateQuiz" Content="Create Quiz" HorizontalAlignment="Left" Margin="163,120,0,0" VerticalAlignment="Top" Height="77" Width="186" Click="btnCreateQuiz_Click" Background="#FF003C42" Foreground="White"/>
-        <Button x:Name="btnEditQuiz" Content="Edit Quiz" HorizontalAlignment="Left" Margin="163,243,0,0" VerticalAlignment="Top" Height="77" Width="186" Click="btnEditQuiz_Click" Background="#FF003C42" Foreground="White"/>
-        <DataGrid x:Name="dtgStudentList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="519,120,23,97" CanUserAddRows="False" AutoGenerateColumns="False" SelectionChanged="dtgStudentList_SelectionChanged" Height="217">
+        <Button x:Name="btnCreateQuiz" Content="Create Quiz" HorizontalAlignment="Left" Margin="112,143,0,0" VerticalAlignment="Top" Height="100" Width="200" Click="btnCreateQuiz_Click" Background="White" Foreground="Black" FontFamily="Tahoma" FontSize="18"/>
+        <Button x:Name="btnEditQuiz" Content="Edit Quiz" HorizontalAlignment="Left" Margin="112,262,0,0" VerticalAlignment="Top" Height="100" Width="200" Click="btnEditQuiz_Click" Background="White" Foreground="Black" FontFamily="Tahoma" FontSize="18"/>
+        <DataGrid x:Name="dtgStudentList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="381,104,29,113" CanUserAddRows="False" AutoGenerateColumns="False" SelectionChanged="dtgStudentList_SelectionChanged" Height="217" FontFamily="Tahoma" Background="White" FontSize="18">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="UserId" Binding="{Binding UserId}" />
                 <DataGridTextColumn Header="Username" Binding="{Binding Username}" />
                 <DataGridTextColumn Header="Level" Binding="{Binding Level}" />
             </DataGrid.Columns>
         </DataGrid>
-        <ComboBox x:Name="cbbChangeLevel" HorizontalAlignment="Left" Margin="519,342,0,0" VerticalAlignment="Top" Width="120" Height="22">
+        <ComboBox x:Name="cbbChangeLevel" HorizontalAlignment="Left" Margin="381,329,0,0" VerticalAlignment="Top" Width="120" Height="33" FontFamily="Tahoma" FontSize="18">
             <ComboBoxItem Content="1"/>
             <ComboBoxItem Content="2"/>
             <ComboBoxItem Content="3"/>
             <ComboBoxItem Content="4"/>
         </ComboBox>
-        <Button x:Name="btnSubmitLevel" Content="Change Level" HorizontalAlignment="Left" Margin="644,342,0,0" VerticalAlignment="Top" Click="btnSubmitLevel_Click" Height="22" Width="82" RenderTransformOrigin="0.388,0.559"/>
-        <Label x:Name="lblStudentCount" Content="STUDENT COUNT" HorizontalAlignment="Left" Margin="519,41,0,0" VerticalAlignment="Top" Width="105" Height="30"/>
-        <Button x:Name="btnCancelSelection" Content="Cancel" HorizontalAlignment="Left" Margin="731,342,0,0" VerticalAlignment="Top" Height="22" Width="46" Click="btnCancelSelection_Click"/>
-        <TextBox x:Name="txtSearchUser" HorizontalAlignment="Left" Margin="519,82,0,0" TextWrapping="Wrap" Text="Search User" VerticalAlignment="Top" Width="120" Height="20"/>
-        <Button x:Name="btnSearchUser" Content="Search" HorizontalAlignment="Left" Margin="654,81,0,0" VerticalAlignment="Top" Click="btnSearchUser_Click" Width="40" Height="20" Background="White" Foreground="Black"/>
-        <Button x:Name="btnClearSearch" Content="Clear" HorizontalAlignment="Left" Margin="714,81,0,0" VerticalAlignment="Top" Click="btnClearSearch_Click" Width="40" Height="20" Background="White"/>
-        <Button x:Name="btnStudentResults" Content="View Student Results" HorizontalAlignment="Left" Margin="519,387,0,0" VerticalAlignment="Top" Width="258" Click="btnStudentResults_Click" Background="White"/>
+        <Button x:Name="btnSubmitLevel" Content="Change Level" HorizontalAlignment="Left" Margin="535,326,0,0" VerticalAlignment="Top" Click="btnSubmitLevel_Click" Height="36" Width="120" RenderTransformOrigin="0.388,0.559" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
+        <Label x:Name="lblStudentCount" Content="STUDENT COUNT" HorizontalAlignment="Left" Margin="112,104,0,0" VerticalAlignment="Top" Width="224" Height="30" FontFamily="Tahoma" FontSize="18" FontWeight="Bold"/>
+        <Button x:Name="btnCancelSelection" Content="Cancel" HorizontalAlignment="Left" Margin="669,326,0,0" VerticalAlignment="Top" Height="36" Width="102" Click="btnCancelSelection_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
+        <TextBox x:Name="txtSearchUser" HorizontalAlignment="Left" Margin="381,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20" FontFamily="Tahoma"/>
+        <Button x:Name="btnSearchUser" Content="Search" HorizontalAlignment="Left" Margin="535,60,0,0" VerticalAlignment="Top" Click="btnSearchUser_Click" Width="120" Height="36" Background="#FFDBEEF1" Foreground="Black" FontFamily="Tahoma" FontSize="18"/>
+        <Button x:Name="btnClearSearch" Content="Clear" HorizontalAlignment="Left" Margin="669,60,0,0" VerticalAlignment="Top" Click="btnClearSearch_Click" Width="102" Height="36" Background="#FFDBEEF1" FontFamily="Tahoma" FontSize="18"/>
+        <Button x:Name="btnStudentResults" Content="View Student Results" HorizontalAlignment="Left" Margin="381,367,0,0" VerticalAlignment="Top" Width="390" Click="btnStudentResults_Click" Background="#FFDBEEF1" FontFamily="Tahoma" Height="39" FontSize="18"/>
+        <Label Content="Search User" HorizontalAlignment="Left" Margin="381,36,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
 
     </Grid>
 </Window>

@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:Quiz_App"
         mc:Ignorable="d"
         Title="StudentFlashcardWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="btnFlashcard" Content="FLASHCARD DATA" HorizontalAlignment="Center" Margin="0,125,0,0" VerticalAlignment="Top" Height="92" Width="312" Click="btnFlashcard_Click"/>
-        <Button x:Name="btnNextFlashcard" Content="Next" HorizontalAlignment="Center" Margin="0,263,0,0" VerticalAlignment="Top" Height="60" Width="136" Click="btnNextFlashcard_Click"/>
+    <Grid Background="#FF77B0AA">
+        <Button x:Name="btnFlashcard" Content="FLASHCARD DATA" HorizontalAlignment="Center" Margin="0,45,0,0" VerticalAlignment="Top" Height="200" Width="400" Click="btnFlashcard_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="20"/>
+        <Button x:Name="btnNextFlashcard" Content="Next" HorizontalAlignment="Center" Margin="0,292,0,0" VerticalAlignment="Top" Height="60" Width="136" Click="btnNextFlashcard_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
 
     </Grid>
 </Window>
