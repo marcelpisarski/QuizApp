@@ -42,7 +42,6 @@ namespace Quiz_App
             {
                 return;
             }
-
         }
 
         //Sets randomise questions to true
@@ -62,7 +61,6 @@ namespace Quiz_App
             //Opens flashcard window with arguements
             StudentSelectQuiz StudentSelectQuiz = new StudentSelectQuiz("PreviousQuizzes", randomiseQuestions);
             StudentSelectQuiz.Show();
-            
         }
 
         private void btnWrongQuizAnswers_Click(object sender, RoutedEventArgs e)
@@ -77,7 +75,6 @@ namespace Quiz_App
             {
                 return;
             }
-
         }
     }
 }

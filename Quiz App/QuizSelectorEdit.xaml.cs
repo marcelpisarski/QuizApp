@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Quiz_App.Classes;
 using static Quiz_App.MainWindow;
 
 namespace Quiz_App
@@ -31,14 +32,6 @@ namespace Quiz_App
 
             quizTree = new BinarySearchTree();
             LoadQuizzes(-1);
-        }
-
-        //Class to input quizzes into table
-        public class Quiz
-        {
-            public int Id { get; set; }
-            public string Title { get; set; }
-            public string Topic { get; set; }
         }
 
         private void btnSelectQuiz_Click(object sender, RoutedEventArgs e)
@@ -107,60 +100,6 @@ namespace Quiz_App
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error deleting quiz: {ex.Message}");
-                }
-            }
-        }
-
-        //Load quizzes into table
-        private void LoadQuizzes(int Id)
-        {
-            string connectionString = GlobalVariables.Connection;
-
-            int teacherId = GlobalVariables.UserId;
-            int quizId = Id;
-
-            using (var connection = new MySqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    var command = connection.CreateCommand();
-                    if (quizId == -1)
-                    {
-                        command.CommandText = "SELECT quizid, title, topic FROM quiz WHERE teacherid = @teacherid";
-                        command.Parameters.AddWithValue("@teacherid", teacherId);
-                    }
-                    else
-                    {
-                        command.CommandText = "SELECT quizid, title, topic FROM quiz WHERE teacherid = @teacherid AND quizid = @quizid";
-                        command.Parameters.AddWithValue("@teacherid", teacherId);
-                        command.Parameters.AddWithValue("@quizid", quizId);
-                    }
-
-                    //Adds all quizzes to a list
-                    using (var reader = command.ExecuteReader())
-                    {
-                        var quizzes = new List<Quiz>();
-
-                        while (reader.Read())
-                        {
-                            var quiz = new Quiz
-                            {
-                                Id = reader.GetInt32("quizid"),
-                                Title = reader.GetString("title"),
-                                Topic = reader.GetString("topic")
-                            };
-                            quizzes.Add(quiz);
-                            quizTree.InsertQuiz(quiz);
-                        }
-
-                        //Bind the list of quizzes to the datagrid
-                        dtgQuizList.ItemsSource = quizzes;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error loading quizzes: {ex.Message}");
                 }
             }
         }
@@ -271,15 +210,6 @@ namespace Quiz_App
                     MessageBox.Show($"Error exporting quiz: {ex.Message}");
                 }
             }
-        }
-
-        public class Question
-        {
-            public string Text { get; set; }
-            public string Type { get; set; }
-            public List<string> Options { get; set; }
-            public int CorrectAnswerIndex { get; set; }
-            public string Answer { get; set; }
         }
 
         private void btnImportQuiz_Click(object sender, RoutedEventArgs e)
@@ -505,96 +435,74 @@ namespace Quiz_App
             }
         }
 
-        public class TreeNode
-        {
-            //Defines a node
-            public Quiz Data { get; set; }
-            public TreeNode Left { get; set; }
-            public TreeNode Right { get; set; }
-
-            //Sets up pointers
-            public TreeNode(Quiz data)
-            {
-                Data = data;
-                Left = null;
-                Right = null;
-            }
-        }
-
-        public class BinarySearchTree
-        {
-            private TreeNode root;
-
-            //If a quiz doesn't exist at root node, then create a new root node
-            public void InsertQuiz(Quiz data)
-            {
-                if (root == null)
-                {
-                    root = new TreeNode(data);
-                }
-                else
-                {
-                    InsertRecursively(data, root);
-                }
-            }
-
-            //Recursively insert new quizzes into the tree
-            public void InsertRecursively(Quiz data, TreeNode root)
-            {
-                if (data.Id < root.Data.Id)
-                {
-                    if (root.Left == null)
-                    {
-                        root.Left = new TreeNode(data); 
-                    }
-                    else
-                    {
-                        InsertRecursively(data, root.Left);
-                    }
-                }
-                else
-                {
-                    if (root.Right == null)
-                    {
-                        root.Right = new TreeNode(data);
-                    }
-                    else
-                    {
-                        InsertRecursively(data, root.Right);
-                    }
-                }
-            }
-
-            public Quiz SearchQuiz(int id)
-            {
-                return SearchRecursively(root, id);
-            }
-
-            public Quiz SearchRecursively(TreeNode root, int id)
-            {
-                //Checks if the root node is null or id matches up
-                if (root == null|| root.Data.Id == id)
-                {
-                    //returns null if root is null, otherwise it returns the quiz id
-                    return root?.Data;
-                }
-
-                if (id < root.Data?.Id) 
-                {
-                    return SearchRecursively(root.Left, id);
-                }
-                else
-                {
-                    return SearchRecursively(root.Right, id);
-                }
-            }
-        }
-
         //Clears the search and resets quiz list
         private void btnClearSearch_Click(object sender, RoutedEventArgs e)
         {
             txtIdSearch.Text = string.Empty;
             LoadQuizzes(-1);
+        }
+
+        //Load quizzes into table
+        private void LoadQuizzes(int Id)
+        {
+            string connectionString = GlobalVariables.Connection;
+
+            int teacherId = GlobalVariables.UserId;
+            int quizId = Id;
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    if (quizId == -1)
+                    {
+                        command.CommandText = "SELECT quizid, title, topic FROM quiz WHERE teacherid = @teacherid";
+                        command.Parameters.AddWithValue("@teacherid", teacherId);
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT quizid, title, topic FROM quiz WHERE teacherid = @teacherid AND quizid = @quizid";
+                        command.Parameters.AddWithValue("@teacherid", teacherId);
+                        command.Parameters.AddWithValue("@quizid", quizId);
+                    }
+
+                    //Adds all quizzes to a list
+                    using (var reader = command.ExecuteReader())
+                    {
+                        var quizzes = new List<Quiz>();
+
+                        while (reader.Read())
+                        {
+                            var quiz = new Quiz
+                            {
+                                Id = reader.GetInt32("quizid"),
+                                Title = reader.GetString("title"),
+                                Topic = reader.GetString("topic")
+                            };
+                            quizzes.Add(quiz);
+                            quizTree.InsertQuiz(quiz);
+                        }
+
+                        //Bind the list of quizzes to the datagrid
+                        dtgQuizList.ItemsSource = quizzes;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error loading quizzes: {ex.Message}");
+                }
+            }
+        }
+
+        public class Question
+        {
+            public string Text { get; set; }
+            public string Type { get; set; }
+            public List<string> Options { get; set; }
+            public int CorrectAnswerIndex { get; set; }
+            public string Answer { get; set; }
         }
     }
 }

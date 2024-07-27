@@ -20,6 +20,7 @@ namespace Quiz_App
     /// Interaction logic for StudentResults.xaml
     /// </summary>
     public record QuizResult(int QuizId, string QuizTitle, int TotalMarks, int StudentMark, DateTime completionDate, decimal Percentage);
+
     public partial class StudentResults : Window
     {
         private int studentId;
@@ -34,6 +35,11 @@ namespace Quiz_App
             
             LoadStudentResults();
             DisplayQuizResults();
+        }
+
+        private void btnCloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
 
         private void LoadStudentResults()
@@ -101,11 +107,6 @@ namespace Quiz_App
 
             //Display the sorted results in the data grid
             dtgStudentResults.ItemsSource = resultsList;
-        }
-
-        private void btnCloseWindow_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

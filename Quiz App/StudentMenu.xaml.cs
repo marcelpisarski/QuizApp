@@ -52,7 +52,6 @@ namespace Quiz_App
             
             StudentResults.Show();
             this.Show();
-
         }
     }
 }

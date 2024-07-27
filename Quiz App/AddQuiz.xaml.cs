@@ -40,14 +40,6 @@ namespace Quiz_App
             btnCreateSchema.IsEnabled = true;
         }
 
-        //Question class for datagrid which shows questions inside quiz
-        public class Question
-        {
-            public int QuestionId { get; set; }
-            public string QuestionText { get; set; }
-            public string QuestionType { get; set; }
-        }
-
         private void btnAddQuestion_Click(object sender, RoutedEventArgs e)
         {
             int quizId = GlobalVariables.QuizId;
@@ -66,35 +58,6 @@ namespace Quiz_App
             QuizQuestion.Show();
             
             canCreateQuiz = true;
-        }
-
-        //Checks number of users who completed the quiz
-        private bool IsQuizCompleted(int quizId)
-        {
-            string connectionString = GlobalVariables.Connection;
-            bool isCompleted = false;
-
-            using (var connection = new MySqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    var command = connection.CreateCommand();
-
-                    // Check if there are any completions for the selected quiz
-                    command.CommandText = "SELECT COUNT(*) FROM userquizcompletions WHERE quizid = @quizId";
-                    command.Parameters.AddWithValue("@quizId", quizId);
-
-                    int completionCount = Convert.ToInt32(command.ExecuteScalar());
-                    isCompleted = completionCount > 0;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error checking quiz completion status: {ex.Message}");
-                }
-            }
-
-            return isCompleted;
         }
 
         private void btnCancelQuiz_Click(object sender, RoutedEventArgs e)
@@ -539,6 +502,43 @@ namespace Quiz_App
                     MessageBox.Show($"Error creating quiz: {ex.Message}");
                 }
             }
+        }
+
+        //Checks number of users who completed the quiz
+        private bool IsQuizCompleted(int quizId)
+        {
+            string connectionString = GlobalVariables.Connection;
+            bool isCompleted = false;
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+
+                    // Check if there are any completions for the selected quiz
+                    command.CommandText = "SELECT COUNT(*) FROM userquizcompletions WHERE quizid = @quizId";
+                    command.Parameters.AddWithValue("@quizId", quizId);
+
+                    int completionCount = Convert.ToInt32(command.ExecuteScalar());
+                    isCompleted = completionCount > 0;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error checking quiz completion status: {ex.Message}");
+                }
+            }
+
+            return isCompleted;
+        }
+
+        //Question class for datagrid which shows questions inside quiz
+        public class Question
+        {
+            public int QuestionId { get; set; }
+            public string QuestionText { get; set; }
+            public string QuestionType { get; set; }
         }
     }
 }

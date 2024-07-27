@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Quiz_App.Classes;
 using static Quiz_App.MainWindow;
 using static Quiz_App.QuizSelectorEdit;
 
@@ -44,11 +45,38 @@ namespace Quiz_App
             }
         }
 
-        public class Quiz
+        //Closes window
+        private void btnCloseStudentSelectQuiz_Click(object sender, RoutedEventArgs e)
         {
-            public int Id { get; set; }
-            public string Topic { get; set; }
-            public string Title { get; set; }
+            this.Close();
+        }
+
+        private void btnSelectQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            if (dtgQuizzes.SelectedItem is Quiz selectedQuiz)
+            {
+                switch (actionType)
+                {
+                    case "PreviousQuizzes":
+                        //Proceed to open flashcard window with selected quiz id
+                        StudentFlashcardWindow studentFlashcardWindow = new StudentFlashcardWindow("PreviousQuizzes", randomiseQuestions, selectedQuiz.Id);
+                        studentFlashcardWindow.Show();
+                        break;
+                    case "StartQuiz":
+                        //Proceed to start the selected quiz
+                        StudentQuizWindow studentQuizWindow = new StudentQuizWindow(selectedQuiz.Id);
+                        studentQuizWindow.Show();
+                        break;
+                    default:
+                        MessageBox.Show("Invalid action type");
+                        return;
+                }
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Please select a quiz to start");
+            }
         }
 
         //Load the users uncompleted quizzes into list
@@ -167,40 +195,6 @@ namespace Quiz_App
             }
 
             return completedQuizzes;
-        }
-
-        //Closes window
-        private void btnCloseStudentSelectQuiz_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnSelectQuiz_Click(object sender, RoutedEventArgs e)
-        {
-            if (dtgQuizzes.SelectedItem is Quiz selectedQuiz)
-            {
-                switch (actionType)
-                {
-                    case "PreviousQuizzes":
-                        //Proceed to open flashcard window with selected quiz id
-                        StudentFlashcardWindow studentFlashcardWindow = new StudentFlashcardWindow("PreviousQuizzes", randomiseQuestions, selectedQuiz.Id);
-                        studentFlashcardWindow.Show();
-                        break;
-                    case "StartQuiz":
-                        //Proceed to start the selected quiz
-                        StudentQuizWindow studentQuizWindow = new StudentQuizWindow(selectedQuiz.Id);
-                        studentQuizWindow.Show();
-                        break;
-                    default:
-                        MessageBox.Show("Invalid action type");
-                        return;
-                }
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Please select a quiz to start");
-            }
         }
     }
 }

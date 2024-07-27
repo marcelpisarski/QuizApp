@@ -59,6 +59,24 @@ namespace Quiz_App
             DisplayFlashcard();
         }
 
+        //Pops question out of stack and displays new flashcard  
+        private void btnNextFlashcard_Click(object sender, RoutedEventArgs e)
+        {
+            if (questionStack.Count > 0)
+            {
+                questionStack.Pop();
+            }
+            
+            isQuestionDisplayed = true;
+            DisplayFlashcard();
+        }
+
+        //Switches between question and answer
+        private void btnFlashcard_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayFlashcard();
+        }
+
         //Places question information onto flashcard
         private void DisplayFlashcard()
         {
@@ -76,9 +94,9 @@ namespace Quiz_App
             if (isQuestionDisplayed)
             {
                 btnFlashcard.Content = currentQuestion.QuestionText;
-                
+
                 //Answer will display next time user presses flashcard
-                isQuestionDisplayed= false;
+                isQuestionDisplayed = false;
             }
             else
             {
@@ -91,7 +109,7 @@ namespace Quiz_App
                         2 => mcq.Option3,
                         3 => mcq.Option4
                     };
-                    
+
                     btnFlashcard.Content = correctAnswer;
                 }
                 else if (currentQuestion is SingleChoiceQuestion scq)
@@ -206,24 +224,6 @@ namespace Quiz_App
             }
 
             return questions;
-        }
-
-        //Pops question out of stack and displays new flashcard  
-        private void btnNextFlashcard_Click(object sender, RoutedEventArgs e)
-        {
-            if (questionStack.Count > 0)
-            {
-                questionStack.Pop();
-            }
-            
-            isQuestionDisplayed = true;
-            DisplayFlashcard();
-        }
-
-        //Switches between question and answer
-        private void btnFlashcard_Click(object sender, RoutedEventArgs e)
-        {
-            DisplayFlashcard();
         }
     }
 }

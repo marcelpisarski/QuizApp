@@ -31,7 +31,7 @@ namespace Quiz_App
             LoadStudentData();
             GetStudentCount();
         }
-
+                    
         //Creates a new quiz
         private void btnCreateQuiz_Click(object sender, RoutedEventArgs e)
         {
@@ -40,37 +40,6 @@ namespace Quiz_App
 
             addQuiz.Show();
             this.Show();
-        }
-
-        //Loads students into table
-        private void LoadStudentData()
-        {
-            string connectionString = GlobalVariables.Connection;
-
-            DataTable dataTable = new DataTable();
-
-            using (var connection = new MySqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    var command = connection.CreateCommand();
-
-                    //Fills dataTable with students
-                    command.CommandText = @"SELECT user.id AS UserId ,user.username AS Username, userbaseline.level AS Level FROM user INNER JOIN userbaseline ON user.id = userbaseline.userid WHERE user.role = 'student' ORDER BY user.username ASC;";
-
-                    using (var adapter = new MySqlDataAdapter(command))
-                    {
-                        adapter.Fill(dataTable);
-                    }
-                }
-                catch (Exception ex) 
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-            //Display data inside table
-            dtgStudentList.ItemsSource = dataTable.DefaultView;
         }
 
         private void dtgStudentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -126,38 +95,6 @@ namespace Quiz_App
                     }
                 }
             }
-        }
-
-        //Counts the number of registered students
-        private void GetStudentCount()
-        {
-            int studentCount = 0;
-            string connectionString = GlobalVariables.Connection; 
-
-            try
-            {
-                using (var connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    var command = connection.CreateCommand();
-                    command.CommandText = "SELECT COUNT(*) FROM user INNER JOIN userbaseline ON user.id = userbaseline.userid WHERE user.role = 'student'";
-
-                    object result = command.ExecuteScalar();
-
-                    //Casts the number of students to studentCount
-                    if (result != null && result != DBNull.Value)
-                    {
-                        studentCount = Convert.ToInt32(result);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            //Updates StudentCount label
-            lblStudentCount.Content = $"Student Count: {studentCount}";
         }
 
         private void btnCancelSelection_Click(object sender, RoutedEventArgs e)
@@ -221,6 +158,69 @@ namespace Quiz_App
                 StudentResults.Show();
                 this.Show();
             }
+        }
+
+        //Loads students into table
+        private void LoadStudentData()
+        {
+            string connectionString = GlobalVariables.Connection;
+
+            DataTable dataTable = new DataTable();
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+
+                    //Fills dataTable with students
+                    command.CommandText = @"SELECT user.id AS UserId ,user.username AS Username, userbaseline.level AS Level FROM user INNER JOIN userbaseline ON user.id = userbaseline.userid WHERE user.role = 'student' ORDER BY user.username ASC;";
+
+                    using (var adapter = new MySqlDataAdapter(command))
+                    {
+                        adapter.Fill(dataTable);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            //Display data inside table
+            dtgStudentList.ItemsSource = dataTable.DefaultView;
+        }
+
+        //Counts the number of registered students
+        private void GetStudentCount()
+        {
+            int studentCount = 0;
+            string connectionString = GlobalVariables.Connection;
+
+            try
+            {
+                using (var connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = "SELECT COUNT(*) FROM user INNER JOIN userbaseline ON user.id = userbaseline.userid WHERE user.role = 'student'";
+
+                    object result = command.ExecuteScalar();
+
+                    //Casts the number of students to studentCount
+                    if (result != null && result != DBNull.Value)
+                    {
+                        studentCount = Convert.ToInt32(result);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            //Updates StudentCount label
+            lblStudentCount.Content = $"Student Count: {studentCount}";
         }
     }
 }
