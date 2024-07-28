@@ -129,7 +129,7 @@ namespace Quiz_App
                     command.Parameters.Clear();
 
                     //Insert details into user table
-                    command.CommandText = "INSERT INTO user(username,password, role) VALUES (@username, @password, @role); ";
+                    command.CommandText = "INSERT INTO user(username,password, role) VALUES (@username, @password, @role)";
                     command.Parameters.AddWithValue("@username", username);
                     command.Parameters.AddWithValue("@password", hashedPassword);
                     command.Parameters.AddWithValue("@role", userRole);
@@ -144,7 +144,7 @@ namespace Quiz_App
                             int userId = Convert.ToInt32(command.ExecuteScalar());
 
                             // Insert into userbaseline table
-                            command.CommandText = "INSERT INTO userbaseline (userid, level) VALUES (@userid, 0);";
+                            command.CommandText = "INSERT INTO userbaseline (userid, level) VALUES (@userid, 0)";
                             command.Parameters.Clear();
                             command.Parameters.AddWithValue("@userid", userId);
 

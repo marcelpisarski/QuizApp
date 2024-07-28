@@ -70,6 +70,7 @@ namespace Quiz_App
                         //Update the database with new level
                         connection.Open();
                         var command = connection.CreateCommand();
+                        
                         command.CommandText = "UPDATE userbaseline SET level = @level, newuser = 0 WHERE userid = @userId";
                         command.Parameters.AddWithValue("@level", newLevel);
                         command.Parameters.AddWithValue("@userId", selectedUserId);
@@ -175,8 +176,10 @@ namespace Quiz_App
                     var command = connection.CreateCommand();
 
                     //Fills dataTable with students
-                    command.CommandText = @"SELECT user.id AS UserId ,user.username AS Username, userbaseline.level AS Level FROM user INNER JOIN userbaseline ON user.id = userbaseline.userid WHERE user.role = 'student' ORDER BY user.username ASC;";
-
+                    command.CommandText = @"SELECT user.id AS UserId ,user.username AS Username, userbaseline.level 
+                                            AS Level FROM user INNER JOIN userbaseline ON user.id = userbaseline.userid 
+                                            WHERE user.role = 'student' ORDER BY user.username ASC;";
+                    
                     using (var adapter = new MySqlDataAdapter(command))
                     {
                         adapter.Fill(dataTable);
@@ -203,6 +206,7 @@ namespace Quiz_App
                 {
                     connection.Open();
                     var command = connection.CreateCommand();
+                    
                     command.CommandText = "SELECT COUNT(*) FROM user INNER JOIN userbaseline ON user.id = userbaseline.userid WHERE user.role = 'student'";
 
                     object result = command.ExecuteScalar();

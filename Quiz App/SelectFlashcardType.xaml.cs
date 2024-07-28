@@ -76,5 +76,11 @@ namespace Quiz_App
                 return;
             }
         }
+
+        //Closes window
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

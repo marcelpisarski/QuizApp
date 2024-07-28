@@ -151,14 +151,13 @@ namespace Quiz_App
                     }
 
                     //Fetch questions and answers
-                    command.CommandText = @"
-                        SELECT q.questionid, q.questiontext, q.questiontype, 
-                               mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, 
-                               sc.scanswer
-                        FROM question q
-                        LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid
-                        LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid
-                        WHERE q.quizid = @quizid";
+                    command.CommandText = @"SELECT q.questionid, q.questiontext, q.questiontype, 
+                                            mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, 
+                                            sc.scanswer
+                                            FROM question q
+                                            LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid
+                                            LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid
+                                            WHERE q.quizid = @quizid";
 
                     //Starts to build exported file
                     var quizContent = new StringBuilder();
@@ -338,7 +337,8 @@ namespace Quiz_App
                                 command.Transaction = transaction;
 
                                 //Insert quiz details
-                                command.CommandText = "INSERT INTO quiz (title, topic, level1, level2, level3, level4, teacherid, totalmarks) VALUES (@title, @topic, @level1, @level2, @level3, @level4, @teacherid, @totalmarks)";
+                                command.CommandText = @"INSERT INTO quiz (title, topic, level1, level2, level3, level4, teacherid, totalmarks) 
+                                                        VALUES (@title, @topic, @level1, @level2, @level3, @level4, @teacherid, @totalmarks)";
                                 command.Parameters.Clear();
                                 command.Parameters.AddWithValue("@title", title);
                                 command.Parameters.AddWithValue("@topic", topic);
@@ -366,7 +366,8 @@ namespace Quiz_App
 
                                     if (question.Type == "MultipleChoice")
                                     {
-                                        command.CommandText = "INSERT INTO multiplechoicequestion (questionid, option1, option2, option3, option4, correctanswerindex) VALUES (@questionid, @option1, @option2, @option3, @option4, @correctanswerindex)";
+                                        command.CommandText = @"INSERT INTO multiplechoicequestion (questionid, option1, option2, option3, option4, correctanswerindex) 
+                                                                VALUES (@questionid, @option1, @option2, @option3, @option4, @correctanswerindex)";
                                         command.Parameters.Clear();
                                         command.Parameters.AddWithValue("@questionid", questionId);
                                         command.Parameters.AddWithValue("@option1", question.Options[0]);

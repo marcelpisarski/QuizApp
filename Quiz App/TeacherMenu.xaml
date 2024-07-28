@@ -16,7 +16,7 @@
                 <DataGridTextColumn Header="Level" Binding="{Binding Level}" />
             </DataGrid.Columns>
         </DataGrid>
-        <ComboBox x:Name="cbbChangeLevel" HorizontalAlignment="Left" Margin="381,329,0,0" VerticalAlignment="Top" Width="120" Height="33" FontFamily="Tahoma" FontSize="18">
+        <ComboBox x:Name="cbbChangeLevel" HorizontalAlignment="Left" Margin="381,329,0,0" VerticalAlignment="Top" Width="137" Height="33" FontFamily="Tahoma" FontSize="18">
             <ComboBoxItem Content="1"/>
             <ComboBoxItem Content="2"/>
             <ComboBoxItem Content="3"/>
@@ -25,7 +25,7 @@
         <Button x:Name="btnSubmitLevel" Content="Change Level" HorizontalAlignment="Left" Margin="535,326,0,0" VerticalAlignment="Top" Click="btnSubmitLevel_Click" Height="36" Width="120" RenderTransformOrigin="0.388,0.559" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
         <Label x:Name="lblStudentCount" Content="STUDENT COUNT" HorizontalAlignment="Left" Margin="112,104,0,0" VerticalAlignment="Top" Width="224" Height="30" FontFamily="Tahoma" FontSize="18" FontWeight="Bold"/>
         <Button x:Name="btnCancelSelection" Content="Cancel" HorizontalAlignment="Left" Margin="669,326,0,0" VerticalAlignment="Top" Height="36" Width="102" Click="btnCancelSelection_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
-        <TextBox x:Name="txtSearchUser" HorizontalAlignment="Left" Margin="381,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20" FontFamily="Tahoma"/>
+        <TextBox x:Name="txtSearchUser" HorizontalAlignment="Left" Margin="381,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Height="20" FontFamily="Tahoma"/>
         <Button x:Name="btnSearchUser" Content="Search" HorizontalAlignment="Left" Margin="535,60,0,0" VerticalAlignment="Top" Click="btnSearchUser_Click" Width="120" Height="36" Background="#FFDBEEF1" Foreground="Black" FontFamily="Tahoma" FontSize="18"/>
         <Button x:Name="btnClearSearch" Content="Clear" HorizontalAlignment="Left" Margin="669,60,0,0" VerticalAlignment="Top" Click="btnClearSearch_Click" Width="102" Height="36" Background="#FFDBEEF1" FontFamily="Tahoma" FontSize="18"/>
         <Button x:Name="btnStudentResults" Content="View Student Results" HorizontalAlignment="Left" Margin="381,367,0,0" VerticalAlignment="Top" Width="390" Click="btnStudentResults_Click" Background="#FFDBEEF1" FontFamily="Tahoma" Height="39" FontSize="18"/>

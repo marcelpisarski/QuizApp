@@ -9,7 +9,10 @@
     <Grid Background="#FF77B0AA">
         <TextBox x:Name="txtTopicName" HorizontalAlignment="Left" Margin="58,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
         <TextBox x:Name="txtQuizTitle" HorizontalAlignment="Left" Margin="58,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
-        <StackPanel Orientation="Vertical" Margin="58,172,622,98">
+        <StackPanel Orientation="Vertical" Margin="58,204,622,73">
+            <StackPanel.Background>
+                <SolidColorBrush Color="White" Opacity="0.2"/>
+            </StackPanel.Background>
             <CheckBox x:Name="cbLevel1" Content="Level 1" Margin="5" FontFamily="Tahoma" FontSize="18"/>
             <CheckBox x:Name="cbLevel2" Content="Level 2" Margin="5" FontFamily="Tahoma" FontSize="18"/>
             <CheckBox x:Name="cbLevel3" Content="Level 3" Margin="5" FontFamily="Tahoma" FontSize="18"/>
@@ -18,8 +21,8 @@
         <Button x:Name="btnAddQuestion" Content="Add Question" HorizontalAlignment="Left" Margin="598,104,0,0" VerticalAlignment="Top" Height="96" Width="149" Click="btnAddQuestion_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
         <Button x:Name="btnSaveQuiz" Content="Save" HorizontalAlignment="Left" Margin="672,365,0,0" VerticalAlignment="Top" Height="36" Width="102" Click="btnSaveQuiz_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
         <Button x:Name="btnCancelQuiz" Content="Cancel" HorizontalAlignment="Left" Margin="559,365,0,0" VerticalAlignment="Top" Width="102" Height="36" Click="btnCancelQuiz_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
-        <Button x:Name="btnCreateSchema" Content="Create Quiz" HorizontalAlignment="Left" Margin="48,302,0,0" VerticalAlignment="Top" Click="btnCreateSchema_Click" FontFamily="Tahoma" Background="#FFDBEEF1" Width="130" Height="30" FontSize="18"/>
-        <DataGrid x:Name="dtgQuestionData" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="200,48,239,102" CanUserAddRows="False" AutoGenerateColumns="False" FontFamily="Tahoma" Background="White">
+        <Button x:Name="btnCreateSchema" Content="Create Quiz" HorizontalAlignment="Left" Margin="53,346,0,0" VerticalAlignment="Top" Click="btnCreateSchema_Click" FontFamily="Tahoma" Background="#FFDBEEF1" Width="130" Height="30" FontSize="18"/>
+        <DataGrid x:Name="dtgQuestionData" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="200,48,239,109" CanUserAddRows="False" AutoGenerateColumns="False" FontFamily="Tahoma" Background="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Question ID" Binding="{Binding QuestionId}" />
                 <DataGridTextColumn Header="Question" Binding="{Binding QuestionText}" />
@@ -27,7 +30,8 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="btnDeleteQuestion" Content="Delete Question" HorizontalAlignment="Left" Margin="598,232,0,0" VerticalAlignment="Top" Height="45" Width="149" Click="btnDeleteQuestion_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
-        <Label Content="Quiz Topic" HorizontalAlignment="Left" Margin="58,53,0,0" VerticalAlignment="Top" FontSize="18"/>
-        <Label Content="Quiz Topic" HorizontalAlignment="Left" Margin="58,108,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="Quiz Topic" HorizontalAlignment="Left" Margin="58,53,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="Tahoma"/>
+        <Label Content="Quiz Title" HorizontalAlignment="Left" Margin="58,108,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="Tahoma"/>
+        <Label Content="Quiz Level" HorizontalAlignment="Left" Margin="59,169,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="18"/>
     </Grid>
 </Window>

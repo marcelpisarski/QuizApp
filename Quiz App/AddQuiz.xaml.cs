@@ -62,8 +62,15 @@ namespace Quiz_App
 
         private void btnCancelQuiz_Click(object sender, RoutedEventArgs e)
         {
+            
             if (isEditingQuiz)
             {
+                if (questionCount == 0) 
+                {
+                    MessageBox.Show("Cannot cancel as question count is 0. Please add a question");
+                    return;
+                }
+                
                 this.Close();
                 return;
             }
@@ -174,7 +181,7 @@ namespace Quiz_App
                 level4 = true;
             }          
 
-            // Insert quiz data into the database
+            //Insert quiz data into the database
             string connectionString = GlobalVariables.Connection;
 
             using (var connection = new MySqlConnection(connectionString))
@@ -201,7 +208,8 @@ namespace Quiz_App
                     // Clear previous parameters
                     command.Parameters.Clear();
 
-                    command.CommandText = "INSERT INTO quiz (topic, title, teacherid, level1, level2, level3, level4, totalmarks) VALUES (@topic, @title, @teacherid, @level1, @level2, @level3, @level4, @totalmarks)";
+                    command.CommandText = @"INSERT INTO quiz (topic, title, teacherid, level1, level2, level3, level4, totalmarks) 
+                                            VALUES (@topic, @title, @teacherid, @level1, @level2, @level3, @level4, @totalmarks)";
 
                     command.Parameters.AddWithValue("@topic", topicName);
                     command.Parameters.AddWithValue("@title", quizTitle);
@@ -470,9 +478,11 @@ namespace Quiz_App
                     quizSchemaCreated = true;
 
                     //Clear previous parameters
-                   command.Parameters.Clear();
+                    command.Parameters.Clear();
 
-                   command.CommandText = "UPDATE quiz SET topic = @topic, title = @title, level1 = @level1, level2 = @level2, level3 = @level3, level4 = @level4, totalmarks = @totalmarks WHERE quizid = @quizid";
+                    command.CommandText = @"UPDATE quiz SET topic = @topic, title = @title, 
+                                            level1 = @level1, level2 = @level2, level3 = @level3, level4 = @level4, 
+                                            totalmarks = @totalmarks WHERE quizid = @quizid";
 
                     command.Parameters.AddWithValue("@topic", topicName);
                     command.Parameters.AddWithValue("@title", quizTitle);
@@ -517,7 +527,7 @@ namespace Quiz_App
                     connection.Open();
                     var command = connection.CreateCommand();
 
-                    // Check if there are any completions for the selected quiz
+                    //Check if there are any completions for the selected quiz
                     command.CommandText = "SELECT COUNT(*) FROM userquizcompletions WHERE quizid = @quizId";
                     command.Parameters.AddWithValue("@quizId", quizId);
 

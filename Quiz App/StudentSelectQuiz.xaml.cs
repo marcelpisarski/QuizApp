@@ -71,6 +71,7 @@ namespace Quiz_App
                         MessageBox.Show("Invalid action type");
                         return;
                 }
+                
                 this.Close();
             }
             else
@@ -118,7 +119,9 @@ namespace Quiz_App
                     };
 
                     //SQL query to fetch quizzes not completed by the user
-                    command.CommandText = $"SELECT quiz.quizid, quiz.topic, quiz.title FROM quiz LEFT JOIN userquizcompletions ON quiz.quizid = userquizcompletions.quizid AND userquizcompletions.userid = @userId WHERE userquizcompletions.quizid IS NULL AND quiz.{levelColumn} = 1";
+                    command.CommandText = @$"SELECT quiz.quizid, quiz.topic, quiz.title 
+                                            FROM quiz LEFT JOIN userquizcompletions ON quiz.quizid = userquizcompletions.quizid AND userquizcompletions.userid = @userId 
+                                            WHERE userquizcompletions.quizid IS NULL AND quiz.{levelColumn} = 1";
 
                     using (var reader = command.ExecuteReader())
                     {
@@ -167,11 +170,10 @@ namespace Quiz_App
                     var command = connection.CreateCommand();
 
                     //SQL query to fetch quizzes completed by the user
-                    command.CommandText = @"
-                        SELECT quiz.quizid, quiz.topic, quiz.title 
-                        FROM quiz 
-                        JOIN userquizcompletions ON quiz.quizid = userquizcompletions.quizid 
-                        WHERE userquizcompletions.userid = @userId";
+                    command.CommandText = @"SELECT quiz.quizid, quiz.topic, quiz.title 
+                                            FROM quiz 
+                                            JOIN userquizcompletions ON quiz.quizid = userquizcompletions.quizid 
+                                            WHERE userquizcompletions.userid = @userId";
                     command.Parameters.AddWithValue("@userId", userId);
 
                     using (var reader = command.ExecuteReader())

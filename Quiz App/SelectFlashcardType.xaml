@@ -11,6 +11,8 @@
         <Button x:Name="btnPreviousQuizzes" Content="Previous quizzes" HorizontalAlignment="Left" Margin="49,0,0,0" VerticalAlignment="Center" Click="btnPreviousQuizzes_Click" FontFamily="Tahoma" Background="#FFDBEEF1" Width="200" Height="100" FontSize="20"/>
         <Button x:Name="btnAllQuestions" Content="All questions" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnAllQuestions_Click" FontFamily="Tahoma" Background="#FFDBEEF1" Width="200" Height="100" FontSize="20"/>
         <CheckBox Content="Randomise" HorizontalAlignment="Center" Margin="0,306,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" FontFamily="Tahoma" FontSize="20"/>
+        <Label Content="Select Flashcard Mode" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontWeight="Bold" FontSize="20"/>
+        <Button x:Name="btnClose" Content="Close" HorizontalAlignment="Left" Margin="664,367,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="18" Width="102" Height="36" Background="#FFDBEEF1" Click="btnClose_Click"/>
 
     </Grid>
 </Window>

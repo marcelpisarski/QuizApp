@@ -39,7 +39,6 @@ namespace Quiz_App
             this.quizId = quizId;
 
             questionStack = new Stack<Question>();
-
             List<Question> questions = FetchFlashCards();
 
             //Creates randomised list of questions
@@ -100,6 +99,7 @@ namespace Quiz_App
             }
             else
             {
+                //Displays correct answer for multiple choice question
                 if (currentQuestion is MultipleChoiceQuestion mcq)
                 {
                     string correctAnswer = mcq.CorrectAnswerIndex switch
@@ -116,6 +116,7 @@ namespace Quiz_App
                 {
                     btnFlashcard.Content = scq.ScAnswer;
                 }
+                
                 //Question displays again once user presses flashcard
                 isQuestionDisplayed = true;
             }
@@ -137,42 +138,39 @@ namespace Quiz_App
                     switch (flashcardType)
                     {
                         case "AllQuestions":
-                            command.CommandText = @"
-                                SELECT q.questionid, q.questiontext, q.questiontype, q.quizid, 
-                                       mc.mcquestionid, mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, 
-                                       sc.scquestionid, sc.scanswer 
-                                FROM userquizanswers uqa
-                                JOIN question q ON uqa.questionid = q.questionid
-                                LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid 
-                                LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid 
-                                WHERE uqa.userid = @userId";
+                            command.CommandText = @"SELECT q.questionid, q.questiontext, q.questiontype, q.quizid, 
+                                                    mc.mcquestionid, mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, 
+                                                    sc.scquestionid, sc.scanswer 
+                                                    FROM userquizanswers uqa
+                                                    JOIN question q ON uqa.questionid = q.questionid
+                                                    LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid 
+                                                    LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid 
+                                                    WHERE uqa.userid = @userId";
                             command.Parameters.AddWithValue("@userId", GlobalVariables.UserId);
                             break;
 
                         case "PreviousQuizzes":
-                            command.CommandText = @"
-                                SELECT q.questionid, q.questiontext, q.questiontype, q.quizid, 
-                                       mc.mcquestionid, mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, 
-                                       sc.scquestionid, sc.scanswer 
-                                FROM userquizcompletions uqc
-                                JOIN question q ON uqc.quizid = q.quizid
-                                LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid 
-                                LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid 
-                                WHERE uqc.userid = @userId AND q.quizid = @quizId";
+                            command.CommandText = @"SELECT q.questionid, q.questiontext, q.questiontype, q.quizid, 
+                                                    mc.mcquestionid, mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, 
+                                                    sc.scquestionid, sc.scanswer 
+                                                    FROM userquizcompletions uqc
+                                                    JOIN question q ON uqc.quizid = q.quizid
+                                                    LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid 
+                                                    LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid 
+                                                    WHERE uqc.userid = @userId AND q.quizid = @quizId";
                             command.Parameters.AddWithValue("@userId", GlobalVariables.UserId);
                             command.Parameters.AddWithValue("@quizId", quizId);
                             break;
 
                         case "WrongQuizAnswers":
-                            command.CommandText = @"
-                                SELECT q.questionid, q.questiontext, q.questiontype, q.quizid,
-                                       mc.mcquestionid, mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, 
-                                       sc.scquestionid, sc.scanswer 
-                                FROM userquizanswers uqa
-                                JOIN question q ON uqa.questionid = q.questionid
-                                LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid 
-                                LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid 
-                                WHERE uqa.userid = @userId AND uqa.mark = 0";
+                            command.CommandText = @"SELECT q.questionid, q.questiontext, q.questiontype, q.quizid,
+                                                    mc.mcquestionid, mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, 
+                                                    sc.scquestionid, sc.scanswer 
+                                                    FROM userquizanswers uqa
+                                                    JOIN question q ON uqa.questionid = q.questionid
+                                                    LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid 
+                                                    LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid 
+                                                    WHERE uqa.userid = @userId AND uqa.mark = 0";
                             command.Parameters.AddWithValue("@userId", GlobalVariables.UserId);
                             break;
 

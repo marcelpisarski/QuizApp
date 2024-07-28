@@ -30,6 +30,7 @@ namespace Quiz_App
             LoadStatement();
         }
 
+        //Submits user answer
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
             string answer = txtAnswer.Text.Trim();
@@ -143,12 +144,14 @@ namespace Quiz_App
                     var command = connection.CreateCommand();
 
                     //Sets user level to calculated level and removes newuser role
-                    command.CommandText = "UPDATE userbaseline INNER JOIN user ON user.id = userbaseline.userid SET userbaseline.level = 4, userbaseline.newuser = 0 WHERE user.id = @userId";
+                    command.CommandText = @"UPDATE userbaseline INNER JOIN user ON user.id = userbaseline.userid SET userbaseline.level = 4, 
+                                            userbaseline.newuser = 0 WHERE user.id = @userId";
                     for (int i = 0; i < conditions.GetLength(0); i++)
                     {
                         if ((double.IsNaN(index) && double.IsNaN(conditions[i, 0])) || (index < conditions[i, 0]))
                         {
-                            command.CommandText = $"UPDATE userbaseline INNER JOIN user ON user.id = userbaseline.userid SET userbaseline.level = {conditions[i, 1]}, userbaseline.newuser = 0 WHERE user.id = @userId";
+                            command.CommandText = @$"UPDATE userbaseline INNER JOIN user ON user.id = userbaseline.userid 
+                                                    SET userbaseline.level = {conditions[i, 1]}, userbaseline.newuser = 0 WHERE user.id = @userId";
                             break;
                         }
                     }

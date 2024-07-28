@@ -111,20 +111,20 @@ namespace Quiz_App
             //Creates a matrix based on lengths
             var matrix = new int[n + 1, m + 1];
 
-            //Populates with 1++
+            //Populates matrix
             for (int i = 0; i < n + 1; i++)
             {
                 matrix[i, 0] = i;
             }
 
-            //Populates with 1++
+            //Populates matrix
             for (int j = 0; j < m + 1; j++)
             {
                 matrix[0, j] = j;
             }
 
 
-            //Edit disance algorithm using a matrix
+            //Edit distance algorithm using a matrix
             for (int i = 1; i <= n; i++)
             {
                 for (int j = 1; j <= m; j++)
@@ -180,7 +180,7 @@ namespace Quiz_App
                     connection.Open();
                     var command = connection.CreateCommand();
 
-                    // Calculate total marks
+                    //Calculate total marks
                     command.CommandText = "SELECT COUNT(*) FROM userquizanswers WHERE userid = @userId AND quizid = @quizId AND mark = 1";
                     command.Parameters.AddWithValue("@userId", userId);
                     command.Parameters.AddWithValue("@quizId", quizId);
@@ -231,6 +231,7 @@ namespace Quiz_App
             }
             else if (question is SingleChoiceQuestion scQuestion)
             {
+                //Sets single choice window
                 grdMultipleChoiceQuestion.Visibility = Visibility.Hidden;
                 grdSingleChoiceQuestion.Visibility = Visibility.Visible;
                 txtSingleAnswer.Text = string.Empty;
@@ -253,7 +254,11 @@ namespace Quiz_App
                     var command = connection.CreateCommand();
 
                     // Fetch general question info
-                    command.CommandText = "SELECT q.questionid, q.questiontext, q.questiontype, mc.mcquestionid AS mcquestionid, mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, sc.scquestionid AS scquestionid, sc.scanswer FROM question q LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid WHERE q.quizid = @quizId";
+                    command.CommandText = @"SELECT q.questionid, q.questiontext, q.questiontype, mc.mcquestionid AS mcquestionid, mc.option1, 
+                                            mc.option2, mc.option3, mc.option4, mc.correctanswerindex, sc.scquestionid AS scquestionid, sc.scanswer 
+                                            FROM question q LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid 
+                                            LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid 
+                                            WHERE q.quizid = @quizId";
                     command.Parameters.AddWithValue("@quizId", quizId);
 
                     using (var reader = command.ExecuteReader())

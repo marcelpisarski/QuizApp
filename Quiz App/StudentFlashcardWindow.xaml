@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         Title="StudentFlashcardWindow" Height="450" Width="800">
     <Grid Background="#FF77B0AA">
-        <Button x:Name="btnFlashcard" Content="FLASHCARD DATA" HorizontalAlignment="Center" Margin="0,45,0,0" VerticalAlignment="Top" Height="200" Width="400" Click="btnFlashcard_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="20"/>
-        <Button x:Name="btnNextFlashcard" Content="Next" HorizontalAlignment="Center" Margin="0,292,0,0" VerticalAlignment="Top" Height="60" Width="136" Click="btnNextFlashcard_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
+        <Button x:Name="btnFlashcard" Content="FLASHCARD DATA" HorizontalAlignment="Center" Margin="0,92,0,0" VerticalAlignment="Top" Height="200" Width="400" Click="btnFlashcard_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="20"/>
+        <Button x:Name="btnNextFlashcard" Content="Next" HorizontalAlignment="Center" Margin="0,324,0,0" VerticalAlignment="Top" Height="60" Width="136" Click="btnNextFlashcard_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
+        <Label Content="Click flashcard below to show answer" HorizontalAlignment="Center" Margin="0,33,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="20" FontWeight="Bold"/>
 
     </Grid>
 </Window>

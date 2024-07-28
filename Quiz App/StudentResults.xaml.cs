@@ -55,11 +55,10 @@ namespace Quiz_App
                     var command = connection.CreateCommand();
 
                     //Fetch quiz results for the student
-                    command.CommandText = @"
-                        SELECT q.quizid, q.title, q.totalmarks, uqc.marks, uqc.completiondate, uqc.percentage
-                        FROM userquizcompletions uqc
-                        JOIN quiz q ON uqc.quizid = q.quizid
-                        WHERE uqc.userid = @userid";
+                    command.CommandText = @"SELECT q.quizid, q.title, q.totalmarks, uqc.marks, uqc.completiondate, uqc.percentage
+                                            FROM userquizcompletions uqc
+                                            JOIN quiz q ON uqc.quizid = q.quizid
+                                            WHERE uqc.userid = @userid";
                     command.Parameters.AddWithValue("@userid", studentId);
 
                     using (var reader = command.ExecuteReader())

@@ -9,7 +9,7 @@
     <Grid Width="800" Height="429" Background="#FF77B0AA">
         <TextBox x:Name="txtAnswer" HorizontalAlignment="Center" Margin="0,245,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="402" Height="56"/>
         <Button x:Name="btnSubmit" Content="Submit" HorizontalAlignment="Center" Margin="0,320,0,0" VerticalAlignment="Top" Click="btnSubmit_Click" FontFamily="Tahoma" Background="#FFDBEEF1" Width="102" Height="36" FontSize="18"/>
-        <Label x:Name="lblStatement" Content="STATEMENT" HorizontalAlignment="Center" Margin="0,145,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="18"/>
+        <Label x:Name="lblStatement" Content="STATEMENT" HorizontalAlignment="Center" Margin="0,145,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="18" FontWeight="Bold"/>
         <TextBlock x:Name="txtIntro" HorizontalAlignment="Center" Margin="0,41,0,0" TextWrapping="Wrap" TextAlignment="Center" Text="Welcome. This is a simple baseline test to determine your writing level. Please read the following statement and write your description in the answer box below." VerticalAlignment="Top" Width="488" FontFamily="Tahoma" FontSize="20"/>
 
     </Grid>

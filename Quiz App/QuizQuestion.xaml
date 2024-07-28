@@ -7,30 +7,35 @@
         mc:Ignorable="d"
         Title="QuizQuestion" Height="450" Width="800">
     <Grid Background="#FF77B0AA">
-        <TextBox x:Name="txtQuestion" HorizontalAlignment="Center" Margin="0,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="446" Height="65" FontFamily="Tahoma"/>
-        <StackPanel Margin="0,180,558,103">
-            <RadioButton x:Name="rbSingleAnswer" Content="Single Answer" Checked="rbSingleAnswer_Checked" Unchecked="rbSingleAnswer_UnChecked" FontFamily="Tahoma" Width="184" FontSize="18"/>
-            <RadioButton x:Name="rbMultipleChoice" Content="Multiple Choice" Checked="rbMultipleChoice_Checked" Unchecked="rbMultipleChoice_UnChecked" FontFamily="Tahoma" FontSize="18" Width="184"/>
+        <TextBox x:Name="txtQuestion" HorizontalAlignment="Left" Margin="52,93,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="295" Height="65" FontFamily="Tahoma"/>
+
+        <Label Content="Question Type" HorizontalAlignment="Left" Margin="112,0,0,0" VerticalAlignment="Center" FontFamily="Tahoma" FontSize="23" FontWeight="Bold"/>
+        <StackPanel Margin="78,241,480,41">
+
+
+            <RadioButton x:Name="rbSingleAnswer" Content="Single Answer" Checked="rbSingleAnswer_Checked" Unchecked="rbSingleAnswer_UnChecked" FontFamily="Tahoma" Width="184" FontSize="23"/>
+            <RadioButton x:Name="rbMultipleChoice" Content="Multiple Choice" Checked="rbMultipleChoice_Checked" Unchecked="rbMultipleChoice_UnChecked" FontFamily="Tahoma" FontSize="23" Width="184"/>
 
         </StackPanel>
 
         <Grid x:Name="grdSingleAnswer" Visibility="Collapsed">
-            <TextBox x:Name="txtSingleAnswer" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="304" Margin="0,217,0,0" FontFamily="Tahoma"/>
-            <Label Content="Type Answer" HorizontalAlignment="Center" Margin="0,177,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="18" FontWeight="Bold"/>
+            <TextBox x:Name="txtSingleAnswer" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="304" Margin="425,95,0,0" FontFamily="Tahoma" Height="214"/>
+            <Label Content="Type Answer" HorizontalAlignment="Left" Margin="507,40,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="20" FontWeight="Bold"/>
         </Grid>
 
-        <Grid x:Name="grdMultipleChoice" Height="430" Width="750" Margin="-68,77,118,-73" Visibility="Collapsed">
-            <TextBox x:Name="txtOption1" HorizontalAlignment="Center" Margin="0,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
-            <TextBox x:Name="txtOption2" HorizontalAlignment="Left" Margin="504,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
-            <TextBox x:Name="txtOption3" HorizontalAlignment="Center" Margin="0,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
-            <TextBox x:Name="txtOption4" HorizontalAlignment="Left" Margin="504,215,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
-            <RadioButton x:Name="rbOption1" Content="Option 1" HorizontalAlignment="Left" Margin="315,130,0,0" VerticalAlignment="Top" GroupName="MultipleChoiceOptions" FontFamily="Tahoma" FontSize="18"/>
-            <RadioButton x:Name="rbOption2" Content="Option 2" HorizontalAlignment="Left" Margin="504,130,0,0" VerticalAlignment="Top" GroupName="MultipleChoiceOptions" FontFamily="Tahoma" FontSize="18"/>
-            <RadioButton x:Name="rbOption3" Content="Option 3" HorizontalAlignment="Left" Margin="315,250,0,0" VerticalAlignment="Top" GroupName="MultipleChoiceOptions" FontFamily="Tahoma" FontSize="18"/>
-            <RadioButton x:Name="rbOption4" Content="Option 4" HorizontalAlignment="Left" Margin="504,250,0,0" VerticalAlignment="Top" GroupName="MultipleChoiceOptions" FontFamily="Tahoma" FontSize="18"/>
+        <Grid x:Name="grdMultipleChoice" Height="430" Width="750" Margin="99,19,-49,-15">
+            <TextBox x:Name="txtOption1" HorizontalAlignment="Center" Margin="0,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
+            <TextBox x:Name="txtOption2" HorizontalAlignment="Left" Margin="504,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
+            <TextBox x:Name="txtOption3" HorizontalAlignment="Center" Margin="0,195,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
+            <TextBox x:Name="txtOption4" HorizontalAlignment="Left" Margin="504,195,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
+            <RadioButton x:Name="rbOption1" Content="Option 1" HorizontalAlignment="Left" Margin="315,155,0,0" VerticalAlignment="Top" GroupName="MultipleChoiceOptions" FontFamily="Tahoma" FontSize="18"/>
+            <RadioButton x:Name="rbOption2" Content="Option 2" HorizontalAlignment="Left" Margin="504,155,0,0" VerticalAlignment="Top" GroupName="MultipleChoiceOptions" FontFamily="Tahoma" FontSize="18"/>
+            <RadioButton x:Name="rbOption3" Content="Option 3" HorizontalAlignment="Left" Margin="315,233,0,0" VerticalAlignment="Top" GroupName="MultipleChoiceOptions" FontFamily="Tahoma" FontSize="18"/>
+            <RadioButton x:Name="rbOption4" Content="Option 4" HorizontalAlignment="Left" Margin="504,233,0,0" VerticalAlignment="Top" GroupName="MultipleChoiceOptions" FontFamily="Tahoma" FontSize="18"/>
+            <Label Content="Type Answers &amp; Correct Option" HorizontalAlignment="Left" Margin="315,81,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="20" FontWeight="Bold"/>
         </Grid>
 
-        <Label Content="Enter Question" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="Tahoma" FontWeight="Bold"/>
+        <Label Content="Enter Question" HorizontalAlignment="Left" Margin="120,33,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="Tahoma" FontWeight="Bold"/>
         <Button x:Name="btnAddQuestion" Content="Add Question" HorizontalAlignment="Left" Margin="651,370,0,0" VerticalAlignment="Top" Width="129" Height="36" Click="btnAddQuestion_Click" Background="#FFDBEEF1" FontFamily="Tahoma" FontSize="18"/>
         <Button x:Name="btnCancelQuestion" Content="Cancel" HorizontalAlignment="Left" Margin="544,370,0,0" VerticalAlignment="Top" Width="102" Height="36" Click="btnCancelQuestion_Click" Background="#FFDBEEF1" FontFamily="Tahoma" FontSize="18"/>
     </Grid>

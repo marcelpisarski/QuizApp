@@ -38,7 +38,6 @@ namespace Quiz_App
         private void rbSingleAnswer_Checked(object sender, RoutedEventArgs e)
         {
             grdSingleAnswer.Visibility = Visibility.Visible;
-
         }
 
         private void rbSingleAnswer_UnChecked(object sender, RoutedEventArgs e)
@@ -156,7 +155,8 @@ namespace Quiz_App
                     int questionId = Convert.ToInt32(command.ExecuteScalar());
 
                     //Insert into singlechoicequestion table
-                    command.CommandText = "INSERT INTO multiplechoicequestion (questionid, option1, option2, option3, option4, correctanswerindex) VALUES (@questionid, @option1, @option2, @option3, @option4, @correctanswerindex)";
+                    command.CommandText = @"INSERT INTO multiplechoicequestion (questionid, option1, option2, option3, option4, correctanswerindex) 
+                                            VALUES (@questionid, @option1, @option2, @option3, @option4, @correctanswerindex)";
                     command.Parameters.AddWithValue("@questionid", questionId);
                     command.Parameters.AddWithValue("@option1", txtOption1.Text.Trim());
                     command.Parameters.AddWithValue("@option2", txtOption2.Text.Trim());
