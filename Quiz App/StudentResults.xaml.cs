@@ -79,7 +79,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error loading quiz results: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -87,25 +87,25 @@ namespace Quiz_App
         private void DisplayQuizResults()
         {
             //Convert the dictionary values to a list
-            var resultsList = studentResults.Values.ToList();
+            var results = studentResults.Values.ToList();
 
             //Sort the list using bubble sort by percentage score
-            for (int i = 0; i < resultsList.Count - 1; i++)
+            for (int i = 0; i < results.Count - 1; i++)
             {
-                for (int j = 0; j < resultsList.Count - i - 1; j++)
+                for (int j = 0; j < results.Count - i - 1; j++)
                 {
-                    if (resultsList[j].Percentage < resultsList[j + 1].Percentage)
+                    if (results[j].Percentage < results[j + 1].Percentage)
                     {
                         //Swap elements
-                        var temp = resultsList[j];
-                        resultsList[j] = resultsList[j + 1];
-                        resultsList[j + 1] = temp;
+                        var temp = results[j];
+                        results[j] = results[j + 1];
+                        results[j + 1] = temp;
                     }
                 }
             }
 
             //Display the sorted results in the data grid
-            dtgStudentResults.ItemsSource = resultsList;
+            dtgStudentResults.ItemsSource = results;
         }
     }
 }

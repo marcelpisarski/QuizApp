@@ -100,7 +100,7 @@ namespace Quiz_App
             //Ensures password is correct
             if (password != confirmedPassword)
             {
-                MessageBox.Show("Passwords do not match. Try again");
+                MessageBox.Show("Passwords do not match. Please try again");
                 return;
             }
 
@@ -134,7 +134,7 @@ namespace Quiz_App
                     command.Parameters.AddWithValue("@password", hashedPassword);
                     command.Parameters.AddWithValue("@role", userRole);
 
-                    int result = command.ExecuteNonQuery();
+                    var result = command.ExecuteNonQuery();
                     if (result == 1)
                     {
                         //If role is student, then given a new user role
@@ -185,20 +185,20 @@ namespace Quiz_App
         {
             using (SHA256 sha256Hash = SHA256.Create())
             {
-                //Convert the input string to an array of bytes and create the hash
-                byte[] data = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+                //Creates hash
+                byte[] userData = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
 
                 //Create a new StringBuilder to collect the bytes and create a string
-                var sBuilder = new StringBuilder();
+                var stringBuilder = new StringBuilder();
 
-                //Loop through each byte of the hashed data and format each one as a hexadecimal string
-                for (int i = 0; i < data.Length; i++)
+                //Loop through each byte of the hashed data and format as hexidecimal string
+                for (int i = 0; i < userData.Length; i++)
                 {
-                    sBuilder.Append(data[i].ToString("x2"));
+                    stringBuilder.Append(userData[i].ToString("x2"));
                 }
 
-                // Returns the string
-                return sBuilder.ToString();
+                //Returns the string
+                return stringBuilder.ToString();
             }
         }
     }

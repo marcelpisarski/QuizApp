@@ -89,7 +89,7 @@ namespace Quiz_App
                     {
                         MessageBox.Show("Quiz deleted successfully");
                         
-                        //Refresh list
+                        //Refreshes list
                         LoadQuizzes(-1);
                     }
                     else
@@ -99,7 +99,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error deleting quiz: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -160,15 +160,15 @@ namespace Quiz_App
                                             WHERE q.quizid = @quizid";
 
                     //Starts to build exported file
-                    var quizContent = new StringBuilder();
-                    quizContent.AppendLine($"Quiz Title: {title}");
-                    quizContent.AppendLine($"Topic: {topic}");
-                    quizContent.AppendLine($"Level 1: {level1}");
-                    quizContent.AppendLine($"Level 2: {level2}");
-                    quizContent.AppendLine($"Level 3: {level3}");
-                    quizContent.AppendLine($"Level 4: {level4}");
+                    var quizData = new StringBuilder();
+                    quizData.AppendLine($"Quiz Title: {title}");
+                    quizData.AppendLine($"Topic: {topic}");
+                    quizData.AppendLine($"Level 1: {level1}");
+                    quizData.AppendLine($"Level 2: {level2}");
+                    quizData.AppendLine($"Level 3: {level3}");
+                    quizData.AppendLine($"Level 4: {level4}");
 
-                    quizContent.AppendLine();
+                    quizData.AppendLine();
 
                     using (var reader = command.ExecuteReader())
                     {
@@ -177,22 +177,22 @@ namespace Quiz_App
                             string questionText = reader.GetString("questiontext");
                             string questionType = reader.GetString("questiontype");
 
-                            quizContent.AppendLine($"Question: {questionText}");
-                            quizContent.AppendLine($"Type: {questionType}");
+                            quizData.AppendLine($"Question: {questionText}");
+                            quizData.AppendLine($"Type: {questionType}");
 
                             if (questionType == "MultipleChoice")
                             {
-                                quizContent.AppendLine($"1. {reader.GetString("option1")}");
-                                quizContent.AppendLine($"2. {reader.GetString("option2")}");
-                                quizContent.AppendLine($"3. {reader.GetString("option3")}");
-                                quizContent.AppendLine($"4. {reader.GetString("option4")}");
-                                quizContent.AppendLine($"correctanswerindex. {reader.GetInt32("correctanswerindex")}");
+                                quizData.AppendLine($"1. {reader.GetString("option1")}");
+                                quizData.AppendLine($"2. {reader.GetString("option2")}");
+                                quizData.AppendLine($"3. {reader.GetString("option3")}");
+                                quizData.AppendLine($"4. {reader.GetString("option4")}");
+                                quizData.AppendLine($"correctanswerindex. {reader.GetInt32("correctanswerindex")}");
                             }
                             else if (questionType == "SingleChoice")
                             {
-                                quizContent.AppendLine($"Answer: {reader.GetString("scanswer")}");
+                                quizData.AppendLine($"Answer: {reader.GetString("scanswer")}");
                             }
-                            quizContent.AppendLine();
+                            quizData.AppendLine();
                         }
                     }
 
@@ -200,13 +200,13 @@ namespace Quiz_App
                     string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                     string filePath = System.IO.Path.Combine(desktopPath, $"{title}_Quiz.txt");
 
-                    System.IO.File.WriteAllText(filePath, quizContent.ToString());
+                    System.IO.File.WriteAllText(filePath, quizData.ToString());
 
                     MessageBox.Show($"Quiz exported successfully to {desktopPath}");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error exporting quiz: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -217,7 +217,7 @@ namespace Quiz_App
             var openFileDialog = new Microsoft.Win32.OpenFileDialog
             {
                 Filter = "Text files (*.txt)|*.txt",
-                Title = "Select Quiz File"
+                Title = "Select a Quiz File"
             };
 
             //Lets the user select a file to import
@@ -233,7 +233,7 @@ namespace Quiz_App
 
                     if (lines.Length == 0)
                     {
-                        MessageBox.Show("The selected file is empty");
+                        MessageBox.Show("Selected file is empty");
                         return;
                     }
 
@@ -332,8 +332,7 @@ namespace Quiz_App
                         using (var transaction = connection.BeginTransaction())
                         {
                             try
-                            {
-                                
+                            {                           
                                 command.Transaction = transaction;
 
                                 //Insert quiz details
@@ -399,14 +398,14 @@ namespace Quiz_App
                             {
                                 //Reverts changes
                                 transaction.Rollback();
-                                MessageBox.Show($"Error importing quiz: {ex.Message}");
+                                MessageBox.Show(ex.Message);
                             }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error reading file: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
                 return;
             }
@@ -432,7 +431,7 @@ namespace Quiz_App
             }
             else
             {
-                MessageBox.Show("Please enter a valid quiz ID");
+                MessageBox.Show("Enter a valid quiz ID");
             }
         }
 
@@ -457,6 +456,7 @@ namespace Quiz_App
                 {
                     connection.Open();
                     var command = connection.CreateCommand();
+
                     if (quizId == -1)
                     {
                         command.CommandText = "SELECT quizid, title, topic FROM quiz WHERE teacherid = @teacherid";
@@ -472,7 +472,7 @@ namespace Quiz_App
                     //Adds all quizzes to a list
                     using (var reader = command.ExecuteReader())
                     {
-                        var quizzes = new List<Quiz>();
+                        var allQuizzes = new List<Quiz>();
 
                         while (reader.Read())
                         {
@@ -482,17 +482,17 @@ namespace Quiz_App
                                 Title = reader.GetString("title"),
                                 Topic = reader.GetString("topic")
                             };
-                            quizzes.Add(quiz);
+                            allQuizzes.Add(quiz);
                             quizTree.InsertQuiz(quiz);
                         }
 
                         //Bind the list of quizzes to the datagrid
-                        dtgQuizList.ItemsSource = quizzes;
+                        dtgQuizList.ItemsSource = allQuizzes;
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error loading quizzes: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
         }

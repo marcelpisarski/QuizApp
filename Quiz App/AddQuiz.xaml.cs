@@ -80,7 +80,7 @@ namespace Quiz_App
             {
                 int quizId = GlobalVariables.QuizId;
 
-                // Define the connection string
+                //Define the connection string
                 string connectionString = GlobalVariables.Connection;
 
                 using (var connection = new MySqlConnection(connectionString))
@@ -90,11 +90,11 @@ namespace Quiz_App
                         connection.Open();
                         var command = connection.CreateCommand();
 
-                        // Delete the quiz from the database
+                        //Delete the quiz from the database
                         command.CommandText = "DELETE FROM quiz WHERE quizid = @quizid";
                         command.Parameters.AddWithValue("@quizid", quizId);
 
-                        int result = command.ExecuteNonQuery();
+                        var result = command.ExecuteNonQuery();
 
                         if (result > 0)
                         {
@@ -102,12 +102,12 @@ namespace Quiz_App
                         }
                         else
                         {
-                            MessageBox.Show("Quiz not found or already deleted");
+                            MessageBox.Show("Quiz not found");
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error deleting quiz: {ex.Message}");
+                        MessageBox.Show(ex.Message);
                     }
                 }
             }
@@ -220,9 +220,9 @@ namespace Quiz_App
                     command.Parameters.AddWithValue("@level4", level4);
                     command.Parameters.AddWithValue("@totalmarks", questionCount);
 
-                    int result = command.ExecuteNonQuery();
+                    var result = command.ExecuteNonQuery();
 
-                    // Retrieve the generated quizid
+                    //Retrieve the generated quizid
                     command.CommandText = "SELECT LAST_INSERT_ID()";
                     GlobalVariables.QuizId = Convert.ToInt32(command.ExecuteScalar());
 
@@ -243,7 +243,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error creating quiz: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -284,7 +284,7 @@ namespace Quiz_App
                     command.CommandText = "DELETE FROM question WHERE questionid = @questionid";
                     command.Parameters.AddWithValue("@questionid", questionId);
 
-                    int result = command.ExecuteNonQuery();
+                    var result = command.ExecuteNonQuery();
 
                     if (result > 0)
                     {
@@ -300,7 +300,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error deleting question: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -353,7 +353,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error loading questions: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -399,7 +399,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error loading quiz: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
 
@@ -509,7 +509,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error creating quiz: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -536,7 +536,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error checking quiz completion status: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
 

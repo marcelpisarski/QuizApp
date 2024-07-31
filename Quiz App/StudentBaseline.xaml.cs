@@ -175,9 +175,9 @@ namespace Quiz_App
                         MessageBox.Show("No rows updated");
                     }
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(ex.Message);
                 }
             }
         }

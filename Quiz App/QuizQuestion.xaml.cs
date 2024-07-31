@@ -167,11 +167,11 @@ namespace Quiz_App
 
                     command.ExecuteNonQuery();
 
-                    MessageBox.Show("Multiple choice question added successfully");
+                    MessageBox.Show("MultipleChoice question added successfully");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error creating question: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -207,11 +207,11 @@ namespace Quiz_App
 
                     command.ExecuteNonQuery();
 
-                    MessageBox.Show("Single choice question added successfully");
+                    MessageBox.Show("SingleChoice question added successfully");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error creating question: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
         }

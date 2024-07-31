@@ -68,10 +68,8 @@ namespace Quiz_App
                         studentQuizWindow.Show();
                         break;
                     default:
-                        MessageBox.Show("Invalid action type");
                         return;
-                }
-                
+                }              
                 this.Close();
             }
             else
@@ -115,7 +113,7 @@ namespace Quiz_App
                         2 => "level2",
                         3 => "level3",
                         4 => "level4",
-                        _ => throw new InvalidOperationException("Invalid user level")
+                        _ => throw new NotImplementedException(),
                     };
 
                     //SQL query to fetch quizzes not completed by the user
@@ -139,7 +137,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error fetching uncompleted quizzes: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
 
@@ -192,10 +190,9 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error fetching completed quizzes: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
-
             return completedQuizzes;
         }
     }

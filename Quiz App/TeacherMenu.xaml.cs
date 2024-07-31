@@ -84,7 +84,7 @@ namespace Quiz_App
                         }
                         else
                         {
-                            MessageBox.Show("No rows updated");
+                            MessageBox.Show("No rows were updated");
                         }
 
                         //Clears combobox once submitted
@@ -149,6 +149,12 @@ namespace Quiz_App
         //Opens student results window
         private void btnStudentResults_Click(object sender, RoutedEventArgs e)
         {
+            if (dtgStudentList.SelectedItem is null)
+            {
+                MessageBox.Show("Please select a student");
+                return;
+            }
+            
             if (dtgStudentList.SelectedItem is DataRowView row)
             {
                 selectedUserId = Convert.ToInt32(row["UserId"]);
@@ -180,9 +186,9 @@ namespace Quiz_App
                                             AS Level FROM user INNER JOIN userbaseline ON user.id = userbaseline.userid 
                                             WHERE user.role = 'student' ORDER BY user.username ASC;";
                     
-                    using (var adapter = new MySqlDataAdapter(command))
+                    using (var dataAdapter = new MySqlDataAdapter(command))
                     {
-                        adapter.Fill(dataTable);
+                        dataAdapter.Fill(dataTable);
                     }
                 }
                 catch (Exception ex)
@@ -209,7 +215,7 @@ namespace Quiz_App
                     
                     command.CommandText = "SELECT COUNT(*) FROM user INNER JOIN userbaseline ON user.id = userbaseline.userid WHERE user.role = 'student'";
 
-                    object result = command.ExecuteScalar();
+                    var result = command.ExecuteScalar();
 
                     //Casts the number of students to studentCount
                     if (result != null && result != DBNull.Value)

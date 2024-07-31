@@ -123,13 +123,20 @@ namespace Quiz_App
                 matrix[0, j] = j;
             }
 
-
             //Edit distance algorithm using a matrix
             for (int i = 1; i <= n; i++)
             {
                 for (int j = 1; j <= m; j++)
                 {
-                    int cost = (userAnswer[i - 1] == realAnswer[j - 1]) ? 0 : 1;
+                    int cost;
+                    if (userAnswer[i - 1] == realAnswer[j - 1])
+                    {
+                        cost = 0;
+                    }
+                    else
+                    {
+                        cost = 1;
+                    }
 
                     matrix[i, j] = Math.Min(Math.Min(matrix[i - 1, j] + 1, matrix[i, j - 1] + 1), matrix[i - 1, j - 1] + cost);
                 }
@@ -208,7 +215,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error marking quiz as completed: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -304,7 +311,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error fetching questions: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
 
@@ -335,7 +342,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error saving answer: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
         }

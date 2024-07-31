@@ -85,7 +85,7 @@ namespace Quiz_App
             }
             else
             {
-                MessageBox.Show("Mo more flashcards to show");
+                MessageBox.Show("No more flashcards to show");
                 this.Close();
                 return;
             }
@@ -102,12 +102,14 @@ namespace Quiz_App
                 //Displays correct answer for multiple choice question
                 if (currentQuestion is MultipleChoiceQuestion mcq)
                 {
-                    string correctAnswer = mcq.CorrectAnswerIndex switch
+                    string correctAnswer = mcq.CorrectAnswerIndex
+                    switch
                     {
                         0 => mcq.Option1,
                         1 => mcq.Option2,
                         2 => mcq.Option3,
-                        3 => mcq.Option4
+                        3 => mcq.Option4,
+                        _ => throw new NotImplementedException()
                     };
 
                     btnFlashcard.Content = correctAnswer;
@@ -175,7 +177,7 @@ namespace Quiz_App
                             break;
 
                         default:
-                            throw new Exception("Unknown flashcard type");
+                            break;
                     }
 
                     using (var reader = command.ExecuteReader())
@@ -217,7 +219,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error fetching questions: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                 }
             }
 

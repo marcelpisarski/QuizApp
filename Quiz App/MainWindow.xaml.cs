@@ -62,11 +62,11 @@ namespace Quiz_App
                     var command = connection.CreateCommand();
 
                     //Retrieves user from database
-                    command.CommandText = "SELECT COUNT(1) FROM user WHERE username=@username AND password=@password";
+                    command.CommandText = "SELECT COUNT(*) FROM user WHERE username=@username AND password=@password";
                     command.Parameters.AddWithValue("@username", username);
                     command.Parameters.AddWithValue("@password", hashedPassword);
 
-                    int result = Convert.ToInt32(command.ExecuteScalar());
+                    var result = Convert.ToInt32(command.ExecuteScalar());
 
                     if (result == 1)
                     {
@@ -78,7 +78,7 @@ namespace Quiz_App
                         command.Parameters.AddWithValue("@username", username);
                         command.Parameters.AddWithValue("@password", hashedPassword);
 
-                        string role = (string)command.ExecuteScalar();
+                        string userRole = (string)command.ExecuteScalar();
 
                         //Checks if user is a newuser
                         command.CommandText = "SELECT newuser FROM userbaseline INNER JOIN user ON user.id = userbaseline.userid WHERE user.username=@username";
@@ -89,7 +89,7 @@ namespace Quiz_App
                         FetchUserId(username, hashedPassword);
 
                         //Checks user role
-                        switch (role)
+                        switch (userRole)
                         {
                             case "student":
                                 //Opens menu for student
@@ -123,7 +123,6 @@ namespace Quiz_App
 
                                 break;
                             default:
-                                MessageBox.Show("Could not establish user role");
                                 return;
                         }
                     }
@@ -144,20 +143,20 @@ namespace Quiz_App
         {
             using (SHA256 sha256Hash = SHA256.Create())
             {
-                //Convert the input string to an array of bytes and create the hash
-                byte[] data = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+                //Creates hash
+                byte[] userData = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
 
                 //Create a new StringBuilder to collect the bytes and create a string
-                var sBuilder = new StringBuilder();
+                var stringBuilder = new StringBuilder();
 
-                //Loop through each byte of the hashed data and format each one as a hexadecimal string
-                for (int i = 0; i < data.Length; i++)
+                //Loop through each byte of the hashed data and format as hexidecimal string
+                for (int i = 0; i < userData.Length; i++)
                 {
-                    sBuilder.Append(data[i].ToString("x2"));
+                    stringBuilder.Append(userData[i].ToString("x2"));
                 }
 
-                // Returns the string
-                return sBuilder.ToString();
+                //Returns the string
+                return stringBuilder.ToString();
             }
         }
 
@@ -177,7 +176,7 @@ namespace Quiz_App
                     command.Parameters.AddWithValue("@username", username);
                     command.Parameters.AddWithValue("@password", password);
 
-                    object result = command.ExecuteScalar();
+                    var result = command.ExecuteScalar();
                     if (result != null)
                     {
                         GlobalVariables.UserId = Convert.ToInt32(result);
@@ -190,7 +189,7 @@ namespace Quiz_App
                 catch (Exception ex)
                 {
                     GlobalVariables.UserId = -1;
-                    MessageBox.Show($"Error fetching user ID: {ex.Message}");
+                    MessageBox.Show(ex.Message);
                     return;
                 }
             }
