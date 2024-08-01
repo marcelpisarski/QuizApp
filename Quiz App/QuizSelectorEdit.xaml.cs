@@ -29,7 +29,6 @@ namespace Quiz_App
         {
 
             InitializeComponent();
-
             quizTree = new BinarySearchTree();
             LoadQuizzes(-1);
         }
@@ -126,11 +125,11 @@ namespace Quiz_App
                     var command = connection.CreateCommand();
 
                     //Fetch quiz details including level
-                    command.CommandText = "SELECT title, topic, level1, level2, level3, level4 FROM quiz WHERE quizid = @quizid";
+                    command.CommandText = "SELECT topic, title, level1, level2, level3, level4 FROM quiz WHERE quizid = @quizid";
                     command.Parameters.AddWithValue("@quizid", selectedQuiz.Id);
 
-                    string title = "";
                     string topic = "";
+                    string title = "";
                     int level1 = -1;
                     int level2 = -1;
                     int level3 = -1;
@@ -141,8 +140,8 @@ namespace Quiz_App
                     {
                         if (reader.Read())
                         {
-                            title = reader.GetString("title");
                             topic = reader.GetString("topic");
+                            title = reader.GetString("title");
                             level1 = reader.GetInt32("level1");
                             level2 = reader.GetInt32("level2");
                             level3 = reader.GetInt32("level3");
@@ -161,8 +160,8 @@ namespace Quiz_App
 
                     //Starts to build exported file
                     var quizData = new StringBuilder();
+                    quizData.AppendLine($"Quiz Topic: {topic}");
                     quizData.AppendLine($"Quiz Title: {title}");
-                    quizData.AppendLine($"Topic: {topic}");
                     quizData.AppendLine($"Level 1: {level1}");
                     quizData.AppendLine($"Level 2: {level2}");
                     quizData.AppendLine($"Level 3: {level3}");
@@ -202,7 +201,7 @@ namespace Quiz_App
 
                     System.IO.File.WriteAllText(filePath, quizData.ToString());
 
-                    MessageBox.Show($"Quiz exported successfully to {desktopPath}");
+                    MessageBox.Show($"Quiz succesfully exported to {desktopPath}");
                 }
                 catch (Exception ex)
                 {
@@ -237,8 +236,8 @@ namespace Quiz_App
                         return;
                     }
 
-                    string title = string.Empty;
                     string topic = string.Empty;
+                    string title = string.Empty;
                     int level1 = -1;
                     int level2 = -1;
                     int level3 = -1;
@@ -250,13 +249,13 @@ namespace Quiz_App
                     {
                         string line = lines[i];
 
-                        if (line.StartsWith("Quiz Title:"))
+                        if (line.StartsWith("Quiz Topic:"))
+                        {
+                            topic = line.Replace("Quiz Topic:", "").Trim();
+                        }
+                        else if (line.StartsWith("Quiz Title:"))
                         {
                             title = line.Replace("Quiz Title:", "").Trim();
-                        }
-                        else if (line.StartsWith("Topic:"))
-                        {
-                            topic = line.Replace("Topic:", "").Trim();
                         }
                         else if (line.StartsWith("Level 1:"))
                         {
@@ -390,7 +389,7 @@ namespace Quiz_App
 
                                 //Commits the changes
                                 transaction.Commit();
-                                MessageBox.Show("Quiz imported successfully");
+                                MessageBox.Show("Quiz succesfully imported");
                                 
                                 LoadQuizzes(-1);
                             }

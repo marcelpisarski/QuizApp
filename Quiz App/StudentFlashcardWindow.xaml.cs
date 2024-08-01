@@ -26,8 +26,8 @@ namespace Quiz_App
         private bool randomiseQuestions;
         private int quizId;
         private Stack<Question> questionStack;
-        private bool isQuestionDisplayed;
         private Question currentQuestion;
+        private bool questionDisplayed;
 
         public StudentFlashcardWindow(string flashcardType, bool randomiseQuestions, int quizId)
         {
@@ -53,7 +53,7 @@ namespace Quiz_App
             {
                 questionStack.Push(question);
             }
-            isQuestionDisplayed = true;
+            questionDisplayed = true;
 
             DisplayFlashcard();
         }
@@ -66,7 +66,7 @@ namespace Quiz_App
                 questionStack.Pop();
             }
             
-            isQuestionDisplayed = true;
+            questionDisplayed = true;
             DisplayFlashcard();
         }
 
@@ -90,12 +90,12 @@ namespace Quiz_App
                 return;
             }
 
-            if (isQuestionDisplayed)
+            if (questionDisplayed)
             {
                 btnFlashcard.Content = currentQuestion.QuestionText;
 
                 //Answer will display next time user presses flashcard
-                isQuestionDisplayed = false;
+                questionDisplayed = false;
             }
             else
             {
@@ -120,7 +120,7 @@ namespace Quiz_App
                 }
                 
                 //Question displays again once user presses flashcard
-                isQuestionDisplayed = true;
+                questionDisplayed = true;
             }
         }
 

@@ -146,6 +146,7 @@ namespace Quiz_App
                     //Sets user level to calculated level and removes newuser role
                     command.CommandText = @"UPDATE userbaseline INNER JOIN user ON user.id = userbaseline.userid SET userbaseline.level = 4, 
                                             userbaseline.newuser = 0 WHERE user.id = @userId";
+
                     for (int i = 0; i < conditions.GetLength(0); i++)
                     {
                         if ((double.IsNaN(index) && double.IsNaN(conditions[i, 0])) || (index < conditions[i, 0]))

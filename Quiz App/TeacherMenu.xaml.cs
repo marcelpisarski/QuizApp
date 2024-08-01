@@ -100,10 +100,10 @@ namespace Quiz_App
 
         private void btnCancelSelection_Click(object sender, RoutedEventArgs e)
         {
-            // Clear selection in DataGrid
+            //Clear selection in DataGrid
             dtgStudentList.SelectedItem = null;
 
-            // Clear selection in ComboBox
+            //Clear selection in ComboBox
             cbbChangeLevel.SelectedIndex = -1;
         }
 

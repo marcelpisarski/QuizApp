@@ -25,7 +25,6 @@ namespace Quiz_App
     /// </summary>
     public partial class AddQuiz : Window
     {
-        bool canCreateQuiz = false;
         bool quizSchemaCreated = false;
         int existingQuizId = -1;
         bool isEditingQuiz = false;
@@ -38,6 +37,7 @@ namespace Quiz_App
             btnAddQuestion.IsEnabled = false;
             dtgQuestionData.IsEnabled = false;
             btnCreateSchema.IsEnabled = true;
+            btnDeleteQuestion.IsEnabled = false;
         }
 
         private void btnAddQuestion_Click(object sender, RoutedEventArgs e)
@@ -56,8 +56,6 @@ namespace Quiz_App
             //Connects OnQuestionAdded method to QuestionAdded event inside QuizQuestion
             QuizQuestion.QuestionAdded += OnQuestionAdded;
             QuizQuestion.Show();
-            
-            canCreateQuiz = true;
         }
 
         private void btnCancelQuiz_Click(object sender, RoutedEventArgs e)
@@ -127,11 +125,6 @@ namespace Quiz_App
             if (isEditingQuiz)
             {
                 UpdateQuiz();
-            }
-            else if (!canCreateQuiz)
-            {
-                MessageBox.Show("Unable to create quiz. Ensure quiz is valid");
-                return;
             }
             else if (!isEditingQuiz)
             {
@@ -233,6 +226,7 @@ namespace Quiz_App
                         btnAddQuestion.IsEnabled = true;
                         dtgQuestionData.IsEnabled = true;
                         btnCreateSchema.IsEnabled = false;
+                        btnDeleteQuestion.IsEnabled = true;
                         
                         LoadQuestions();
                     }
@@ -394,6 +388,7 @@ namespace Quiz_App
                             quizSchemaCreated = true;
                             btnAddQuestion.IsEnabled = true;
                             dtgQuestionData.IsEnabled = true;
+                            btnDeleteQuestion.IsEnabled = true;
                         }
                     }
                 }
