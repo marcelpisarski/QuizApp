@@ -86,7 +86,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error fetching username: {ex.Message}");
                 }
             }
         }

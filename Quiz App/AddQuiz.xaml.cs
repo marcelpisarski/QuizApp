@@ -105,7 +105,7 @@ namespace Quiz_App
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show($"Error deleting quiz: {ex.Message}");
                     }
                 }
             }
@@ -118,7 +118,7 @@ namespace Quiz_App
             //Check if there are no questions added
             if (questionCount == 0)
             {
-                MessageBox.Show("You cannot save a quiz without questions. Please add at least one question");
+                MessageBox.Show("Cannot save as question count is 0. Please add at least one question");
                 return;
             }
 
@@ -237,7 +237,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error creating quiz: {ex.Message}");
                 }
             }
         }
@@ -294,7 +294,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error deleting question: {ex.Message}");
                 }
             }
         }
@@ -347,7 +347,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error loading quiz questions: {ex.Message}");
                 }
             }
         }
@@ -394,7 +394,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error loading quiz data: {ex.Message}");
                 }
             }
 
@@ -504,7 +504,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error updating quiz: {ex.Message}");
                 }
             }
         }
@@ -531,7 +531,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error validating if quiz has been completed by a user: {ex.Message}");
                 }
             }
 

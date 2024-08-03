@@ -38,7 +38,7 @@ namespace Quiz_App
             {
                 StudentFlashcardWindow.Show();
             }
-            catch
+            catch (Exception ex) 
             {
                 return;
             }
@@ -71,7 +71,7 @@ namespace Quiz_App
             {
                 StudentFlashcardWindow.Show();
             }
-            catch
+            catch (Exception ex)
             {
                 return;
             }

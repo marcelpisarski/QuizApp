@@ -219,7 +219,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error fetching quiz questions: {ex.Message}");
                 }
             }
 

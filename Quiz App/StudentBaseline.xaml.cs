@@ -178,7 +178,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error updating user baseline level: {ex.Message}");
                 }
             }
         }

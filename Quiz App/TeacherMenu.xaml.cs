@@ -92,7 +92,7 @@ namespace Quiz_App
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show($"Error updating user level: {ex.Message}");
                     }
                 }
             }
@@ -193,7 +193,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error loading student data: {ex.Message}");
                 }
             }
             //Display data inside table
@@ -226,7 +226,7 @@ namespace Quiz_App
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Error fetching student count: {ex.Message}");
             }
 
             //Updates StudentCount label

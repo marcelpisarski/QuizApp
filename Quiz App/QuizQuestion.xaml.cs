@@ -171,7 +171,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error inserting MultipleChoice question: {ex.Message}");
                 }
             }
         }
@@ -211,7 +211,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error inserting SingleChoice question: {ex.Message}");
                 }
             }
         }

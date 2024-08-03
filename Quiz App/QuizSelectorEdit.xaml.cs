@@ -98,7 +98,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error deleting quiz: {ex.Message}");
                 }
             }
         }
@@ -205,7 +205,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error exporting quiz: {ex.Message}");
                 }
             }
         }
@@ -397,14 +397,14 @@ namespace Quiz_App
                             {
                                 //Reverts changes
                                 transaction.Rollback();
-                                MessageBox.Show(ex.Message);
+                                MessageBox.Show($"Error fetching quiz: {ex.Message}");
                             }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error importing quiz: {ex.Message}");
                 }
                 return;
             }
@@ -491,7 +491,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error loading quiz: {ex.Message}");
                 }
             }
         }

@@ -133,7 +133,7 @@ namespace Quiz_App
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error logging in user: {ex.Message}");
                 }
             }
         }
@@ -189,7 +189,7 @@ namespace Quiz_App
                 catch (Exception ex)
                 {
                     GlobalVariables.UserId = -1;
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error fetching user id: {ex.Message}");
                     return;
                 }
             }

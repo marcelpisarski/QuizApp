@@ -68,7 +68,7 @@ namespace Quiz_App
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Error fetching teacher code: {ex.Message}");
                 return;
             }
 
@@ -175,7 +175,7 @@ namespace Quiz_App
                 }    
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"Error registering user: {ex.Message}");
                 }
             }
         }
