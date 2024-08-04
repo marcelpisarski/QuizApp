@@ -201,5 +201,11 @@ namespace Quiz_App
                 return stringBuilder.ToString();
             }
         }
+
+        //Clears teacher code textbox when user clicks it
+        public void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            txtTeacherCode.Text = string.Empty;
+        }
     }
 }
