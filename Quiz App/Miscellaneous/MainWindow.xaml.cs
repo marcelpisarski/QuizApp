@@ -30,7 +30,6 @@ namespace Quiz_App
 
         public MainWindow()
         {
-
             InitializeComponent();
         }
 
@@ -80,13 +79,13 @@ namespace Quiz_App
 
                         string userRole = (string)command.ExecuteScalar();
 
-                        //Checks if user is a newuser
+                        //Checks if user is a new user
                         command.CommandText = "SELECT newuser FROM userbaseline INNER JOIN user ON user.id = userbaseline.userid WHERE user.username=@username";
                         command.Parameters.Clear();
                         command.Parameters.AddWithValue("@username", username);
 
                         bool isNewUser = Convert.ToBoolean(command.ExecuteScalar());
-                        FetchUserId(username, hashedPassword);
+                        GetUserId(username, hashedPassword);
 
                         //Checks user role
                         switch (userRole)
@@ -161,7 +160,7 @@ namespace Quiz_App
         }
 
         //Places logged in userid into global variables
-        private void FetchUserId(string username, string password)
+        private void GetUserId(string username, string password)
         {
             string connectionString = GlobalVariables.Connection;
 

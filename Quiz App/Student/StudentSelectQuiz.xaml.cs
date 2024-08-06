@@ -25,7 +25,7 @@ namespace Quiz_App
     {
         private string actionType;
         private bool randomiseQuestions;
-        
+
         public StudentSelectQuiz(string actionType, bool randomiseQuestions)
         {
             //Casts flashcard options to variables
@@ -34,7 +34,7 @@ namespace Quiz_App
 
             InitializeComponent();
 
-            // Load quizzes based on the action type
+            //Load quizzes based on the action type
             if (actionType == "PreviousQuizzes")
             {
                 LoadCompletedQuizzes();

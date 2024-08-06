@@ -124,7 +124,7 @@ namespace Quiz_App
                     connection.Open();
                     var command = connection.CreateCommand();
 
-                    //Fetch quiz details including level
+                    //Fetch quiz details
                     command.CommandText = "SELECT topic, title, level1, level2, level3, level4 FROM quiz WHERE quizid = @quizid";
                     command.Parameters.AddWithValue("@quizid", selectedQuiz.Id);
 
@@ -244,7 +244,7 @@ namespace Quiz_App
                     int level4 = -1;
                     var questions = new List<Question>();
 
-                    //Parse the file content
+                    //Parse the file data
                     for (int i = 0; i < lines.Length; i++)
                     {
                         string line = lines[i];
@@ -337,6 +337,7 @@ namespace Quiz_App
                                 //Insert quiz details
                                 command.CommandText = @"INSERT INTO quiz (title, topic, level1, level2, level3, level4, teacherid, totalmarks) 
                                                         VALUES (@title, @topic, @level1, @level2, @level3, @level4, @teacherid, @totalmarks)";
+
                                 command.Parameters.Clear();
                                 command.Parameters.AddWithValue("@title", title);
                                 command.Parameters.AddWithValue("@topic", topic);
@@ -397,7 +398,7 @@ namespace Quiz_App
                             {
                                 //Reverts changes
                                 transaction.Rollback();
-                                MessageBox.Show($"Error fetching quiz: {ex.Message}");
+                                MessageBox.Show($"Error importing quiz: {ex.Message}");
                             }
                         }
                     }

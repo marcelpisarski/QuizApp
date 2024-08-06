@@ -75,7 +75,7 @@ namespace Quiz_App
             //Insures all textboxes have a value
             if (username.Length == 0 || password.Length == 0 || confirmedPassword.Length == 0)
             {
-                MessageBox.Show("Missing value");
+                MessageBox.Show("Missing username and/or password");
                 return;
             }
 
@@ -143,7 +143,7 @@ namespace Quiz_App
                             command.CommandText = "SELECT LAST_INSERT_ID();";
                             int userId = Convert.ToInt32(command.ExecuteScalar());
 
-                            // Insert into userbaseline table
+                            //Insert into userbaseline table
                             command.CommandText = "INSERT INTO userbaseline (userid, level) VALUES (@userid, 0)";
                             command.Parameters.Clear();
                             command.Parameters.AddWithValue("@userid", userId);

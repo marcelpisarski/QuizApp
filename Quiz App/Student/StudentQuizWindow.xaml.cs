@@ -61,7 +61,7 @@ namespace Quiz_App
                 
                 int distance = LevenshteinAlgorithmCheck(userAnswer, realAnswer);
                 
-                //Adjust edits as needed to mark answer as correct
+                //Adjust edits as needed to mark the user answer as correct
                 bool isCorrect = distance <= 3;
 
                 CheckAnswerAndSave(scQuestion.QuestionId, isCorrect);
@@ -260,7 +260,7 @@ namespace Quiz_App
                     connection.Open();
                     var command = connection.CreateCommand();
 
-                    // Fetch general question info
+                    //Fetch general question data
                     command.CommandText = @"SELECT q.questionid, q.questiontext, q.questiontype, mc.mcquestionid AS mcquestionid, mc.option1, 
                                             mc.option2, mc.option3, mc.option4, mc.correctanswerindex, sc.scquestionid AS scquestionid, sc.scanswer 
                                             FROM question q LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid 
@@ -272,7 +272,7 @@ namespace Quiz_App
                     {
                         while (reader.Read())
                         {
-                            //Casts general question information into variables
+                            //Casts general question data into variables
                             int questionId = reader.GetInt32("questionid");
                             string questionText = reader.GetString("questiontext");
                             string questionType = reader.GetString("questiontype");

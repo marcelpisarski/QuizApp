@@ -33,12 +33,12 @@ namespace Quiz_App
         private void btnAllQuestions_Click(object sender, RoutedEventArgs e)
         {
             //Opens flashcard window with arguements
-            StudentFlashcardWindow StudentFlashcardWindow= new StudentFlashcardWindow("AllQuestions", randomiseQuestions, -1);
+            StudentFlashcardWindow StudentFlashcardWindow = new StudentFlashcardWindow("AllQuestions", randomiseQuestions, -1);
             try
             {
                 StudentFlashcardWindow.Show();
             }
-            catch (Exception ex) 
+            catch 
             {
                 return;
             }
@@ -71,7 +71,7 @@ namespace Quiz_App
             {
                 StudentFlashcardWindow.Show();
             }
-            catch (Exception ex)
+            catch 
             {
                 return;
             }

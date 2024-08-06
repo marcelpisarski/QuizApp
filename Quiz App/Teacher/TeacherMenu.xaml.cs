@@ -58,7 +58,7 @@ namespace Quiz_App
             //Casts selected level to user
             if (cbbChangeLevel.SelectedItem is ComboBoxItem selectedItem)
             {
-                //Sets newLevel to the selected item 
+                //Sets newLevel to the selected level 
                 int newLevel = Convert.ToInt32(selectedItem.Content);
 
                 string connectionString = GlobalVariables.Connection;

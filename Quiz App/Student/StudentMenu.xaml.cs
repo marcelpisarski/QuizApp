@@ -49,10 +49,10 @@ namespace Quiz_App
 
         //Opens window where students can view their results
         private void btnViewResults_Click(object sender, RoutedEventArgs e)
-        {          
+        {
             StudentResults StudentResults = new StudentResults(GlobalVariables.UserId);
             this.Hide();
-            
+
             StudentResults.Show();
             this.Show();
         }

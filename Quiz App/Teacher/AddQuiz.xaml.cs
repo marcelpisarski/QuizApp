@@ -59,8 +59,7 @@ namespace Quiz_App
         }
 
         private void btnCancelQuiz_Click(object sender, RoutedEventArgs e)
-        {
-            
+        {       
             if (isEditingQuiz)
             {
                 if (questionCount == 0) 
@@ -137,23 +136,23 @@ namespace Quiz_App
         //Adds quiz to database
         private void btnCreateSchema_Click(object sender, RoutedEventArgs e)
         {
-            //Shows error if title / topic name is empty
+            //Shows error if title or topic name is empty
             if (txtQuizTitle.Text.Length == 0 || txtTopicName.Text.Length == 0)
             {
                 MessageBox.Show("Quiz title and/or topic name is empty");
                 return;
             }
 
-            //Ensures a quiz has a level selected
+            //Ensures quiz has levels selected
             if (cbLevel1.IsChecked == false && cbLevel2.IsChecked == false && cbLevel3.IsChecked == false && cbLevel4.IsChecked == false)
             {
                 MessageBox.Show("Please select a quiz level");
                 return;
-            }      
+            }
 
             //Adds quiz details to variables
+            string quizTopic = txtTopicName.Text.Trim();
             string quizTitle = txtQuizTitle.Text.Trim();
-            string topicName = txtTopicName.Text.Trim();
             bool level1 = false, level2 = false, level3 = false, level4 = false;
             int teacherId = GlobalVariables.UserId;
 
@@ -184,7 +183,7 @@ namespace Quiz_App
                     connection.Open();
                     var command = connection.CreateCommand();
 
-                    // Check if the quiz title already exists
+                    //Check if the quiz title already exists
                     command.CommandText = "SELECT COUNT(*) FROM quiz WHERE title = @title";
                     command.Parameters.AddWithValue("@title", quizTitle);
 
@@ -198,13 +197,13 @@ namespace Quiz_App
 
                     quizSchemaCreated = true;
 
-                    // Clear previous parameters
+                    //Clear previous parameters
                     command.Parameters.Clear();
 
                     command.CommandText = @"INSERT INTO quiz (topic, title, teacherid, level1, level2, level3, level4, totalmarks) 
                                             VALUES (@topic, @title, @teacherid, @level1, @level2, @level3, @level4, @totalmarks)";
 
-                    command.Parameters.AddWithValue("@topic", topicName);
+                    command.Parameters.AddWithValue("@topic", quizTopic);
                     command.Parameters.AddWithValue("@title", quizTitle);
                     command.Parameters.AddWithValue("@teacherid", teacherId);
                     command.Parameters.AddWithValue("@level1", level1);
@@ -261,7 +260,7 @@ namespace Quiz_App
                 return;
             }
 
-            //Getw the selected question and creates object
+            //Get the selected question and create object
             Question selectedQuestion = (Question)dtgQuestionData.SelectedItem;
             int questionId = selectedQuestion.QuestionId;
 
@@ -418,9 +417,9 @@ namespace Quiz_App
                 return;
             }
 
-            //Casts updates quiz details to variables
+            //Casts updated quiz details to variables
             string quizTitle = txtQuizTitle.Text.Trim();
-            string topicName = txtTopicName.Text.Trim();
+            string quizTopic = txtTopicName.Text.Trim();
             bool level1 = false, level2 = false, level3 = false, level4 = false;
             int teacherId = GlobalVariables.UserId;
 
@@ -456,7 +455,7 @@ namespace Quiz_App
                     command.Parameters.AddWithValue("@quizid", existingQuizId);
                     string existingTitle = (string)command.ExecuteScalar();
 
-                    //Check if the quiz title already exists, but only if the title has changed
+                    //Check if the quiz title already exists
                     if (quizTitle != existingTitle)
                     {
                         command.CommandText = "SELECT COUNT(*) FROM quiz WHERE title = @title";
@@ -479,7 +478,7 @@ namespace Quiz_App
                                             level1 = @level1, level2 = @level2, level3 = @level3, level4 = @level4, 
                                             totalmarks = @totalmarks WHERE quizid = @quizid";
 
-                    command.Parameters.AddWithValue("@topic", topicName);
+                    command.Parameters.AddWithValue("@topic", quizTopic);
                     command.Parameters.AddWithValue("@title", quizTitle);
                     command.Parameters.AddWithValue("@teacherid", teacherId);
                     command.Parameters.AddWithValue("@level1", level1);

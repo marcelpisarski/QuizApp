@@ -23,7 +23,6 @@ namespace Quiz_App
     public partial class QuizQuestion : Window
     {
         public event Action QuestionAdded;
-
         int quizId = GlobalVariables.QuizId;
 
         public QuizQuestion()
@@ -112,7 +111,7 @@ namespace Quiz_App
             this.Close();
         }
 
-        //Insert multiplechoice question into database
+        //Insert MultipleChoice question into database
         private void InsertMultipleChoiceQuestion(string questionText)
         {
             int correctAnswerIndex = -1;
@@ -154,7 +153,7 @@ namespace Quiz_App
                     command.CommandText = "SELECT LAST_INSERT_ID();";
                     int questionId = Convert.ToInt32(command.ExecuteScalar());
 
-                    //Insert into singlechoicequestion table
+                    //Insert into multiplechoicequestion table
                     command.CommandText = @"INSERT INTO multiplechoicequestion (questionid, option1, option2, option3, option4, correctanswerindex) 
                                             VALUES (@questionid, @option1, @option2, @option3, @option4, @correctanswerindex)";
                     command.Parameters.AddWithValue("@questionid", questionId);
@@ -176,7 +175,7 @@ namespace Quiz_App
             }
         }
 
-        //Insert singlechoice question into database
+        //Insert SingleChoice question into database
         private void InsertSingleChoiceQuestion(string questionText)
         {
             string connectionString = GlobalVariables.Connection;
@@ -200,7 +199,7 @@ namespace Quiz_App
                     command.CommandText = "SELECT LAST_INSERT_ID();";
                     int questionId = Convert.ToInt32(command.ExecuteScalar());
 
-                    //Insert into multiplechoicequestion table
+                    //Insert into singlechoicequestion table
                     command.CommandText = "INSERT INTO singlechoicequestion (questionid, scanswer) VALUES (@questionid, @scanswer)";
                     command.Parameters.AddWithValue("@questionid", questionId);
                     command.Parameters.AddWithValue("@scanswer", txtSingleAnswer.Text.Trim());
