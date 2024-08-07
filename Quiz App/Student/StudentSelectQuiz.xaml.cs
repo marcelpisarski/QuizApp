@@ -60,7 +60,7 @@ namespace Quiz_App
                     case "PreviousQuizzes":
                         //Proceed to open flashcard window with selected quiz id
                         StudentFlashcardWindow studentFlashcardWindow = new StudentFlashcardWindow("PreviousQuizzes", randomiseQuestions, selectedQuiz.Id);
-                        studentFlashcardWindow.Show();
+                        studentFlashcardWindow.Show();                      
                         break;
                     case "StartQuiz":
                         //Proceed to start the selected quiz

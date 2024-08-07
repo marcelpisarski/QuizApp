@@ -37,6 +37,7 @@ namespace Quiz_App
             try
             {
                 StudentFlashcardWindow.Show();
+                this.Close();
             }
             catch 
             {
@@ -61,6 +62,7 @@ namespace Quiz_App
             //Opens flashcard window with arguements
             StudentSelectQuiz StudentSelectQuiz = new StudentSelectQuiz("PreviousQuizzes", randomiseQuestions);
             StudentSelectQuiz.Show();
+            this.Close();
         }
 
         private void btnWrongQuizAnswers_Click(object sender, RoutedEventArgs e)
@@ -70,6 +72,7 @@ namespace Quiz_App
             try
             {
                 StudentFlashcardWindow.Show();
+                this.Close();
             }
             catch 
             {

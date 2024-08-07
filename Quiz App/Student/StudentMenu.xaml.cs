@@ -100,5 +100,13 @@ namespace Quiz_App
             ChangePassword.Show();
             this.Show();
         }
+
+        private void btnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow Mainwindow = new MainWindow();
+            Mainwindow.Show();
+
+            this.Close();
+        }
     }
 }
