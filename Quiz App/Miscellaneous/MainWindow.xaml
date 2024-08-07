@@ -8,8 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid Width="800" Height="430" Background="#FF77B0AA">
         <TextBox x:Name="txtUsername" HorizontalAlignment="Center" Margin="0,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="240" Height="20"/>
-        <Button x:Name="btnRegister" Content="Register" HorizontalAlignment="Center" Margin="0,323,0,0" VerticalAlignment="Top" Height="39" Width="104" Click="btnRegister_Click" Background="#FFDBEEF1" FontFamily="Tahoma" FontSize="18"/>
-        <Button x:Name="btnLogin" Content="Login" HorizontalAlignment="Center" Margin="0,239,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="52" Width="104" Click="btnLogin_Click" Background="#FFDBEEF1" FontFamily="Tahoma" FontSize="18">
+        <Button x:Name="btnRegister" Content="Register" HorizontalAlignment="Center" Margin="0,303,0,0" VerticalAlignment="Top" Height="39" Width="104" Click="btnRegister_Click" Background="#FFDBEEF1" FontFamily="Tahoma" FontSize="18"/>
+        <Button x:Name="btnLogin" Content="Login" HorizontalAlignment="Center" Margin="0,231,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="52" Width="104" Click="btnLogin_Click" Background="#FFDBEEF1" FontFamily="Tahoma" FontSize="18">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

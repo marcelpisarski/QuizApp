@@ -11,5 +11,6 @@
         <Button x:Name="btnOpenFlashcards" Content="Open Flashcards" HorizontalAlignment="Left" Margin="428,115,0,0" VerticalAlignment="Top" Width="300" Height="100" Click="btnOpenFlashcards_Click" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="20"/>
         <Button x:Name="btnViewResults" Content="View Quiz Results" HorizontalAlignment="Left" Margin="67,266,0,0" VerticalAlignment="Top" Click="btnViewResults_Click" FontFamily="Tahoma" Background="#FFDBEEF1" Width="661" Height="50" FontSize="18"/>
         <Label x:Name="lblWelcomeLabel" Content="WELCOME LABEL" HorizontalAlignment="Center" Margin="0,47,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="20" FontWeight="Bold"/>
+        <Button x:Name="txtChangePassword" Content="Change Current Password" HorizontalAlignment="Center" Margin="0,341,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="16" Background="#FFF3D7AF" Width="232" Height="39" FontWeight="Bold" Click="txtChangePassword_Click"/>
     </Grid>
 </Window>

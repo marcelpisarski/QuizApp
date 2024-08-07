@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Quiz_App.Miscellaneous;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;

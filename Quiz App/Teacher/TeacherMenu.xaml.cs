@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static Quiz_App.MainWindow;
+using Quiz_App.Miscellaneous;
 
 namespace Quiz_App
 {
@@ -231,6 +232,15 @@ namespace Quiz_App
 
             //Updates StudentCount label
             lblStudentCount.Content = $"Student Count: {studentCount}";
+        }
+
+        private void txtChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePassword ChangePassword = new ChangePassword();
+            this.Hide();
+
+            ChangePassword.Show();
+            this.Show();
         }
     }
 }

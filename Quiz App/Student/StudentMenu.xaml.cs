@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Quiz_App.Miscellaneous;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,6 +90,15 @@ namespace Quiz_App
                     MessageBox.Show($"Error fetching username: {ex.Message}");
                 }
             }
+        }
+
+        private void txtChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePassword ChangePassword = new ChangePassword();
+            this.Hide();
+
+            ChangePassword.Show();
+            this.Show();
         }
     }
 }
