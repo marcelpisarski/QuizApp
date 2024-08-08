@@ -49,6 +49,7 @@ namespace Quiz_App.Miscellaneous
                                         FROM userquizanswers uqa
                                         INNER JOIN question q ON uqa.questionid = q.questionid
                                         WHERE uqa.userid = @userid AND uqa.quizid = @quizid";
+
                     command.Parameters.AddWithValue("@userid", studentId);
                     command.Parameters.AddWithValue("@quizid", quizId);
 
@@ -72,7 +73,7 @@ namespace Quiz_App.Miscellaneous
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error fetching quiz questions: {ex.Message}");
+                    MessageBox.Show($"Error loading quiz questions: {ex.Message}");
                 }
             }
         }

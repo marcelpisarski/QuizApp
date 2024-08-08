@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="IndividualQuestionResults" Height="450" Width="800">
     <Grid Background="#FF77B0AA">
-        <DataGrid x:Name="dtgResultList" d:ItemsSource="{d:SampleData ItemCount=5}" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" AutoGenerateColumns="False" Margin="108,59,108,90" FontFamily="Tahoma" Width="584" Height="290">
+        <DataGrid x:Name="dtgResultList" d:ItemsSource="{d:SampleData ItemCount=5}" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" AutoGenerateColumns="False" Margin="108,59,108,90" FontFamily="Tahoma" Width="584" Height="290" Background="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Question Id" Binding="{Binding QuestionId}" Width="*"/>
                 <DataGridTextColumn Header="Question" Binding="{Binding QuestionText}" Width="*"/>
