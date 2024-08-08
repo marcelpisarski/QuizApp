@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="StudentSelectQuiz" Height="450" Width="800">
     <Grid Background="#FF77B0AA">
-        <DataGrid x:Name="dtgQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" Margin="174,93,174,92" FontFamily="Tahoma" Background="White" FontSize="18">
+        <DataGrid x:Name="dtgQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" Margin="174,93,174,92" FontFamily="Tahoma" Background="White" FontSize="18">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Quiz ID" Binding="{Binding Id}" />
-                <DataGridTextColumn Header="Quiz Name" Binding="{Binding Topic}" />
-                <DataGridTextColumn Header="Quiz Title" Binding="{Binding Title}" />
+                <DataGridTextColumn Header="Quiz ID" Binding="{Binding Id}" Width="*"/>
+                <DataGridTextColumn Header="Quiz Name" Binding="{Binding Topic}" Width="*"/>
+                <DataGridTextColumn Header="Quiz Title" Binding="{Binding Title}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="btnCloseStudentSelectQuiz" Content="Close" HorizontalAlignment="Left" Margin="560,367,0,0" VerticalAlignment="Top" Click="btnCloseStudentSelectQuiz_Click" Height="36" Width="102" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>

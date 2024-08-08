@@ -9,11 +9,11 @@
     <Grid Background="#FF77B0AA">
         <Button x:Name="btnCancelQuizEdit" Content="Close" HorizontalAlignment="Left" Margin="677,371,0,0" VerticalAlignment="Top" Click="btnCancelQuizEdit_Click" Background="#FFDBEEF1" FontFamily="Tahoma" Height="36" Width="102" FontSize="18"/>
         <Button x:Name="btnSelectQuiz" Content="Edit Quiz" HorizontalAlignment="Left" Margin="219,371,0,0" VerticalAlignment="Top" Click="btnSelectQuiz_Click" Background="#FFDBEEF1" FontFamily="Tahoma" Width="102" Height="36" FontSize="18"/>
-        <DataGrid x:Name="dtgQuizList" d:ItemsSource="{d:SampleData ItemCount=5}" CanUserAddRows="False" AutoGenerateColumns="False" Margin="112,94,226,89" FontFamily="Tahoma" Background="White" FontSize="18">
+        <DataGrid x:Name="dtgQuizList" d:ItemsSource="{d:SampleData ItemCount=5}" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" AutoGenerateColumns="False" Margin="112,94,226,89" FontFamily="Tahoma" Background="White" FontSize="18">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Quiz Id" Binding="{Binding Id}" />
-                <DataGridTextColumn Header="Quiz Topic" Binding="{Binding Topic}" />
-                <DataGridTextColumn Header="Quiz Title" Binding="{Binding Title}" />
+                <DataGridTextColumn Header="Quiz Id" Binding="{Binding Id}" Width="*"/>
+                <DataGridTextColumn Header="Quiz Topic" Binding="{Binding Topic}" Width="*"/>
+                <DataGridTextColumn Header="Quiz Title" Binding="{Binding Title}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="btnDeleteQuiz" Content="Delete Quiz" HorizontalAlignment="Left" Margin="112,371,0,0" VerticalAlignment="Top" Click="btnDeleteQuiz_Click" Background="#FFDBEEF1" FontFamily="Tahoma" Width="102" Height="36" FontSize="18"/>

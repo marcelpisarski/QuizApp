@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Quiz_App.Miscellaneous;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,6 +107,24 @@ namespace Quiz_App
 
             //Display the sorted results in the data grid
             dtgStudentResults.ItemsSource = results;
+        }
+
+        private void btnViewQuizQuestions_Click(object sender, RoutedEventArgs e)
+        {
+            if (dtgStudentResults.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a quiz");
+                return;
+            }
+
+            var selectedQuizResult = (QuizResult)dtgStudentResults.SelectedItem;
+            int selectedQuizId = selectedQuizResult.QuizId;
+
+            IndividualQuestionResults IndividualQuestionResults = new IndividualQuestionResults(studentId, selectedQuizId);
+            this.Hide();
+
+            IndividualQuestionResults.Show();
+            this.Show();
         }
     }
 }

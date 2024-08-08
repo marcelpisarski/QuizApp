@@ -9,11 +9,11 @@
     <Grid Width="800" Height="434" Background="#FF77B0AA">
         <Button x:Name="btnCreateQuiz" Content="Create Quiz" HorizontalAlignment="Left" Margin="99,86,0,0" VerticalAlignment="Top" Height="100" Width="200" Click="btnCreateQuiz_Click" Background="White" Foreground="Black" FontFamily="Tahoma" FontSize="23"/>
         <Button x:Name="btnEditQuiz" Content="Edit Quiz" HorizontalAlignment="Left" Margin="99,212,0,0" VerticalAlignment="Top" Height="100" Width="200" Click="btnEditQuiz_Click" Background="White" Foreground="Black" FontFamily="Tahoma" FontSize="23"/>
-        <DataGrid x:Name="dtgStudentList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="381,104,29,113" CanUserAddRows="False" AutoGenerateColumns="False" SelectionChanged="dtgStudentList_SelectionChanged" Height="217" FontFamily="Tahoma" Background="White" FontSize="18">
+        <DataGrid x:Name="dtgStudentList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="381,104,29,113" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" AutoGenerateColumns="False" SelectionChanged="dtgStudentList_SelectionChanged" Height="217" FontFamily="Tahoma" Background="White" FontSize="18">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="UserId" Binding="{Binding UserId}" />
-                <DataGridTextColumn Header="Username" Binding="{Binding Username}" />
-                <DataGridTextColumn Header="Level" Binding="{Binding Level}" />
+                <DataGridTextColumn Header="UserId" Binding="{Binding UserId}" Width="*"/>
+                <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>
+                <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         <ComboBox x:Name="cbbChangeLevel" HorizontalAlignment="Left" Margin="381,329,0,0" VerticalAlignment="Top" Width="137" Height="33" FontFamily="Tahoma" FontSize="18">
