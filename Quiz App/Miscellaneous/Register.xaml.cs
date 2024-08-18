@@ -63,7 +63,7 @@ namespace Quiz_App
             try
             {
                 //Local filepath to teachercode
-                string filePath = "C:\\Users\\marce\\source\\repos\\Quiz App\\Quiz App\\Text Files\\TeacherCode.txt";
+                string filePath = GlobalVariables.TeacherCode;
                 TEACHERCODE = File.ReadAllText(filePath).Trim();
             }
             catch (Exception ex)

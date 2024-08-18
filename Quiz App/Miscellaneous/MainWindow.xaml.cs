@@ -27,6 +27,8 @@ namespace Quiz_App
             public static int UserId { get; set; }
             public static int QuizId { get; set; }
             public static readonly string Connection = "server=127.0.0.1;uid=root;pwd=;database=quizsystem;SslMode=Required;";
+            public static readonly string TeacherCode = "C:\\Users\\marce\\source\\repos\\Quiz App\\Quiz App\\Text Files\\TeacherCode.txt";
+            public static readonly string BaselineStatements = "C:\\Users\\marce\\source\\repos\\Quiz App\\Quiz App\\Text Files\\BaselineStatements.txt";
         }
 
         public MainWindow()

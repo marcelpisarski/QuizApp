@@ -52,7 +52,7 @@ namespace Quiz_App
         //Shows a random statement from BaselineStatements.txt to newly logged in user
         private void LoadStatement()
         {
-            string filePath = "C:\\Users\\marce\\source\\repos\\Quiz App\\Quiz App\\Text Files\\BaselineStatements.txt";
+            string filePath = GlobalVariables.BaselineStatements;
             string[] questions = File.ReadAllLines(filePath);
 
             Random random = new Random();
