@@ -65,7 +65,13 @@ namespace Quiz_App
             {
                 questionStack.Pop();
             }
-            
+            else
+            {
+                MessageBox.Show("No more flashcards to show");
+                this.Close();
+                return;
+            }
+
             questionDisplayed = true;
             DisplayFlashcard();
         }
@@ -174,6 +180,20 @@ namespace Quiz_App
                                                     LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid 
                                                     WHERE uqa.userid = @userId AND uqa.mark = 0";
                             command.Parameters.AddWithValue("@userId", GlobalVariables.UserId);
+                            break;
+
+                        case "WrongChosenQuizAnswers":
+                            command.CommandText = @"SELECT q.questionid, q.questiontext, q.questiontype, q.quizid, 
+                                                    mc.mcquestionid, mc.option1, mc.option2, mc.option3, mc.option4, mc.correctanswerindex, 
+                                                    sc.scquestionid, sc.scanswer 
+                                                    FROM userquizcompletions uqc
+                                                    JOIN question q ON uqc.quizid = q.quizid
+                                                    LEFT JOIN multiplechoicequestion mc ON q.questionid = mc.questionid 
+                                                    LEFT JOIN singlechoicequestion sc ON q.questionid = sc.questionid 
+                                                    INNER JOIN userquizanswers uqa ON q.questionid = uqa.questionid
+                                                    WHERE uqc.userid = @userId AND q.quizid = @quizId AND uqa.mark = 0";
+                            command.Parameters.AddWithValue("@userId", GlobalVariables.UserId);
+                            command.Parameters.AddWithValue("@quizId", quizId);
                             break;
 
                         default:

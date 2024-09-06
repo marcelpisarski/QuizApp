@@ -33,11 +33,13 @@ namespace Quiz_App
             this.randomiseQuestions = randomiseQuestions;
 
             InitializeComponent();
+            cbxWrongAnswers.Visibility = Visibility.Hidden;
 
             //Load quizzes based on the action type
             if (actionType == "PreviousQuizzes")
             {
                 LoadCompletedQuizzes();
+                cbxWrongAnswers.Visibility = Visibility.Visible;
             }
             else
             {
@@ -55,11 +57,24 @@ namespace Quiz_App
         {
             if (dtgQuizzes.SelectedItem is Quiz selectedQuiz)
             {
+                //Check if check box is checked
+                bool wrongAnswersOnlyMode = (cbxWrongAnswers.IsChecked == true);
+
+                if (actionType == "PreviousQuizzes" && wrongAnswersOnlyMode)
+                {
+                    //Check if there are any wrong answers before opening the window
+                    if (!HasIncorrectAnswers(selectedQuiz.Id))
+                    {
+                        MessageBox.Show("You have no incorrect answers on this quiz");
+                        return; 
+                    }
+                }
+
                 switch (actionType)
                 {
                     case "PreviousQuizzes":
-                        //Proceed to open flashcard window with selected quiz id
-                        StudentFlashcardWindow studentFlashcardWindow = new StudentFlashcardWindow("PreviousQuizzes", randomiseQuestions, selectedQuiz.Id);
+                        //Proceed to open flashcard window with selected quiz id (either wrong answers only or all questions shown)
+                        StudentFlashcardWindow studentFlashcardWindow = new StudentFlashcardWindow(wrongAnswersOnlyMode ? "WrongChosenQuizAnswers" : "PreviousQuizzes", randomiseQuestions, selectedQuiz.Id);
                         studentFlashcardWindow.Show();                      
                         break;
                     case "StartQuiz":
@@ -194,6 +209,38 @@ namespace Quiz_App
                 }
             }
             return completedQuizzes;
+        }
+
+        //Checks if the user has any incorrect answers on the selected quiz
+        private bool HasIncorrectAnswers(int quizId)
+        {
+            bool hasIncorrectAnswer = false;
+
+            string connectionString = GlobalVariables.Connection;
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+
+                    command.CommandText = @"SELECT COUNT(*) FROM userquizanswers uqa 
+                                            JOIN question q ON uqa.questionid = q.questionid 
+                                            WHERE uqa.userid = @userId AND q.quizid = @quizId AND uqa.mark = 0";
+                    command.Parameters.AddWithValue("@userId", GlobalVariables.UserId);
+                    command.Parameters.AddWithValue("@quizId", quizId);
+
+                    int incorrectAnswerCount = Convert.ToInt32(command.ExecuteScalar());
+                    hasIncorrectAnswer = (incorrectAnswerCount > 0);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error fetching wrong answer count: {ex.Message}");
+                }
+            }
+
+            return hasIncorrectAnswer;
         }
     }
 }

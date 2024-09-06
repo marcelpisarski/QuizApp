@@ -17,5 +17,6 @@
         <Button x:Name="btnCloseStudentSelectQuiz" Content="Close" HorizontalAlignment="Left" Margin="560,367,0,0" VerticalAlignment="Top" Click="btnCloseStudentSelectQuiz_Click" Height="36" Width="102" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
         <Button x:Name="btnSelectQuiz" Content="Open" HorizontalAlignment="Left" Margin="667,367,0,0" VerticalAlignment="Top" Click="btnSelectQuiz_Click" Height="36" Width="102" FontFamily="Tahoma" Background="#FFDBEEF1" FontSize="18"/>
         <Label Content="Select Quiz" HorizontalAlignment="Center" Margin="0,36,0,0" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Tahoma" FontSize="20"/>
+        <CheckBox x:Name="cbxWrongAnswers" Content="Wrong Answers Only Mode" HorizontalAlignment="Left" Margin="174,350,0,0" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="18"/>
     </Grid>
 </Window>

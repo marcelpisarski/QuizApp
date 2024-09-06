@@ -1,4 +1,8 @@
-﻿using MySql.Data.MySqlClient;
+﻿using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.WPF;
+using SkiaSharp;
+using MySql.Data.MySqlClient;
 using Quiz_App.Miscellaneous;
 using System;
 using System.Collections.Generic;
@@ -14,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static Quiz_App.MainWindow;
+using LiveChartsCore.SkiaSharpView.Painting;
 
 namespace Quiz_App
 {
@@ -27,6 +32,8 @@ namespace Quiz_App
         private int studentId;
         private Dictionary<int, QuizResult> studentResults;
 
+        public ISeries[] PieChart { get; set; }
+
         public StudentResults(int studentId)
         {
             InitializeComponent();
@@ -36,6 +43,7 @@ namespace Quiz_App
             
             LoadStudentResults();
             DisplayQuizResults();
+            DataContext = this;
         }
 
         private void btnCloseWindow_Click(object sender, RoutedEventArgs e)
@@ -47,6 +55,8 @@ namespace Quiz_App
         {
             //Define the connection string
             string connectionString = GlobalVariables.Connection;
+            int totalQuizzes = 0;
+            int quizzesPassed = 0;
 
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -75,8 +85,24 @@ namespace Quiz_App
 
                             //Adds results to studentResults dictionary
                             studentResults.Add(quizId, new QuizResult(quizId, quizTitle, totalMarks, studentMarks, completionDate, Percentage));
+
+                            totalQuizzes++;
+                            if (Percentage >= 70)
+                            {
+                                quizzesPassed++;
+                            }
                         }
                     }
+
+                    //Creates a pie chart for the passing rate
+                    double percentagePassed = Math.Round((totalQuizzes > 0) ? (quizzesPassed / (double)totalQuizzes) * 100 : 0, 2);
+                    double percentageFailed = Math.Round(100 - percentagePassed, 2);
+
+                    PieChart = new ISeries[]
+                    {
+                        new PieSeries<double> { Values = new double[] { percentagePassed }, Name = "Percentage Passed", Fill = new SolidColorPaint(SKColors.Green) },
+                        new PieSeries<double> { Values = new double[] { percentageFailed }, Name = "Percentage Failed", Fill = new SolidColorPaint(SKColors.Red) }
+                    };
                 }
                 catch (Exception ex)
                 {

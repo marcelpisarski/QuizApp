@@ -1,4 +1,8 @@
-﻿using MySql.Data.MySqlClient;
+﻿using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.WPF;
+using SkiaSharp;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static Quiz_App.MainWindow;
+using LiveChartsCore.SkiaSharpView.Painting;
 
 namespace Quiz_App.Miscellaneous
 {
@@ -22,11 +27,13 @@ namespace Quiz_App.Miscellaneous
     public partial class IndividualQuestionResults : Window
     {
         public record QuestionList(int QuestionId, string QuestionText, string QuestionType, int Mark);
+        public ISeries[] PieChart { get; set; }
 
         public IndividualQuestionResults(int studentId, int quizId)
         {
             InitializeComponent();
             LoadQuizQuestionResults(studentId, quizId);
+            DataContext = this;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -37,6 +44,8 @@ namespace Quiz_App.Miscellaneous
         private void LoadQuizQuestionResults(int studentId, int quizId)
         {
             string connectionString = GlobalVariables.Connection;
+            int answersCorrect = 0;
+            int answersIncorrect = 0;
 
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -65,10 +74,31 @@ namespace Quiz_App.Miscellaneous
                             string questionType = reader.GetString("questiontype");
 
                             Questions.Add(new QuestionList(questionId, questionText, questionType, mark));
+
+                            
+                            if (mark > 0)
+                            {
+                                answersCorrect++;
+                            }
+                            else
+                            {
+                                answersIncorrect++;
+                            }
                         }
 
-                        // Set the item source of the DataGrid or ListView to the questions list
+                        //Set the item source of the DataGrid or ListView to the questions list
                         dtgResultList.ItemsSource = Questions;
+
+                        //Calculates percentages and creates pie chart
+                        double totalAnswers = answersCorrect + answersIncorrect;
+                        double percentageCorrect = Math.Round((totalAnswers > 0) ? (answersCorrect / totalAnswers) * 100 : 0, 2);
+                        double percentageIncorrect = Math.Round((totalAnswers > 0) ? (answersIncorrect / totalAnswers) * 100 : 0, 2);
+
+                        PieChart = new ISeries[]
+                        {
+                            new PieSeries<double> { Values = new double[] { percentageCorrect }, Name = "Correct Percentage", Fill = new SolidColorPaint(SKColors.Green) },
+                            new PieSeries<double> { Values = new double[] { percentageIncorrect }, Name = "Incorrect Percentage", Fill = new SolidColorPaint(SKColors.Red) }
+                        };
                     }
                 }
                 catch (Exception ex)
