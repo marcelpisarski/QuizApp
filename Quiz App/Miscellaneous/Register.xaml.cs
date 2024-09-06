@@ -79,6 +79,13 @@ namespace Quiz_App
                 return;
             }
 
+            //Username validation check
+            if (!UsernameValid(username))
+            {
+                MessageBox.Show("Username must only contain letters and numbers");
+                return;
+            }
+
             //Default user role is student
             string userRole = "student";
 
@@ -206,6 +213,19 @@ namespace Quiz_App
         public void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             txtTeacherCode.Text = string.Empty;
+        }
+
+        //Ensures the username is valid
+        private bool UsernameValid(string username)
+        {
+            foreach (char c in username)
+            {
+                if (!char.IsLetterOrDigit(c))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
