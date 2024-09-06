@@ -8,7 +8,7 @@
         Title="StudentQuizWindow" Height="450" Width="800">
     <Grid Background="#FF77B0AA">
 
-        <TextBlock x:Name="txtQuestion" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,59,0,0" TextWrapping="Wrap" Text="QUESTION" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="25" FontWeight="Bold"/>
+        <TextBlock x:Name="txtQuestion" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,59,0,0" TextWrapping="Wrap" Text="QUESTION" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="25" FontWeight="Bold" Width="746" Height="69"/>
 
         <Grid x:Name="grdSingleChoiceQuestion">
             <TextBox x:Name="txtSingleAnswer" HorizontalAlignment="Center" Margin="0,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="406" Height="47"/>

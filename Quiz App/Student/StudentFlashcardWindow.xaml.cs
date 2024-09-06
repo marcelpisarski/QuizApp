@@ -98,7 +98,7 @@ namespace Quiz_App
 
             if (questionDisplayed)
             {
-                btnFlashcard.Content = currentQuestion.QuestionText;
+                txtAnswerBlock.Text = currentQuestion.QuestionText;
 
                 //Answer will display next time user presses flashcard
                 questionDisplayed = false;
@@ -118,11 +118,11 @@ namespace Quiz_App
                         _ => throw new NotImplementedException()
                     };
 
-                    btnFlashcard.Content = correctAnswer;
+                    txtAnswerBlock.Text = correctAnswer;
                 }
                 else if (currentQuestion is SingleChoiceQuestion scq)
                 {
-                    btnFlashcard.Content = scq.ScAnswer;
+                    txtAnswerBlock.Text = scq.ScAnswer;
                 }
                 
                 //Question displays again once user presses flashcard

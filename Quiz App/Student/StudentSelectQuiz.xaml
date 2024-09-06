@@ -10,7 +10,7 @@
         <DataGrid x:Name="dtgQuizzes" d:ItemsSource="{d:SampleData ItemCount=5}" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" Margin="174,93,174,92" FontFamily="Tahoma" Background="White" FontSize="18">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Quiz ID" Binding="{Binding Id}" Width="*"/>
-                <DataGridTextColumn Header="Quiz Name" Binding="{Binding Topic}" Width="*"/>
+                <DataGridTextColumn Header="Quiz Topic" Binding="{Binding Topic}" Width="*"/>
                 <DataGridTextColumn Header="Quiz Title" Binding="{Binding Title}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
