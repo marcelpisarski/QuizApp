@@ -54,7 +54,7 @@ namespace Quiz_App
             QuizQuestion QuizQuestion = new QuizQuestion();
             
             //Connects OnQuestionAdded method to QuestionAdded event inside QuizQuestion
-            QuizQuestion.QuestionAdded += OnQuestionAdded;
+            QuizQuestion.QuestionAdded += WhenQuestionAdded;
             QuizQuestion.Show();
         }
 
@@ -299,7 +299,7 @@ namespace Quiz_App
         }
 
         //Refreshes question list
-        private void OnQuestionAdded()
+        private void WhenQuestionAdded()
         {
             LoadQuestions();
         }

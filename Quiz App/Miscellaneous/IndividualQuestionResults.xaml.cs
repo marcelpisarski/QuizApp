@@ -64,7 +64,7 @@ namespace Quiz_App.Miscellaneous
 
                     using (var reader = command.ExecuteReader())
                     {
-                        var Questions = new List<QuestionList>();
+                        var questions = new List<QuestionList>();
 
                         while (reader.Read())
                         {
@@ -73,7 +73,7 @@ namespace Quiz_App.Miscellaneous
                             string questionText = reader.GetString("questiontext");
                             string questionType = reader.GetString("questiontype");
 
-                            Questions.Add(new QuestionList(questionId, questionText, questionType, mark));
+                            questions.Add(new QuestionList(questionId, questionText, questionType, mark));
 
                             
                             if (mark > 0)
@@ -87,7 +87,7 @@ namespace Quiz_App.Miscellaneous
                         }
 
                         //Set the item source of the DataGrid or ListView to the questions list
-                        dtgResultList.ItemsSource = Questions;
+                        dtgResultList.ItemsSource = questions;
 
                         //Calculates percentages and creates pie chart
                         double totalAnswers = answersCorrect + answersIncorrect;

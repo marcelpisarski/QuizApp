@@ -53,10 +53,11 @@ namespace Quiz_App
 
         private void LoadStudentResults()
         {
-            //Define the connection string
-            string connectionString = GlobalVariables.Connection;
             int totalQuizzes = 0;
             int quizzesPassed = 0;
+           
+            //Define the connection string
+            string connectionString = GlobalVariables.Connection;
 
             using (var connection = new MySqlConnection(connectionString))
             {

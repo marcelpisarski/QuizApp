@@ -64,7 +64,7 @@ namespace Quiz_App
                 //Adjust edits as needed to mark the user answer as correct
                 bool isCorrect = distance <= 3;
 
-                CheckAnswerAndSave(scQuestion.QuestionId, isCorrect);
+                CheckAnswer(scQuestion.QuestionId, isCorrect);
                 DisplayNextQuestion();
             }
         }
@@ -97,7 +97,7 @@ namespace Quiz_App
                 {
                     isCorrect = true;
                 }
-                CheckAnswerAndSave(mcQuestion.QuestionId, isCorrect);
+                CheckAnswer(mcQuestion.QuestionId, isCorrect);
                 DisplayNextQuestion();
             }
         }
@@ -319,7 +319,7 @@ namespace Quiz_App
         }
 
         //Awards user mark if correct answer given and saves it to the database
-        private void CheckAnswerAndSave(int questionId, bool isCorrect)
+        private void CheckAnswer(int questionId, bool isCorrect)
         {
             int mark = isCorrect ? 1 : 0;
 

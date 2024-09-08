@@ -92,6 +92,7 @@ namespace Quiz_App
             }
         }
 
+        //Opens change password window
         private void txtChangePassword_Click(object sender, RoutedEventArgs e)
         {
             ChangePassword ChangePassword = new ChangePassword();
@@ -101,6 +102,7 @@ namespace Quiz_App
             this.Show();
         }
 
+        //Logs user out
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
             MainWindow Mainwindow = new MainWindow();
