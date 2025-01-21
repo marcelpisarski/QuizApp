@@ -52,6 +52,12 @@ namespace Quiz_App.Miscellaneous
                 return;
             }
 
+            if (oldPassword == newPassword)
+            {
+                MessageBox.Show("New password must be different to old password");
+                return;
+            }
+
             //Confirms if the current user password and entered old user password match up
             bool isConfirmed = ConfirmOldPassword(oldPassword);
             if (isConfirmed)
